@@ -1,6 +1,6 @@
 #include "menu.h"
 void printBackgroundImg(){
-    sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "SFML Background");
+    sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "Spirit of Carpats");
 
     // Завантаження текстури для фону
     sf::Texture backgroundTexture;

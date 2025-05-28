@@ -20,6 +20,4 @@ using namespace std;
 
 int main() {
     printBackgroundImg();
-
-
 }
