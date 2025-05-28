@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="assets">
-      <UniqueIdentifier>{e73e1280-826a-42d6-ba35-6f19a46fc558}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\img">
-      <UniqueIdentifier>{3648c745-3ec6-438a-a72e-bd05db3d4c5f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\sound">
-      <UniqueIdentifier>{0fef746c-762e-4538-b32d-dde496f4ec91}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="spirit_of_carpats.cpp">
@@ -47,10 +38,5 @@
     <ClInclude Include="location.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Users\matvi\Desktop\backgroundMenu.png">
-      <Filter>assets\img</Filter>
-    </Image>
   </ItemGroup>
 </Project>
