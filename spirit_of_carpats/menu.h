@@ -33,5 +33,3 @@ public:
     void handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window);
     void draw(sf::RenderWindow& window);
 };
-
-void printBackgroundImg();
