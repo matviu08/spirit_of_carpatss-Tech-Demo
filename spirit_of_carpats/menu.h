@@ -16,7 +16,22 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
+#include <optional>
 
 using namespace std;
+
+class Menu {
+private:
+    sf::RectangleShape newGameRect;
+    sf::RectangleShape settingsRect;
+    sf::RectangleShape quitRect;
+    sf::Text newGameButton;
+    sf::Text settingsButton;
+    sf::Text quitButton;
+public:
+    Menu(sf::Font& font);
+    void handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window);
+};
 
 void printBackgroundImg();
