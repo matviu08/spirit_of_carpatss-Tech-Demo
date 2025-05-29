@@ -37,35 +37,38 @@ int main() {
         static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
         });
 
-    // Font
-    sf::Font font;
-    if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
-        std::cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
-    }
-
-    // --- Box2D World Setup ---
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
     b2WorldId worldId = b2CreateWorld(&worldDef);
 
     // Ground
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
-    groundBodyDef.position = b2Vec2{ 0.0f, -9.0f };
+    groundBodyDef.type = b2_staticBody; // Земля нерухома
+    groundBodyDef.position = b2Vec2{ 0.0f, -1.0f };
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
-    b2Polygon groundBox = b2MakeBox(10.0f, 1.0f);
+
+    b2Polygon groundBox = b2MakeBox(10.0f, 2.0f); // Земля стала товстіша для коректної колізії
     b2ShapeDef groundShapeDef = b2DefaultShapeDef();
+    groundShapeDef.density = 0.0f; // Земля статична
+    groundShapeDef.material.friction = 100.0f; // Додано тертя для кращої взаємодії
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
     // Character
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 0.0f, 0.0f };
+    bodyDef.position = b2Vec2{ 0.0f, 15.0f }; // Піднято вище, щоб персонаж не провалювався крізь землю
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
+
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);
     b2ShapeDef shapeDef = b2DefaultShapeDef();
     shapeDef.density = 1.0f;
     shapeDef.material.friction = 0.3f;
+    shapeDef.material.restitution = 0.0f; // Вимкнено відскок
     b2CreatePolygonShape(bodyId, &shapeDef, &dynamicBox);
+
+    // Увімкнення персонажа для коректної взаємодії
+    b2Body_SetAwake(bodyId, true);
+    b2Body_SetFixedRotation(bodyId, true);
 
     // SFML Rectangle for character
     sf::RectangleShape characterShape;
@@ -75,8 +78,8 @@ int main() {
 
     // SFML Rectangle for ground
     sf::RectangleShape groundShape;
-    groundShape.setSize({ 20.0f * SCALE, 2.0f * SCALE });
-    groundShape.setOrigin({ 10.0f * SCALE, 1.0f * SCALE });
+    groundShape.setSize({ 20.0f * SCALE, 4.0f * SCALE }); // Візуальна висота для відповідності фізичній моделі
+    groundShape.setOrigin({ 10.0f * SCALE, 2.0f * SCALE });
     groundShape.setFillColor(sf::Color(100, 70, 30));
 
     float timeStep = 1.0f / 60.0f;
@@ -107,16 +110,14 @@ int main() {
             // Drawing
             window.clear();
             window.draw(backgroundSprite);
-            groundShape.setPosition({ 500, 1000 - (9.0f * SCALE) });
+            groundShape.setPosition({ 500, 1500 - (9.0f * SCALE) });
             window.draw(groundShape);
             b2Vec2 pos = b2Body_GetPosition(bodyId);
             characterShape.setPosition({ 500 + pos.x * SCALE, 1000 - pos.y * SCALE });
             window.draw(characterShape);
             window.display();
         }
-
-        
-        
     }
     b2DestroyWorld(worldId);
+
 }
