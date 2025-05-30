@@ -41,7 +41,10 @@ int main() {
             if (event->is<sf::Event::Closed>())
                 window.close();
             else
+            {
                 menu.handleEvent(event, window);
+            }
+                
         }
 
         window.clear();

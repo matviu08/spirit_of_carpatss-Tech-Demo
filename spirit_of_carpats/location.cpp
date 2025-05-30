@@ -1,4 +1,5 @@
 #include "location.h"
+#include "logick.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 using namespace std;
@@ -60,4 +61,12 @@ int location_2_forest() {
         tree_forest.setPosition(Vector2f(100.f + i * 150.f, 250.f));
         trees_forest.push_back(tree_forest);
     }
+}
+void createLevel() {
+    sf::VideoMode screenSize = sf::VideoMode::getDesktopMode();
+    sf::RenderWindow window(screenSize, "game!!");
+
+    Player pl;
+    pl.characterMovement(window);
+    
 }

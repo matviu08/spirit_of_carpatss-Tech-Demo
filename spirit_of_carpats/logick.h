@@ -36,6 +36,8 @@ public:
 	int characterSpeed()const;
 	int characterDamage()const;
 	int characterMaxHp()const;
+
+	void characterMovement(sf::RenderWindow&);
 };
 
 
