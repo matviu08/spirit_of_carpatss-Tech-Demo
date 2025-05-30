@@ -59,7 +59,7 @@ void Player::characterMovement(sf::RenderWindow& window)
 {
     
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("assets/img/backgroundMenu_Decstop.png")) {
+    if (!backgroundTexture.loadFromFile("assets/img/background.jpg")) {
         std::cout << "Помилка: неможливо завантажити backgroundMenu.png!" << std::endl;
     }
     sf::Sprite backgroundSprite(backgroundTexture);
@@ -72,7 +72,7 @@ void Player::characterMovement(sf::RenderWindow& window)
     // Ground
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody; // Земля нерухома
-    groundBodyDef.position = b2Vec2{ 0.0f, -7.0f };
+    groundBodyDef.position = b2Vec2{ 0.0f, 1.5f };
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
 
     b2Polygon groundBox = b2MakeBox(100.0f, 2.0f); // Земля стала товстіша для коректної колізії
@@ -84,7 +84,7 @@ void Player::characterMovement(sf::RenderWindow& window)
     // Character
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 0.0f, 15.0f }; // Піднято вище, щоб персонаж не провалювався крізь землю
+    bodyDef.position = b2Vec2{ 0.0f, 3.0f }; // Піднято вище, щоб персонаж не провалювався крізь землю
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
 
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);

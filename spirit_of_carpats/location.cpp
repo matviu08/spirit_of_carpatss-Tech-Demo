@@ -64,7 +64,7 @@ int location_2_forest() {
 }
 void createLevel() {
     sf::VideoMode screenSize = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow window(screenSize, "game!!");
+    sf::RenderWindow window(screenSize, "Spirit of Carpatians", sf::State::Fullscreen);
 
     Player pl;
     pl.characterMovement(window);
