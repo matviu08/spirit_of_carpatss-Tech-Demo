@@ -1,72 +1,120 @@
-#include "menu.h"
+п»ї#include "menu.h"
 
+void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
+    sf::Vector2u windowSize = window.getSize();
+    if (tohnoEnglish) {
+        if (&button == &newGameButton) {
+            sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - 300 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_1);
+        }
+        else if (&button == &settingsButton) {
+            sf::Vector2f pos_2(static_cast<float>(windowSize.x) / 2 - 250 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_2);
+        }
+        else if (&button == &quitButton) {
+            sf::Vector2f pos_3(static_cast<float>(windowSize.x) / 2 - 160 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_3);
+        }
+        else if (&button == &chapterButton) {
+            sf::Vector2f pos_4(static_cast<float>(windowSize.x) / 2 - 280 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_4);
+        }
+        else if (&button == &backButton) {
+            sf::Vector2f pos_5(static_cast<float>(windowSize.x) / 2 - 200 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_5);
+        }
+        else if (&button == &languageButton) {
+            sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 500 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_6);
+        }
+    }
+}
 
-
-
-Menu::Menu(sf::Font& font) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font) {
-    newGameButton.setString("New Game"); // Текст кнопки
-    newGameButton.setCharacterSize(50);  // Розмір шрифту
-    newGameButton.setFillColor(sf::Color(252, 228, 204)); // Колір тексту
-    newGameButton.setPosition({ 380.f, 400.f }); // Позиція на екрані
+Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font), backButtonForChap(font) {
+    newGameButton.setString("New Game"); // РўРµРєСЃС‚ РєРЅРѕРїРєРё
+    newGameButton.setCharacterSize(50);  // Р РѕР·РјС–СЂ С€СЂРёС„С‚Сѓ
+    newGameButton.setFillColor(sf::Color(252, 228, 204)); // РљРѕР»С–СЂ С‚РµРєСЃС‚Сѓ
+    centerButton(newGameButton, window, -100);
 
     settingsButton.setString("Settings");
     settingsButton.setCharacterSize(50);
     settingsButton.setFillColor(sf::Color(252, 228, 204));
-    settingsButton.setPosition({ 400.f, 500.f });
+    centerButton(settingsButton, window, 0);
+
 
     quitButton.setString("Quit");
     quitButton.setCharacterSize(50);
     quitButton.setFillColor(sf::Color(252, 228, 204));
-    quitButton.setPosition({ 445.f, 600.f });
+    centerButton(quitButton, window, 100);
+
 
     chapterButton.setString("chapter 1");
     chapterButton.setCharacterSize(50);
     chapterButton.setFillColor(sf::Color(252, 228, 204));
-    chapterButton.setPosition({ 400.f, 400.f });
+    centerButton(chapterButton, window, -100);
+
 
     backButton.setString("Back");
     backButton.setCharacterSize(50);
     backButton.setFillColor(sf::Color(252, 228, 204));
-    backButton.setPosition({ 450.f, 500.f });
+    centerButton(backButton, window, 0);
+
 
     languageButton.setString("Language: English");
     languageButton.setCharacterSize(50);
     languageButton.setFillColor(sf::Color(252, 228, 204));
-    languageButton.setPosition({ 300.f, 400.f });
+    centerButton(languageButton, window, -100);
+
+    backButtonForChap.setString("Back to Chapters");
+    backButtonForChap.setCharacterSize(50);
+    backButtonForChap.setFillColor(sf::Color::White);
+    backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
 }
 
-void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window) {
+void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     if (event->is<sf::Event::MouseButtonPressed>()) {
         auto mousePos = sf::Mouse::getPosition(window);
         sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-        // **Якщо меню активне**
-        if (!levelStarted && !settingsOpened) {
+        // Р“РѕР»РѕРІРЅРµ РјРµРЅСЋ
+        if (!levelStarted && !settingsOpened && !chapterOneRunning) {
             if (newGameButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: New Game!" << std::endl;
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: New Game!" << std::endl;
                 levelStarted = true;
             }
             else if (settingsButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Settings!" << std::endl;
-                settingsOpened = true; // **Активуємо меню налаштувань**
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: Settings!" << std::endl;
+                settingsOpened = true;
             }
             else if (quitButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Quit!" << std::endl;
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: Quit!" << std::endl;
                 window.close();
             }
         }
-        // **Якщо рівень активний**
-        else if (levelStarted) {
+
+        // РњРµРЅСЋ С‡Р°РїС‚РµСЂС–РІ (2-Р№ РµРєСЂР°РЅ)
+        else if (levelStarted && !chapterOneRunning) {
             if (chapterButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Глава 1! Запускаємо createLevel()..." << std::endl;
-                createLevel();
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: Р“Р»Р°РІР° 1!" << std::endl;
+                chapterOneRunning = true; // РџРµСЂРµС…РѕРґРёРјРѕ РЅР° 3-Р№ РµРєСЂР°РЅ
+                createLevel1(window, backgroundSprite);
             }
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Back!" << std::endl;
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: Back to Main Menu!" << std::endl;
                 levelStarted = false;
             }
         }
-        // **Якщо налаштування активні**
+
+        // Р С–РІРµРЅСЊ (3-Р№ РµРєСЂР°РЅ)
+        else if (chapterOneRunning) {
+            if (backButtonForChap.getGlobalBounds().contains(mouseWorldPos)) {
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: РџРѕРІРµСЂРЅРµРЅРЅСЏ РґРѕ С‡Р°РїС‚РµСЂС–РІ!" << std::endl;
+                chapterOneRunning = false;
+                // РџРѕРІРµСЂС‚Р°С”РјРѕСЃСЊ РґРѕ РјРµРЅСЋ С‡Р°РїС‚РµСЂС–РІ
+            }
+        }
+
+        // РќР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ
         else if (settingsOpened) {
             if (languageButton.getGlobalBounds().contains(mouseWorldPos)) {
                 isEnglish = !isEnglish;
@@ -78,19 +126,23 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     chapterButton.setString("Chapter 1");
                     backButton.setString("Back");
                     languageButton.setString("Language: English");
+                    backButtonForChap.setString("Back");
+                    tohnoEnglish = true;
                 }
                 else {
-                    std::cout << "Перемкнули на Українську!" << std::endl;
-                    newGameButton.setString(L"Нова гра");
-                    settingsButton.setString(L"Налаштування");
-                    quitButton.setString(L"Вийти");
-                    chapterButton.setString(L"Глава 1");
-                    backButton.setString(L"Назад");
-                    languageButton.setString(L"Language: Українська");
+                    std::cout << "РџРµСЂРµРјРєРЅСѓР»Рё РЅР° РЈРєСЂР°С—РЅСЃСЊРєСѓ!" << std::endl;
+                    newGameButton.setString(L"РќРѕРІР° РіСЂР°");
+                    settingsButton.setString(L"РќР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ");
+                    quitButton.setString(L"Р’РёР№С‚Рё");
+                    chapterButton.setString(L"Р“Р»Р°РІР° 1");
+                    backButton.setString(L"РќР°Р·Р°Рґ");
+                    languageButton.setString(L"Language: РЈРєСЂР°С—РЅСЃСЊРєР°");
+                    backButtonForChap.setString(L"РќР°Р·Р°Рґ");
+                    tohnoEnglish = false;
                 }
             }
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Back!" << std::endl;
+                std::cout << "РќР°С‚РёСЃРЅСѓС‚Рѕ: Back!" << std::endl;
                 settingsOpened = false;
             }
         }
@@ -98,14 +150,17 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
 }
 
 void Menu::draw(sf::RenderWindow& window) {
-    if (!levelStarted && !settingsOpened) {
+    if (!levelStarted && !settingsOpened && !chapterOneRunning) {
         window.draw(newGameButton);
         window.draw(settingsButton);
         window.draw(quitButton);
     }
-    else if (levelStarted) {
+    else if (levelStarted && !chapterOneRunning) {
         window.draw(chapterButton);
         window.draw(backButton);
+    }
+    else if (chapterOneRunning) {
+        window.draw(backButtonForChap);
     }
     else if (settingsOpened) {
         window.draw(languageButton);

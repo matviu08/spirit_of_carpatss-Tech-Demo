@@ -12,6 +12,7 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
+#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -20,11 +21,15 @@
 
 using namespace std;
 
+
+
 class Menu {
 private:
     bool levelStarted = false;
+    bool chapterOneRunning = false;
     bool settingsOpened = false;
     bool isEnglish = true;
+    bool tohnoEnglish = true;
     //головне меню
     sf::RectangleShape newGameRect;
     sf::RectangleShape settingsRect;
@@ -40,9 +45,13 @@ private:
     //настройки
     sf::RectangleShape languageRect;
     sf::Text languageButton;
+    //чаптер1
+    sf::RectangleShape backRectForChap;
+    sf::Text backButtonForChap;
 
+    void centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset);
 public:
-    Menu(sf::Font& font);
-    void handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window);
+    Menu(sf::Font& font, sf::RenderWindow& window);
+    void handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite);
     void draw(sf::RenderWindow& window);
 };

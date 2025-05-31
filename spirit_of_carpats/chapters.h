@@ -16,12 +16,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
-class loot_box {};
-class object {};
-class bg {};
-class for_bg {};
-class ground {};
-class weather {};  
+#include <optional>
 
-int location_1_home(sf::RenderWindow& window);
-int location_2_forest(sf::RenderWindow& window);
+using namespace std;
+
+void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite);

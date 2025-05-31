@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
+#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -19,10 +20,11 @@
 using namespace std;
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "Spirit of Carpats");
+    sf::VideoMode screenSize = sf::VideoMode::getDesktopMode();
+    sf::RenderWindow window(screenSize, "Spirit of Carpatians", sf::State::Fullscreen);
 
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("assets/img/backgroundMenu.png")) {
+    if (!backgroundTexture.loadFromFile("assets/img/backgroundMenu_DecstopVersion.png")) {
         cout << "Помилка: неможливо завантажити backgroundMenu.png!" << std::endl;
     }
 
@@ -37,7 +39,7 @@ int main() {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
     }
 
-    Menu menu(font); // Створюємо об'єкт меню
+    Menu menu(font, window); // Створюємо об'єкт меню
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -45,7 +47,7 @@ int main() {
                 window.close();
 
             // **Обробка натискання кнопок**
-            menu.handleEvent(event, window);
+            menu.handleEvent(event, window, backgroundSprite);
         }
 
         window.clear();

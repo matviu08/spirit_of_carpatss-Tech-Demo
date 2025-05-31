@@ -14,6 +14,7 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
+#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -37,7 +38,7 @@ public:
 	int characterDamage()const;
 	int characterMaxHp()const;
 
-	void characterMovement(sf::RenderWindow&);
+	void characterMovement(sf::RenderWindow&, sf::Sprite&);
 };
 
 

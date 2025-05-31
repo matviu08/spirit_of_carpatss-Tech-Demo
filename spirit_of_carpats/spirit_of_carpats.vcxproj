@@ -135,12 +135,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="chapters.cpp" />
     <ClCompile Include="location.cpp" />
     <ClCompile Include="logick.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="spirit_of_carpats.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="chapters.h" />
     <ClInclude Include="location.h" />
     <ClInclude Include="logick.h" />
     <ClInclude Include="menu.h" />

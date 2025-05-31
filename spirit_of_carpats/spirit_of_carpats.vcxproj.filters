@@ -27,6 +27,9 @@
     <ClCompile Include="location.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="chapters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="menu.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="location.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="chapters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,72 +2,62 @@
 
 Player::Player()
 {
-	hp = 100;
-	damage = 0;
-	velocity = 1;
-	maxHp = 100;
+    hp = 100;
+    damage = 0;
+    velocity = 1;
+    maxHp = 100;
 }
 void Player::addDamage(int damage) {
-	this->damage += damage;
+    this->damage += damage;
 }
 void Player::heal(int heal) {
-	if (hp + heal < maxHp) {
-		hp += heal;
-	}
-	else {
-		hp = maxHp;
-	}
+    if (hp + heal < maxHp) {
+        hp += heal;
+    }
+    else {
+        hp = maxHp;
+    }
 }
 void Player::hpIncrease(int incr) {
-	hp += incr;
-	maxHp += incr;
+    hp += incr;
+    maxHp += incr;
 }
 
 void Player::damageTaken(int damageTaken)
 {
-	hp -= damageTaken;
+    hp -= damageTaken;
 }
 
 void Player::playerSpeed(int speed)
 {
-	this->velocity += speed;
+    this->velocity += speed;
 }
 
 int Player::characterHp() const
 {
-	return hp;
+    return hp;
 }
 
 int Player::characterSpeed() const
 {
-	return velocity;
+    return velocity;
 }
 
 int Player::characterDamage() const
 {
-	return damage;
+    return damage;
 }
 
 int Player::characterMaxHp() const
 {
-	return maxHp;
+    return maxHp;
 }
-const float SCALE = 50.0f; 
+const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
 
-void Player::characterMovement(sf::RenderWindow& window)
+void Player::characterMovement(sf::RenderWindow& window, sf::Sprite& background)
 {
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("assets/img/Game_BackGround.png")) {
-        std::cout << "Помилка: неможливо завантажити background.jpg!" << std::endl;
-    }
-    sf::Sprite backgroundSprite(backgroundTexture);
-    backgroundSprite.setScale({
-        static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
-        static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
-        });
-
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
     b2WorldId worldId = b2CreateWorld(&worldDef);
@@ -118,11 +108,6 @@ void Player::characterMovement(sf::RenderWindow& window)
     bool jumpHeldLastFrame = false;
 
     while (window.isOpen()) {
-        while (const std::optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-        }
-
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         float moveSpeed = 0.5f;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
@@ -134,13 +119,13 @@ void Player::characterMovement(sf::RenderWindow& window)
         else {
             velocity.x = 0.0f;
         }
-        
+
         b2Vec2 pos = b2Body_GetPosition(bodyId);
         float groundY = -2.0f + 2.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
         float jumpDuration = 1.8f;
         float jumpVelocity = 12.0f;
-        float gravity = 6.0f; 
+        float gravity = 6.0f;
         float jumpTimer = 0.0f;
 
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
@@ -154,25 +139,25 @@ void Player::characterMovement(sf::RenderWindow& window)
         if (jumpTimer > 0.0f) {
             jumpTimer -= timeStep;
             velocity.y = jumpVelocity * pow(jumpTimer / jumpDuration, 0.8f);
-            
+
 
         }
         else if (!onGround) {
             b2Body_SetAwake(bodyId, false);
             velocity.y -= gravity * timeStep;
             sf::Clock timer;
-            while (timer.getElapsedTime().asSeconds() < 0.01f){}
-            
+            while (timer.getElapsedTime().asSeconds() < 0.01f) {}
+
             b2Body_SetAwake(bodyId, true);
         }
-        
+
 
         b2Body_SetLinearVelocity(bodyId, velocity);
 
         b2World_Step(worldId, timeStep, subStepCount);
 
         window.clear();
-        window.draw(backgroundSprite);
+        window.draw(background);
         groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
         window.draw(groundShape);
         pos = b2Body_GetPosition(bodyId);
