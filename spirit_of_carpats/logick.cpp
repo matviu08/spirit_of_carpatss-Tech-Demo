@@ -103,6 +103,11 @@ void Player::characterMovement(sf::RenderWindow& window)
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
     characterShape.setFillColor(sf::Color::Red);
 
+    /*sf::Texture characterTexture;
+    characterTexture.loadFromFile("assets/img/character.png");
+    characterShape.setTexture(&characterTexture);*/
+
+
     sf::RectangleShape groundShape;
     groundShape.setSize({ 200.0f * SCALE, 4.0f * SCALE });
     groundShape.setOrigin({ 100.0f * SCALE, 2.0f * SCALE });
@@ -120,7 +125,6 @@ void Player::characterMovement(sf::RenderWindow& window)
 
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         float moveSpeed = 0.5f;
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
             velocity.x = -moveSpeed;
         }
@@ -130,16 +134,38 @@ void Player::characterMovement(sf::RenderWindow& window)
         else {
             velocity.x = 0.0f;
         }
-
+        
         b2Vec2 pos = b2Body_GetPosition(bodyId);
         float groundY = -2.0f + 2.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
+        float jumpDuration = 1.8f;
+        float jumpVelocity = 12.0f;
+        float gravity = 6.0f; 
+        float jumpTimer = 0.0f;
 
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
-            velocity.y = 10.0f; 
+            velocity.y = jumpVelocity;
+            jumpTimer = jumpDuration;
+
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
+
+        if (jumpTimer > 0.0f) {
+            jumpTimer -= timeStep;
+            velocity.y = jumpVelocity * pow(jumpTimer / jumpDuration, 0.8f);
+            
+
+        }
+        else if (!onGround) {
+            b2Body_SetAwake(bodyId, false);
+            velocity.y -= gravity * timeStep;
+            sf::Clock timer;
+            while (timer.getElapsedTime().asSeconds() < 0.01f){}
+            
+            b2Body_SetAwake(bodyId, true);
+        }
+        
 
         b2Body_SetLinearVelocity(bodyId, velocity);
 
