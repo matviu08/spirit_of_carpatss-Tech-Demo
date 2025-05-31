@@ -59,7 +59,7 @@ const float CHARACTER_HALF_HEIGHT = 1.0f;
 void Player::characterMovement(sf::RenderWindow& window)
 {
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("assets/img/background.jpg")) {
+    if (!backgroundTexture.loadFromFile("assets/img/Game_BackGround.png")) {
         std::cout << "Помилка: неможливо завантажити background.jpg!" << std::endl;
     }
     sf::Sprite backgroundSprite(backgroundTexture);
