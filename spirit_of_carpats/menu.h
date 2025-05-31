@@ -22,12 +22,25 @@ using namespace std;
 
 class Menu {
 private:
+    bool levelStarted = false;
+    bool settingsOpened = false;
+    bool isEnglish = true;
+    //головне меню
     sf::RectangleShape newGameRect;
     sf::RectangleShape settingsRect;
     sf::RectangleShape quitRect;
     sf::Text newGameButton;
     sf::Text settingsButton;
     sf::Text quitButton;
+    //меню чаптерів
+    sf::RectangleShape chapterRect;
+    sf::RectangleShape backRect;
+    sf::Text chapterButton;
+    sf::Text backButton;
+    //настройки
+    sf::RectangleShape languageRect;
+    sf::Text languageButton;
+
 public:
     Menu(sf::Font& font);
     void handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window);
