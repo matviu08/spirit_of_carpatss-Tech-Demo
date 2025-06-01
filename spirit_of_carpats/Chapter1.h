@@ -19,8 +19,7 @@
 #include <box2d/box2d.h>
 
 using namespace std;
-#ifndef _CHAPTER1
-#define _CHAPTER1
-void createLevels1(sf::RenderWindow&, sf::Sprite&);
-#endif
 
+
+
+void createLevels1(sf::RenderWindow&, sf::Sprite&, sf::Text&);

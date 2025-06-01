@@ -1,12 +1,11 @@
 ﻿#include "chapters.h"
 
-
 void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     std::cout << "Запускаємо Level 1..." << std::endl;
 
 
     sf::Texture newBackgroundTexture;
-    if (!newBackgroundTexture.loadFromFile("assets/img/Game_BackGround.png")) {
+    if (!newBackgroundTexture.loadFromFile("assets/img/levl1_bg.png")) {
         std::cerr << "неможливо завантажити background.jpg!" << std::endl;
         return;
     }
@@ -19,6 +18,12 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
     Player pl;
 
+    sf::Text backButtonForChap(font);
+    backButtonForChap.setString("Back to Chapters");
+    backButtonForChap.setCharacterSize(50);
+    backButtonForChap.setFillColor(sf::Color::White);
+    backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
+
     while (window.isOpen()) {
         while (const optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
@@ -29,7 +34,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
             window.clear();
             window.draw(backgroundSprite);
-            createLevels1(window, backgroundSprite);
+            createLevels1(window, backgroundSprite, backButtonForChap);
             window.display();
         }
     }

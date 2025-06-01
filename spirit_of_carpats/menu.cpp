@@ -1,5 +1,7 @@
 ﻿#include "menu.h"
 
+bool levelStarted = false;
+
 void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
     sf::Vector2u windowSize = window.getSize();
     if (tohnoEnglish) {
@@ -30,7 +32,7 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
     }
 }
 
-Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font), backButtonForChap(font) {
+Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font){
     newGameButton.setString("New Game");
     newGameButton.setCharacterSize(50); 
     newGameButton.setFillColor(sf::Color(252, 228, 204));
@@ -59,16 +61,13 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     backButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(backButton, window, 0);
 
-
+  
     languageButton.setString("Language: English");
     languageButton.setCharacterSize(50);
     languageButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(languageButton, window, -100);
 
-    backButtonForChap.setString("Back to Chapters");
-    backButtonForChap.setCharacterSize(50);
-    backButtonForChap.setFillColor(sf::Color::White);
-    backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
+    
 }
 
 void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
@@ -76,7 +75,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
         auto mousePos = sf::Mouse::getPosition(window);
         sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-        if (!levelStarted && !settingsOpened && !chapterOneRunning) {
+        if (!levelStarted && !settingsOpened) {
             if (newGameButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = true;
             }
@@ -88,19 +87,12 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
             }
         }
 
-        else if (levelStarted && !chapterOneRunning) {
+        else if (levelStarted) {
             if (chapterButton.getGlobalBounds().contains(mouseWorldPos)) {
-                chapterOneRunning = true; 
                 createLevel1(window, backgroundSprite);
             }
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = false;
-            }
-        }
-
-        else if (chapterOneRunning) {
-            if (backButtonForChap.getGlobalBounds().contains(mouseWorldPos)) {
-                chapterOneRunning = false;
             }
         }
 
@@ -114,7 +106,6 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     chapterButton.setString("Chapter 1");
                     backButton.setString("Back");
                     languageButton.setString("Language: English");
-                    backButtonForChap.setString("Back");
                     tohnoEnglish = true;
                 }
                 else {
@@ -125,7 +116,6 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     chapterButton.setString(L"Глава 1");
                     backButton.setString(L"Назад");
                     languageButton.setString(L"Language: Українська");
-                    backButtonForChap.setString(L"Назад");
                     tohnoEnglish = false;
                 }
             }
@@ -138,17 +128,14 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
 }
 
 void Menu::draw(sf::RenderWindow& window) {
-    if (!levelStarted && !settingsOpened && !chapterOneRunning) {
+    if (!levelStarted && !settingsOpened) {
         window.draw(newGameButton);
         window.draw(settingsButton);
         window.draw(quitButton);
     }
-    else if (levelStarted && !chapterOneRunning) {
+    else if (levelStarted) {
         window.draw(chapterButton);
         window.draw(backButton);
-    }
-    else if (chapterOneRunning) {
-        window.draw(backButtonForChap);
     }
     else if (settingsOpened) {
         window.draw(languageButton);

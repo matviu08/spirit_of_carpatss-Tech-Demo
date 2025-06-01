@@ -4,7 +4,9 @@ const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background) {
+extern bool levelStarted;
+
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton) {
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
@@ -104,9 +106,13 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background) {
             b2Body_SetAwake(bodyId, true);
         }
 
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-
-
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && backButton.getGlobalBounds().contains(mouseWorldPos)) {
+            std::cout << "backButton to menu!" << std::endl;
+            levelStarted = false;
+        }
 
         b2Body_SetLinearVelocity(bodyId, velocity);
 
@@ -140,6 +146,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background) {
         pos = b2Body_GetPosition(bodyId);
         characterShape.setPosition({ 1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE });
         window.draw(characterShape);
+        window.draw(backButton);
         window.display();
     }
 
