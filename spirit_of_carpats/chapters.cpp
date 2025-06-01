@@ -20,7 +20,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     Player pl;
 
     while (window.isOpen()) {
-        while (const std::optional event = window.pollEvent()) {
+        while (const optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
         
@@ -29,7 +29,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
             window.clear();
             window.draw(backgroundSprite);
-            pl.characterMovement(window, backgroundSprite);
+            createLevels1(window, backgroundSprite);
             window.display();
         }
     }

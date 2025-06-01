@@ -31,9 +31,9 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
 }
 
 Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font), backButtonForChap(font) {
-    newGameButton.setString("New Game"); // Текст кнопки
-    newGameButton.setCharacterSize(50);  // Розмір шрифту
-    newGameButton.setFillColor(sf::Color(252, 228, 204)); // Колір тексту
+    newGameButton.setString("New Game");
+    newGameButton.setCharacterSize(50); 
+    newGameButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(newGameButton, window, -100);
 
     settingsButton.setString("Settings");
@@ -76,50 +76,38 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
         auto mousePos = sf::Mouse::getPosition(window);
         sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-        // Головне меню
         if (!levelStarted && !settingsOpened && !chapterOneRunning) {
             if (newGameButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: New Game!" << std::endl;
                 levelStarted = true;
             }
             else if (settingsButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Settings!" << std::endl;
                 settingsOpened = true;
             }
             else if (quitButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Quit!" << std::endl;
                 window.close();
             }
         }
 
-        // Меню чаптерів (2-й екран)
         else if (levelStarted && !chapterOneRunning) {
             if (chapterButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Глава 1!" << std::endl;
-                chapterOneRunning = true; // Переходимо на 3-й екран
+                chapterOneRunning = true; 
                 createLevel1(window, backgroundSprite);
             }
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Back to Main Menu!" << std::endl;
                 levelStarted = false;
             }
         }
 
-        // Рівень (3-й екран)
         else if (chapterOneRunning) {
             if (backButtonForChap.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Повернення до чаптерів!" << std::endl;
                 chapterOneRunning = false;
-                // Повертаємось до меню чаптерів
             }
         }
 
-        // Налаштування
         else if (settingsOpened) {
             if (languageButton.getGlobalBounds().contains(mouseWorldPos)) {
                 isEnglish = !isEnglish;
                 if (isEnglish) {
-                    std::cout << "Switched to English!" << std::endl;
                     newGameButton.setString("New Game");
                     settingsButton.setString("Settings");
                     quitButton.setString("Quit");

@@ -12,13 +12,15 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
-#include "Chapter1.h"
+#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
-#include <optional>
 
 using namespace std;
+#ifndef _CHAPTER1
+#define _CHAPTER1
+void createLevels1(sf::RenderWindow&, sf::Sprite&);
+#endif
 
-void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite);

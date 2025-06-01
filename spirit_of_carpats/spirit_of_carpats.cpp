@@ -16,7 +16,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
-
+#include "Chapter1.h"
 using namespace std;
 
 int main() {
@@ -27,7 +27,6 @@ int main() {
     if (!backgroundTexture.loadFromFile("assets/img/backgroundMenu_DecstopVersion.png")) {
         cout << "Помилка: неможливо завантажити backgroundMenu.png!" << std::endl;
     }
-
     sf::Sprite backgroundSprite(backgroundTexture);
     backgroundSprite.setScale({
         static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
