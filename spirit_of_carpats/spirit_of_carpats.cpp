@@ -47,7 +47,6 @@ int main() {
 
             menu.handleEvent(event, window, backgroundSprite);
         }
-
         window.clear();
         window.draw(backgroundSprite);
 

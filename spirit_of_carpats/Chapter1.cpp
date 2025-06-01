@@ -112,6 +112,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && backButton.getGlobalBounds().contains(mouseWorldPos)) {
             std::cout << "backButton to menu!" << std::endl;
             levelStarted = false;
+            window.close();
         }
 
         b2Body_SetLinearVelocity(bodyId, velocity);
