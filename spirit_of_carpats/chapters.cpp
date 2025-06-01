@@ -4,7 +4,7 @@
 void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     std::cout << "Запускаємо Level 1..." << std::endl;
 
-    // ✅ Змінюємо фон рівня
+
     sf::Texture newBackgroundTexture;
     if (!newBackgroundTexture.loadFromFile("assets/img/Game_BackGround.png")) {
         std::cerr << "неможливо завантажити background.jpg!" << std::endl;
@@ -12,13 +12,11 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     }
     backgroundSprite.setTexture(newBackgroundTexture);
 
-    // ✅ Додаємо кнопку "Back to Chapters"
     sf::Font font;
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
     }
 
-    // ✅ Створюємо об'єкт гравця
     Player pl;
 
     while (window.isOpen()) {

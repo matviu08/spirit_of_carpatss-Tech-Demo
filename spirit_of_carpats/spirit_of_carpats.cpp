@@ -39,21 +39,19 @@ int main() {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
     }
 
-    Menu menu(font, window); // Створюємо об'єкт меню
+    Menu menu(font, window); 
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
 
-            // **Обробка натискання кнопок**
             menu.handleEvent(event, window, backgroundSprite);
         }
 
         window.clear();
         window.draw(backgroundSprite);
 
-        // **Тут малюємо кнопки**
         menu.draw(window);
 
         window.display();

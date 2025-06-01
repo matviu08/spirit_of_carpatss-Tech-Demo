@@ -155,7 +155,26 @@ void Player::characterMovement(sf::RenderWindow& window, sf::Sprite& background)
         b2Body_SetLinearVelocity(bodyId, velocity);
 
         b2World_Step(worldId, timeStep, subStepCount);
+        sf::Vector2f windowSize(window.getSize().x, window.getSize().y);
+        sf::View view(windowSize * 0.5f, windowSize); 
+        window.setView(view);
 
+        float worldStartX = 0.0f;
+        float worldEndX = 5000.0f; 
+
+        float viewWidth = window.getSize().x;
+        float halfViewWidth = viewWidth / 2.0f;
+
+        pos = b2Body_GetPosition(bodyId);
+        sf::Vector2f charScreenPos(1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE);
+
+        float unclampedCenterX = charScreenPos.x;
+        float minCenterX = worldStartX + halfViewWidth;
+        float maxCenterX = worldEndX - halfViewWidth;
+        float clampedCenterX = max(minCenterX, min(unclampedCenterX, maxCenterX));
+
+        sf::View view1(sf::Vector2f(clampedCenterX, window.getSize().y / 2.0f), sf::Vector2f(viewWidth, window.getSize().y));
+        window.setView(view1);
         window.clear();
         window.draw(background);
         groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
