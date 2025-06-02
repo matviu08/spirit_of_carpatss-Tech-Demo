@@ -26,7 +26,7 @@ void generateForestScene(RenderWindow& window,
     int groundCols = window.getSize().x / groundTileWidth + 2;
 
     for (int x = 0; x < groundCols; ++x) {
-        Sprite tile(groundTexture); // 🔴 SFML 3.0 — обов’язково з текстурою
+        Sprite tile(groundTexture); 
         tile.setPosition(Vector2f(static_cast<float>(x * groundTileWidth),
             static_cast<float>(window.getSize().y - groundTileHeight)));
         groundTiles.push_back(tile);
@@ -39,7 +39,7 @@ void generateForestScene(RenderWindow& window,
     for (int x = 0; x < groundCols; ++x) {
         for (int v = 0; v < grassVariants; ++v) {
             if (distr(gen) % 3 == 0) {
-                Sprite grass(grassTexture); // ✅ обов’язково передати текстуру
+                Sprite grass(grassTexture);
                 grass.setPosition(Vector2f(
                     static_cast<float>(x * groundTileWidth + (distr(gen) % 50 - 25)),
                     static_cast<float>(window.getSize().y - groundTileHeight - grassTexHeight + 10)

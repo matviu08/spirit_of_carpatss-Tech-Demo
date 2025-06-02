@@ -4,7 +4,7 @@ Player::Player()
 {
     hp = 100;
     damage = 0;
-    velocity = 1;
+    velocity = 0.6f;
     maxHp = 100;
 }
 void Player::addDamage(int damage) {
@@ -28,7 +28,7 @@ void Player::damageTaken(int damageTaken)
     hp -= damageTaken;
 }
 
-void Player::playerSpeed(int speed)
+void Player::playerSpeed(float speed)
 {
     this->velocity += speed;
 }
@@ -38,7 +38,7 @@ int Player::characterHp() const
     return hp;
 }
 
-int Player::characterSpeed() const
+float Player::characterSpeed() const
 {
     return velocity;
 }
@@ -51,9 +51,4 @@ int Player::characterDamage() const
 int Player::characterMaxHp() const
 {
     return maxHp;
-}
-
-void Player::characterMovement(sf::RenderWindow& window, sf::Sprite& background)
-{
-    
 }

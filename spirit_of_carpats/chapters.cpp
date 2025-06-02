@@ -2,7 +2,7 @@
 
 void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     std::cout << "Запускаємо Level 1..." << std::endl;
-
+    Player pl;
 
     sf::Texture newBackgroundTexture;
     if (!newBackgroundTexture.loadFromFile("assets/img/levl1_bg.png")) {
@@ -15,8 +15,6 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
     }
-
-    Player pl;
 
     sf::Text backButtonForChap(font);
     backButtonForChap.setString("Back to Chapters");
@@ -34,7 +32,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
             window.clear();
             window.draw(backgroundSprite);
-            createLevels1(window, backgroundSprite, backButtonForChap);
+            createLevels1(window, backgroundSprite, backButtonForChap, pl);
             window.display();
         }
     }

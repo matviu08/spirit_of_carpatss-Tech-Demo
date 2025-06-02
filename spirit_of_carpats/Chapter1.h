@@ -1,4 +1,6 @@
+
 #pragma once
+
 #pragma comment (lib, "winmm.lib")
 #define _USE_MATH_DEFINES
 #define _CRT_SECURE_NO_WARNINGS
@@ -12,6 +14,7 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
+#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -19,6 +22,4 @@
 
 using namespace std;
 
-
-
-void createLevels1(sf::RenderWindow&, sf::Sprite&, sf::Text&);
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl);

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef _LOGICK
-#define _LOGICK
 #pragma comment (lib, "winmm.lib")
 #define _USE_MATH_DEFINES
 #define _CRT_SECURE_NO_WARNINGS
@@ -11,10 +9,6 @@
 #include <cmath>
 #include <algorithm>
 #include <fstream>
-#include "menu.h"
-#include "logick.h"
-#include "location.h"
-#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -23,7 +17,7 @@
 class Player {
 	int maxHp;
 	int hp;
-	int velocity;
+	float velocity;
 	int damage;
 public:
 	Player();
@@ -31,15 +25,13 @@ public:
 	void heal(int);
 	void hpIncrease(int);
 	void damageTaken(int);
-	void playerSpeed(int);
+	void playerSpeed(float);
 
 	int characterHp()const;
-	int characterSpeed()const;
+	float characterSpeed()const;
 	int characterDamage()const;
 	int characterMaxHp()const;
 
-	void characterMovement(sf::RenderWindow&, sf::Sprite&);
 };
 
 
-#endif

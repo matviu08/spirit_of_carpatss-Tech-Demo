@@ -6,7 +6,9 @@ const float CHARACTER_HALF_HEIGHT = 1.0f;
 
 extern bool levelStarted;
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton) {
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
+
+    sf::Vector2u windowSize = window.getSize();
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
@@ -14,13 +16,14 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody;
-    groundBodyDef.position = b2Vec2{ 0.0f, -2.0f };
+    groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float) windowSize.y- windowSize.y - 2.0f};
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
 
     b2Polygon groundBox = b2MakeBox(100.0f, 2.0f);
     b2ShapeDef groundShapeDef = b2DefaultShapeDef();
     groundShapeDef.density = 0.0f;
     groundShapeDef.material.friction = 100.0f;
+    
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
     b2BodyDef bodyDef = b2DefaultBodyDef();
@@ -52,16 +55,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     groundShape.setOrigin({ 100.0f * SCALE, 2.0f * SCALE });
     groundShape.setFillColor(sf::Color(100, 70, 30));
 
-    // ==== ЛІСОВІ ОБ’ЄКТИ ====
-    /*std::vector<sf::Sprite> trees, bushes, rocks, grassSprites, groundTiles;
-    sf::Texture bushTexture, rockTexture, grassTexture, groundTexture;
-    sf:vector<Texture> treeTexture;
-    bushTexture.loadFromFile("assets/img/torn newspaper.png");
-    rockTexture.loadFromFile("assets/img/Kamin.png");
-    grassTexture.loadFromFile("assets/img/grass_new.png");
-    groundTexture.loadFromFile("assets/img/background.png");
-    generateForestScene(window, trees, bushes, rocks, grassSprites, groundTiles, treeTexture, bushTexture, rockTexture, grassTexture, groundTexture);*/
-
     
 
     float timeStep = 1.0f / 60.0f;
@@ -70,7 +63,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
     while (window.isOpen()) {
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
-        float moveSpeed = 0.5f;
+        float moveSpeed = pl.characterSpeed();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
             velocity.x = -moveSpeed;
         }
@@ -87,30 +80,22 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         b2Vec2 pos = b2Body_GetPosition(bodyId);
         float groundY = -2.0f + 2.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
-        float jumpDuration = 1.8f;
         float jumpVelocity = 12.0f;
         float gravity = 6.0f;
-        float jumpTimer = 0.0f;
 
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = jumpVelocity;
-            jumpTimer = jumpDuration;
 
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
 
-        if (jumpTimer > 0.0f) {
-            jumpTimer -= timeStep;
-            velocity.y = jumpVelocity * pow(jumpTimer / jumpDuration, 0.8f);
-
-
-        }
-        else if (!onGround) {
+        if (!onGround) {
             b2Body_SetAwake(bodyId, false);
             velocity.y -= gravity * timeStep;
             sf::Clock timer;
-            while (timer.getElapsedTime().asSeconds() < 0.01f) {}
+            while (timer.getElapsedTime().asSeconds() < 0.008f) {
+            }
 
             b2Body_SetAwake(bodyId, true);
         }
@@ -119,7 +104,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && backButton.getGlobalBounds().contains(mouseWorldPos)) {
-            std::cout << "backButton to menu!" << std::endl;
+            cout << "backButton to menu!" << endl;
             levelStarted = false;
             window.close();
         }
@@ -132,7 +117,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.setView(view);
 
         float worldStartX = 0.0f;
-        float worldEndX = 5000.0f;
+        float worldEndX = (float)windowSize.x * 2;
 
         float viewWidth = window.getSize().x;
         float halfViewWidth = viewWidth / 2.0f;
@@ -147,6 +132,22 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         sf::View view1(sf::Vector2f(clampedCenterX, window.getSize().y / 2.0f), sf::Vector2f(viewWidth, window.getSize().y));
         window.setView(view1);
         window.clear();
@@ -154,12 +155,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
         window.draw(groundShape);
         pos = b2Body_GetPosition(bodyId);
-        // 🔹 Малюємо дерева, кущі, каміння
-        /*for (const auto& tree : trees) window.draw(tree);
-        for (const auto& bush : bushes) window.draw(bush);
-        for (const auto& rock : rocks) window.draw(rock);
-        for (const auto& grassSprite : grassSprites) window.draw(grassSprite);
-        for (const auto& groundTile : groundTiles) window.draw(groundTile);*/
         characterShape.setPosition({ 1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE });
         window.draw(characterShape);
         window.draw(backButton);

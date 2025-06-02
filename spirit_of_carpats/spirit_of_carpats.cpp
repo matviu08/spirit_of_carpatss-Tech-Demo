@@ -17,6 +17,7 @@
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
 #include "Chapter1.h"
+
 using namespace std;
 
 int main() {
@@ -39,7 +40,7 @@ int main() {
     }
 
     Menu menu(font, window); 
-
+    
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())

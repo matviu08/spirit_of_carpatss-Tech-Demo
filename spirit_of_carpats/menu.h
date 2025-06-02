@@ -27,19 +27,16 @@ private:
     bool settingsOpened = false;
     bool isEnglish = true;
     bool tohnoEnglish = true;
-    //головне меню
     sf::RectangleShape newGameRect;
     sf::RectangleShape settingsRect;
     sf::RectangleShape quitRect;
     sf::Text newGameButton;
     sf::Text settingsButton;
     sf::Text quitButton;
-    //меню чаптерів
     sf::RectangleShape chapterRect;
     sf::RectangleShape backRect;
     sf::Text chapterButton;
     sf::Text backButton;
-    //настройки
     sf::RectangleShape languageRect;
     sf::Text languageButton;
     
@@ -47,6 +44,6 @@ private:
     void centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset);
 public:
     Menu(sf::Font& font, sf::RenderWindow& window);
-    void handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite);
+    void handleEvent(const std::optional<sf::Event>&, sf::RenderWindow&, sf::Sprite&);
     void draw(sf::RenderWindow& window);
 };
