@@ -1,4 +1,4 @@
-#include "Chapter1.h"
+﻿#include "Chapter1.h"
 
 const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
@@ -52,8 +52,17 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     groundShape.setOrigin({ 100.0f * SCALE, 2.0f * SCALE });
     groundShape.setFillColor(sf::Color(100, 70, 30));
 
+    // ==== ЛІСОВІ ОБ’ЄКТИ ====
+    /*std::vector<sf::Sprite> trees, bushes, rocks, grassSprites, groundTiles;
+    sf::Texture bushTexture, rockTexture, grassTexture, groundTexture;
+    sf:vector<Texture> treeTexture;
+    bushTexture.loadFromFile("assets/img/torn newspaper.png");
+    rockTexture.loadFromFile("assets/img/Kamin.png");
+    grassTexture.loadFromFile("assets/img/grass_new.png");
+    groundTexture.loadFromFile("assets/img/background.png");
+    generateForestScene(window, trees, bushes, rocks, grassSprites, groundTiles, treeTexture, bushTexture, rockTexture, grassTexture, groundTexture);*/
 
-
+    
 
     float timeStep = 1.0f / 60.0f;
     int subStepCount = 4;
@@ -145,6 +154,12 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
         window.draw(groundShape);
         pos = b2Body_GetPosition(bodyId);
+        // 🔹 Малюємо дерева, кущі, каміння
+        /*for (const auto& tree : trees) window.draw(tree);
+        for (const auto& bush : bushes) window.draw(bush);
+        for (const auto& rock : rocks) window.draw(rock);
+        for (const auto& grassSprite : grassSprites) window.draw(grassSprite);
+        for (const auto& groundTile : groundTiles) window.draw(groundTile);*/
         characterShape.setPosition({ 1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE });
         window.draw(characterShape);
         window.draw(backButton);

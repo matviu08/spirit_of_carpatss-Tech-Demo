@@ -16,6 +16,12 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
+#include <random>
+#include <vector>
+
+using namespace sf;
+using namespace std;
+
 class loot_box {};
 class object {};
 class bg {};
@@ -23,5 +29,14 @@ class for_bg {};
 class ground {};
 class weather {};  
 
-int location_1_home(sf::RenderWindow& window);
-int location_2_forest(sf::RenderWindow& window);
+void generateForestScene(RenderWindow& window,
+    vector<Sprite>& trees,
+    vector<Sprite>& bushes,
+    vector<Sprite>& rocks,
+    vector<Sprite>& grassSprites,
+    vector<Sprite>& groundTiles,
+    const vector<Texture>& treeTextures,
+    const Texture& bushTexture,
+    const Texture& rockTexture,
+    const Texture& grassTexture,
+    const Texture& groundTexture);
