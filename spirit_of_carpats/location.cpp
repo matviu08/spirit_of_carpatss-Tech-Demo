@@ -1,17 +1,35 @@
 ﻿#include "location.h"
 
+//void textures(RenderWindow& window,
+//    vector<Sprite>& rocks
+//    ) 
+//
+//{
+//    Vector2fu windowSizeSprite = window.getSize();
+//
+//    Vector2f pos_rock(static_cast<float>(windowSizeSprite.x) / 2 - 300 / 2, static_cast<float>(windowSizeSprite.y) / 2);
+//
+//
+//}
+
+
+
 void generateForestScene(RenderWindow& window,
     vector<Sprite>& trees,
     vector<Sprite>& bushes,
+    vector<Sprite>& news_tiles,
     vector<Sprite>& rocks,
     vector<Sprite>& grassSprites,
     vector<Sprite>& groundTiles,
+    vector<Sprite>& news_peper,
     const vector<Texture>& treeTextures,
     const Texture& bushTexture,
+    const vector<Texture>& news_peperTexturs,
     const Texture& rockTexture,
     const Texture& grassTexture,
     const Texture& groundTexture) {
     trees.clear();
+    news_tiles.clear();
     bushes.clear();
     rocks.clear();
     grassSprites.clear();
@@ -26,7 +44,7 @@ void generateForestScene(RenderWindow& window,
     int groundCols = window.getSize().x / groundTileWidth + 2;
 
     for (int x = 0; x < groundCols; ++x) {
-        Sprite tile(groundTexture); 
+        Sprite tile(groundTexture); // 🔴 SFML 3.0 — обов’язково з текстурою
         tile.setPosition(Vector2f(static_cast<float>(x * groundTileWidth),
             static_cast<float>(window.getSize().y - groundTileHeight)));
         groundTiles.push_back(tile);
@@ -39,7 +57,7 @@ void generateForestScene(RenderWindow& window,
     for (int x = 0; x < groundCols; ++x) {
         for (int v = 0; v < grassVariants; ++v) {
             if (distr(gen) % 3 == 0) {
-                Sprite grass(grassTexture);
+                Sprite grass(grassTexture); // ✅ обов’язково передати текстуру
                 grass.setPosition(Vector2f(
                     static_cast<float>(x * groundTileWidth + (distr(gen) % 50 - 25)),
                     static_cast<float>(window.getSize().y - groundTileHeight - grassTexHeight + 10)
@@ -62,6 +80,24 @@ void generateForestScene(RenderWindow& window,
             tree.setScale(Vector2f(scale, scale));
             tree.setPosition(Vector2f(x, y - (scale - 1.0f) * tex.getSize().y * 0.5f));
             trees.push_back(tree);
+        }
+    }
+
+    int news_peper_count = 3 + (distr(gen) % 10);
+    for (int i = 0; i < news_peper_count; ++i) {
+        if (!news_peperTexturs.empty()) {
+            const Texture& tex = news_peperTexturs[distr(gen) % news_peperTexturs.size()];
+            Sprite news_tile(tex);
+
+            float x = static_cast<float>(distr(gen) % (window.getSize().x + 200) - 100);
+            float y = static_cast<float>(window.getSize().y - tex.getSize().y);  // або інше значення, де буде "газета"
+
+            float scale = 0.8f + static_cast<float>(distr(gen) % 40) / 100.0f;
+
+            news_tile.setScale(Vector2f(scale, scale));
+            news_tile.setPosition(Vector2f(x, y - (scale - 1.0f) * tex.getSize().y * 0.5f));
+
+            news_tiles.push_back(news_tile);
         }
     }
 

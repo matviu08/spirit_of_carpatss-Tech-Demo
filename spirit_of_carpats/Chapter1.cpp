@@ -46,9 +46,31 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
     characterShape.setFillColor(sf::Color::Red);
 
-    /*sf::Texture characterTexture;
-    characterTexture.loadFromFile("assets/img/character.png");
-    characterShape.setTexture(&characterTexture);*/
+
+
+    sf::Texture groundTexture, grassTexture, bushTexture, rockTexture, news_peper;
+    std::vector<sf::Texture> treeTextures, news_peperTexturs;
+
+    groundTexture.loadFromFile("assets/img/ground.png");
+    grassTexture.loadFromFile("assets/img/grass_new.png");
+    bushTexture.loadFromFile("assets/img/bush.png");
+    rockTexture.loadFromFile("assets/img/rock.png");
+
+    // Припустимо, дерева — Tree_1.png, Tree_2.png, Tree_3.png(нахуя-незнаю,потім реалізую)
+    /*for (int i = 1; i <= 3; ++i) {
+        sf::Texture treeTex;
+        treeTex.loadFromFile("assets/img/Tree_" + std::to_string(i) + ".png");
+        treeTextures.push_back(treeTex);
+    }*/
+
+
+
+    // Спрайти сцени
+    std::vector<sf::Sprite> groundTiles, grassSprites, bushes, rocks, trees;
+
+    // Генеруємо сцену
+    generateForestScene(window, trees, bushes, rocks, grassSprites, groundTiles,
+        treeTextures, bushTexture, rockTexture, grassTexture, groundTexture);
 
     sf::RectangleShape groundShape;
     groundShape.setSize({ 200.0f * SCALE, 4.0f * SCALE });
@@ -131,27 +153,18 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         float clampedCenterX = max(minCenterX, min(unclampedCenterX, maxCenterX));
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         sf::View view1(sf::Vector2f(clampedCenterX, window.getSize().y / 2.0f), sf::Vector2f(viewWidth, window.getSize().y));
         window.setView(view1);
         window.clear();
         window.draw(background);
+
+        //відображення об'єктів(Мар'ян, мені насрати що тебе бісять коментарі,я їх пишу щоб потім додавати локаціїї без проблем)
+        for (const auto& tile : groundTiles) window.draw(tile);
+        for (const auto& grass : grassSprites) window.draw(grass);
+        for (const auto& bush : bushes) window.draw(bush);
+        for (const auto& rock : rocks) window.draw(rock);
+        for (const auto& tree : trees) window.draw(tree);
+
         groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
         window.draw(groundShape);
         pos = b2Body_GetPosition(bodyId);
