@@ -26,11 +26,12 @@ void generateForestScene(RenderWindow& window,
     vector<Sprite>& groundTiles,
     vector<Sprite>& news_peper,
     const vector<Texture>& treeTextures,
-    const Texture& bushTexture,
-    const vector<Texture>& news_peperTexturs,
-    const Texture& rockTexture,
+     Texture& bushTexture,
+     vector<Texture>& news_peperTexturs,
+     Texture& rockTexture,
     const Texture& grassTexture,
-    const Texture& groundTexture) {
+     Texture& groundTexture) {
+
     trees.clear();
     news_tiles.clear();
     bushes.clear();

@@ -11,7 +11,6 @@
 #include <fstream>
 #include "menu.h"
 #include "logick.h"
-#include "location.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -33,11 +32,14 @@ class news_peper {};
 void generateForestScene(RenderWindow& window,
     vector<Sprite>& trees,
     vector<Sprite>& bushes,
+    vector<Sprite>& news_tiles,
     vector<Sprite>& rocks,
     vector<Sprite>& grassSprites,
     vector<Sprite>& groundTiles,
+    vector<Sprite>& news_peper,
     const vector<Texture>& treeTextures,
-    const Texture& bushTexture,
-    const Texture& rockTexture,
+     Texture& bushTexture,
+     vector<Texture>& news_peperTexturs,
+     Texture& rockTexture,
     const Texture& grassTexture,
-    const Texture& groundTexture);
+     Texture& groundTexture);
