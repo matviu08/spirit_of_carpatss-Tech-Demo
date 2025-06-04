@@ -12,7 +12,10 @@
 //
 //}
 
+void generateHomeScene(RenderWindow& window,const Texture& bed)
+{
 
+}
 
 void generateForestScene(RenderWindow& window,
     vector<Sprite>& trees,
@@ -100,6 +103,14 @@ void generateForestScene(RenderWindow& window,
             news_tiles.push_back(news_tile);
         }
     }
+
+    class news_peper {
+    public:
+        string MessegPeper[100];
+        void news_text_peper_1(string MessegPeper) {
+            MessegPeper = { "some text for lore" };
+        }
+    };
 
     int bushCount = 10 + (distr(gen) % 10);
     for (int i = 0; i < bushCount; ++i) {

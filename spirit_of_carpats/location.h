@@ -28,6 +28,7 @@ class bg {};
 class for_bg {};
 class ground {};
 class weather {};  
+class news_peper {};
 
 void generateForestScene(RenderWindow& window,
     vector<Sprite>& trees,
