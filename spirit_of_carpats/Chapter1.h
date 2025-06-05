@@ -20,6 +20,7 @@
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
 
-using namespace std;
 
 void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl);
+
+using namespace std;

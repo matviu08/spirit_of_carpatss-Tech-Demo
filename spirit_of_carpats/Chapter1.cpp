@@ -46,32 +46,28 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
     characterShape.setFillColor(sf::Color::Red);
 
-
-
     sf::Texture groundTexture, grassTexture, bushTexture, rockTexture, news_peper;
     std::vector<sf::Texture> treeTextures, news_peperTexturs;
 
-    groundTexture.loadFromFile("assets/img/ground.png");
     grassTexture.loadFromFile("assets/img/grass_new.png");
-    bushTexture.loadFromFile("assets/img/bush.png");
-    rockTexture.loadFromFile("assets/img/rock.png");
+    rockTexture.loadFromFile("assets/img/Kamin.png");
 
-    // Припустимо, дерева — Tree_1.png, Tree_2.png, Tree_3.png(нахуя-незнаю,потім реалізую)
-    /*for (int i = 1; i <= 3; ++i) {
-        sf::Texture treeTex;
-        treeTex.loadFromFile("assets/img/Tree_" + std::to_string(i) + ".png");
-        treeTextures.push_back(treeTex);
-    }*/
+    vector<Sprite> trees;
+    vector<Sprite> bushes;
+    vector<Sprite> rocks;
+    vector<Sprite> grassSprites;
+    vector<Sprite> groundTiles;
 
 
-
-    // Спрайти сцени
-    std::vector<sf::Sprite> groundTiles, grassSprites, bushes, rocks, trees;
-
-    // Генеруємо сцену
-    generateForestScene(window, trees, bushes, rocks, grassSprites, groundTiles,
-        treeTextures, bushTexture, rockTexture, grassTexture, groundTexture);
-
+    generateForestScene(
+        window,
+        trees,
+        bushes,
+        rocks,
+        grassSprites,
+        groundTiles
+    );
+    
     sf::RectangleShape groundShape;
     groundShape.setSize({ 200.0f * SCALE, 4.0f * SCALE });
     groundShape.setOrigin({ 100.0f * SCALE, 2.0f * SCALE });
@@ -95,9 +91,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         else {
             velocity.x = 0.0f;
         }
-
-
-
 
         b2Vec2 pos = b2Body_GetPosition(bodyId);
         float groundY = -2.0f + 2.0f + CHARACTER_HALF_HEIGHT;

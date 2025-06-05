@@ -12,25 +12,21 @@
 //
 //}
 
-void generateHomeScene(RenderWindow& window,const Texture& bed)
-{
 
-}
 
 void generateForestScene(RenderWindow& window,
     vector<Sprite>& trees,
     vector<Sprite>& bushes,
-    vector<Sprite>& news_tiles,
     vector<Sprite>& rocks,
     vector<Sprite>& grassSprites,
     vector<Sprite>& groundTiles,
-    vector<Sprite>& news_peper,
+    vector<Sprite>& news_tiles,
     const vector<Texture>& treeTextures,
-     Texture& bushTexture,
-     vector<Texture>& news_peperTexturs,
-     Texture& rockTexture,
+    const vector<Texture>& news_peperTexturs,
+    const Texture& bushTexture,
+    const Texture& rockTexture,
     const Texture& grassTexture,
-     Texture& groundTexture) {
+    const Texture& groundTexture){
 
     trees.clear();
     news_tiles.clear();

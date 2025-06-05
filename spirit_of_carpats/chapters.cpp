@@ -1,11 +1,11 @@
 ﻿#include "chapters.h"
-
+#include "location.h"
 void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     std::cout << "Запускаємо Level 1..." << std::endl;
     Player pl;
-
+       
     sf::Texture newBackgroundTexture;
-    if (!newBackgroundTexture.loadFromFile("assets/img/levl1_bg.png")) {
+    if (!newBackgroundTexture.loadFromFile("assets/img/background_level 2.png")) {
         std::cerr << "неможливо завантажити background.jpg!" << std::endl;
         return;
     }
