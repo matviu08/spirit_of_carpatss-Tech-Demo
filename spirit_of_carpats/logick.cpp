@@ -4,7 +4,7 @@ Player::Player()
 {
     hp = 100;
     damage = 0;
-    velocity = 1.2f;
+    velocity = 1.5f;
     maxHp = 100;
 }
 void Player::addDamage(int damage) {
@@ -30,7 +30,7 @@ void Player::damageTaken(int damageTaken)
 
 void Player::playerSpeed(float speed)
 {
-    this->velocity += speed;
+    this->velocity = speed;
 }
 
 int Player::characterHp() const

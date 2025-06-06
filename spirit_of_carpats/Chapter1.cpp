@@ -7,7 +7,6 @@ const float CHARACTER_HALF_HEIGHT = 1.0f;
 extern bool levelStarted;
 
 void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
-
     sf::Vector2u windowSize = window.getSize();
 
     b2WorldDef worldDef = b2DefaultWorldDef();
@@ -21,7 +20,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
     b2Polygon groundBox = b2MakeBox(100.0f, 2.0f);
     b2ShapeDef groundShapeDef = b2DefaultShapeDef();
-    groundShapeDef.density = 0.0f;
+    groundShapeDef.density = 0.0f; 
     groundShapeDef.material.friction = 100.0f;
     
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
@@ -87,26 +86,33 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     float timeStep = 1.0f / 60.0f;
     int subStepCount = 4;
     bool jumpHeldLastFrame = false;
-
+    sf::Clock frameClock;
+    float accumulator = 0.0f;
     while (window.isOpen()) {
+        float deltaTime = frameClock.restart().asSeconds();
+
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         float moveSpeed = pl.characterSpeed();
+        float move = 0.0f;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-            velocity.x = -moveSpeed;
+            move = -moveSpeed;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            velocity.x = moveSpeed;
+            move = moveSpeed;
         }
-        else {
-            velocity.x = 0.0f;
-        }
+        velocity.x = move * deltaTime * 60.0f * 4.5f;
+
 
         b2Vec2 pos = b2Body_GetPosition(bodyId);
         float groundY = -2.0f + 2.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
-        float jumpVelocity = 12.0f;
+        float jumpVelocity = 9.0f;
         float gravity = 6.0f;
 
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && onGround) {
+            velocity.y = jumpVelocity;
+        }
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = jumpVelocity;
@@ -134,6 +140,11 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         }
 
         b2Body_SetLinearVelocity(bodyId, velocity);
+        while (accumulator >= timeStep) {
+            b2World_Step(worldId, timeStep, subStepCount);
+            accumulator -= timeStep;
+        }
+
 
         b2World_Step(worldId, timeStep, subStepCount);
         sf::Vector2f windowSize(window.getSize().x, window.getSize().y);
