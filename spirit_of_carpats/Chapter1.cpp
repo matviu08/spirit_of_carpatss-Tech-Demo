@@ -57,6 +57,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     vector<Sprite> rocks;
     vector<Sprite> grassSprites;
     vector<Sprite> groundTiles;
+    vector<Sprite> news_tiles;
 
 
     generateForestScene(
@@ -65,7 +66,15 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bushes,
         rocks,
         grassSprites,
-        groundTiles
+        groundTiles,
+        news_tiles,
+        treeTextures,
+        news_peperTexturs,
+        bushTexture,
+        rockTexture,
+        grassTexture,
+        groundTexture
+
     );
     
     sf::RectangleShape groundShape;
