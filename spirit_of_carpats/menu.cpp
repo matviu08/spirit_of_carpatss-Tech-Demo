@@ -52,7 +52,7 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
             button.setPosition(pos_5);
         }
         else if (&button == &languageButton) {
-            sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 600 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 530 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
             button.setPosition(pos_6);
         }
     }
@@ -142,7 +142,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     quitButton.setString(L"Вийти");
                     chapterButton.setString(L"Глава 1");
                     backButton.setString(L"Назад");
-                    languageButton.setString(L"Language: Українська");
+                    languageButton.setString(L"Мова: Українська");
                     tohnoEnglish = false;
                 }
                 centerButton(newGameButton, window, -100);
