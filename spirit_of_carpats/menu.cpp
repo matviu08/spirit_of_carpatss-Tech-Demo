@@ -30,6 +30,32 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
             button.setPosition(pos_6);
         }
     }
+    else {
+        if (&button == &newGameButton) {
+            sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - 300 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_1);
+        }
+        else if (&button == &settingsButton) {
+            sf::Vector2f pos_2(static_cast<float>(windowSize.x) / 2 - 465 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_2);
+        }
+        else if (&button == &quitButton) {
+            sf::Vector2f pos_3(static_cast<float>(windowSize.x) / 2 - 260 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_3);
+        }
+        else if (&button == &chapterButton) {
+            sf::Vector2f pos_4(static_cast<float>(windowSize.x) / 2 - 280 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_4);
+        }
+        else if (&button == &backButton) {
+            sf::Vector2f pos_5(static_cast<float>(windowSize.x) / 2 - 250 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_5);
+        }
+        else if (&button == &languageButton) {
+            sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 600 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_6);
+        }
+    }
 }
 
 Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font){
@@ -119,6 +145,13 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     languageButton.setString(L"Language: Українська");
                     tohnoEnglish = false;
                 }
+                centerButton(newGameButton, window, -100);
+                centerButton(settingsButton, window, 0);
+                centerButton(quitButton, window, 100);
+                centerButton(chapterButton, window, -100);
+                centerButton(backButton, window, 0);
+                centerButton(languageButton, window, -100);
+
             }
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
                 std::cout << "Натиснуто: Back!" << std::endl;
