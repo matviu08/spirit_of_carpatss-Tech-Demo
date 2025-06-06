@@ -41,6 +41,8 @@ int main() {
 
     Menu menu(font, window); 
     
+    bool inLevel = false;
+
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())

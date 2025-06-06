@@ -39,12 +39,12 @@ void generateForestScene(RenderWindow& window,
     mt19937 gen(rd());
     uniform_int_distribution<> distr(0, 100);
 
-    int groundTileWidth = static_cast<int>(groundTexture.getSize().x);
-    int groundTileHeight = static_cast<int>(groundTexture.getSize().y);
-    int groundCols = window.getSize().x / groundTileWidth + 2;
+    int groundTileWidth = static_cast<float>(groundTexture.getSize().x);
+    int groundTileHeight = static_cast<float>(groundTexture.getSize().y);
+    int groundCols = window.getSize().x / (groundTileWidth + 3.0f);
 
     for (int x = 0; x < groundCols; ++x) {
-        Sprite tile(groundTexture); // 🔴 SFML 3.0 — обов’язково з текстурою
+        Sprite tile(groundTexture); 
         tile.setPosition(Vector2f(static_cast<float>(x * groundTileWidth),
             static_cast<float>(window.getSize().y - groundTileHeight)));
         groundTiles.push_back(tile);
@@ -57,7 +57,7 @@ void generateForestScene(RenderWindow& window,
     for (int x = 0; x < groundCols; ++x) {
         for (int v = 0; v < grassVariants; ++v) {
             if (distr(gen) % 3 == 0) {
-                Sprite grass(grassTexture); // ✅ обов’язково передати текстуру
+                Sprite grass(grassTexture); 
                 grass.setPosition(Vector2f(
                     static_cast<float>(x * groundTileWidth + (distr(gen) % 50 - 25)),
                     static_cast<float>(window.getSize().y - groundTileHeight - grassTexHeight + 10)
@@ -71,7 +71,7 @@ void generateForestScene(RenderWindow& window,
     for (int i = 0; i < treeCount; ++i) {
         if (!treeTextures.empty()) {
             const Texture& tex = treeTextures[distr(gen) % treeTextures.size()];
-            Sprite tree(tex); // ✅ передаємо одразу текстуру
+            Sprite tree(tex);
 
             float x = static_cast<float>(distr(gen) % (window.getSize().x + 200) - 100);
             float y = static_cast<float>(window.getSize().y - groundTileHeight - tex.getSize().y + 20);
@@ -90,7 +90,7 @@ void generateForestScene(RenderWindow& window,
             Sprite news_tile(tex);
 
             float x = static_cast<float>(distr(gen) % (window.getSize().x + 200) - 100);
-            float y = static_cast<float>(window.getSize().y - tex.getSize().y);  // або інше значення, де буде "газета"
+            float y = static_cast<float>(window.getSize().y - tex.getSize().y); 
 
             float scale = 0.8f + static_cast<float>(distr(gen) % 40) / 100.0f;
 
@@ -111,7 +111,7 @@ void generateForestScene(RenderWindow& window,
 
     int bushCount = 10 + (distr(gen) % 10);
     for (int i = 0; i < bushCount; ++i) {
-        Sprite bush(bushTexture); // ✅
+        Sprite bush(bushTexture); 
         float x = static_cast<float>(distr(gen) % window.getSize().x);
         float y = static_cast<float>(window.getSize().y - groundTileHeight - bushTexture.getSize().y + 15);
         bush.setPosition(Vector2f(x, y));
@@ -120,7 +120,7 @@ void generateForestScene(RenderWindow& window,
 
     int rockCount = 5 + (distr(gen) % 6);
     for (int i = 0; i < rockCount; ++i) {
-        Sprite rock(rockTexture); // ✅
+        Sprite rock(rockTexture); 
         float x = static_cast<float>(distr(gen) % window.getSize().x);
         float y = static_cast<float>(window.getSize().y - groundTileHeight - rockTexture.getSize().y + 5);
         rock.setPosition(Vector2f(x, y));

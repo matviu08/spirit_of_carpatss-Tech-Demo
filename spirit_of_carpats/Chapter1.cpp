@@ -160,7 +160,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.clear();
         window.draw(background);
 
-        //відображення об'єктів(Мар'ян, мені насрати що тебе бісять коментарі,я їх пишу щоб потім додавати локаціїї без проблем)
         for (const auto& tile : groundTiles) window.draw(tile);
         for (const auto& grass : grassSprites) window.draw(grass);
         for (const auto& bush : bushes) window.draw(bush);
