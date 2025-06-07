@@ -11,6 +11,24 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     }
     backgroundSprite.setTexture(newBackgroundTexture);
 
+    //КОМЕНТАРІ НЕ ВИДАЛЯТИ ЦЕ КОД З ЯКИМ Я БУДУ ПРАЦЮВАТИ
+
+    /*sf::Texture news_peper;
+    if (!news_peper.loadFromFile("assets/img/torn newspaper.png")) {
+        std::cerr << "неможливо завантажити background.jpg!" << std::endl;
+        return;
+    }
+    news_Sprite.setTexture(news_peper);*/
+    /*news_Sprite.setPosition(Vector2f(-65.f, 20.f));*/
+
+    /*sf::Texture BackgorundContinet;
+    if (!BackgorundContinet.loadFromFile("some bg")) {
+        std::cerr << "неможливо завантажити background.jpg!" << std::endl;
+        return;
+    }
+    SpriteBgCountined.setTexture(BackgorundContinet);*/
+    /*SpriteBgCountined.setPosition(sf::Vector2f(100.f, 100.f));*/
+    
     sf::Font font;
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
@@ -22,6 +40,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     backButtonForChap.setFillColor(sf::Color::White);
     backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
 
+
     while (window.isOpen()) {
         while (const optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
@@ -32,6 +51,9 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
             window.clear();
             window.draw(backgroundSprite);
+            //ТУТ ТОЖЕ НЕ ВИДАЛЯТИ,Я ТЕСТУЮ!!!!!!!!!!
+            /*window.draw(SpriteBgCountined);*/
+            /*window.draw(news_Sprite);*/
             createLevels1(window, backgroundSprite, backButtonForChap, pl);
             window.display();
         }

@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <conio.h>
 #include <cmath>
+#include <vector>
 #include <algorithm>
 #include <fstream>
 #include "menu.h"
