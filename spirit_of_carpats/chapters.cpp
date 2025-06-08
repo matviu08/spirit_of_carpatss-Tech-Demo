@@ -1,5 +1,9 @@
 ﻿#include "chapters.h"
 #include "location.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <vector>
+#include <optional>
 void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     std::cout << "Запускаємо Level 1..." << std::endl;
     Player pl;
@@ -13,13 +17,13 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
     //КОМЕНТАРІ НЕ ВИДАЛЯТИ ЦЕ КОД З ЯКИМ Я БУДУ ПРАЦЮВАТИ
 
-    /*sf::Texture news_peper;
+   /* sf::Texture news_peper;
     if (!news_peper.loadFromFile("assets/img/torn newspaper.png")) {
         std::cerr << "неможливо завантажити background.jpg!" << std::endl;
         return;
     }
-    news_Sprite.setTexture(news_peper);*/
-    /*news_Sprite.setPosition(Vector2f(-65.f, 20.f));*/
+    news_Sprite.setTexture(news_peper);
+    news_Sprite.setPosition(Vector2f(-65.f, 20.f));*/
 
     /*sf::Texture BackgorundContinet;
     if (!BackgorundContinet.loadFromFile("some bg")) {
@@ -40,6 +44,56 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     backButtonForChap.setFillColor(sf::Color::White);
     backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
 
+    std::vector<sf::Texture> treeTextures;
+    std::vector<sf::Texture> news_peperTextures;
+    sf::Texture bushTexture, rockTexture, grassTexture, groundTexture;
+
+    sf::Texture treeTex;
+    if (treeTex.loadFromFile("assets/img/tree1.png")) {
+        treeTextures.push_back(treeTex);
+    }
+    else {
+        std::cerr << "Не вдалося завантажити tree1.png" << std::endl;
+    }
+
+    sf::Texture newsTex;
+    if (newsTex.loadFromFile("assets/img/torn newspaper.png")) {
+        news_peperTextures.push_back(newsTex);
+    }
+    else {
+        std::cerr << "Не вдалося завантажити torn newspaper.png" << std::endl;
+    }
+
+    if (!bushTexture.loadFromFile("assets/img/bush.png")) {
+        std::cerr << "Не вдалося завантажити bush.png" << std::endl;
+    }
+    if (!rockTexture.loadFromFile("assets/img/rock.png")) {
+        std::cerr << "Не вдалося завантажити rock.png" << std::endl;
+    }
+    if (!grassTexture.loadFromFile("assets/img/grass.png")) {
+        std::cerr << "Не вдалося завантажити grass.png" << std::endl;
+    }
+    if (!groundTexture.loadFromFile("assets/img/ground.png")) {
+        std::cerr << "Не вдалося завантажити ground.png" << std::endl;
+    }
+
+    std::vector<sf::Sprite> trees, bushes, rocks, grassSprites, groundTiles, news_tiles;
+
+    generateForestScene(
+        window,
+        trees,
+        bushes,
+        rocks,
+        grassSprites,
+        groundTiles,
+        news_tiles,
+        treeTextures,
+        news_peperTextures,
+        bushTexture,
+        rockTexture,
+        grassTexture,
+        groundTexture
+    );
 
     while (window.isOpen()) {
         while (const optional event = window.pollEvent()) {
@@ -50,10 +104,19 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
             sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
             window.clear();
+
+            window.draw(backgroundSprite);
+            for (const auto& tile : groundTiles) window.draw(tile);
+            for (const auto& grass : grassSprites) window.draw(grass);
+            for (const auto& tree : trees) window.draw(tree);
+            for (const auto& bush : bushes) window.draw(bush);
+            for (const auto& rock : rocks) window.draw(rock);
+            for (const auto& news : news_tiles) window.draw(news);
+
             window.draw(backgroundSprite);
             //ТУТ ТОЖЕ НЕ ВИДАЛЯТИ,Я ТЕСТУЮ!!!!!!!!!!
             /*window.draw(SpriteBgCountined);*/
-            /*window.draw(news_Sprite);*/
+           /* window.draw(news_Sprite);*/
             createLevels1(window, backgroundSprite, backButtonForChap, pl);
             window.display();
         }
