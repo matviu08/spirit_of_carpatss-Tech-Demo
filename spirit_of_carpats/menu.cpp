@@ -96,7 +96,7 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     
 }
 
-void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite, sf::Sprite& news_Sperite) {
+void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     if (event->is<sf::Event::MouseButtonPressed>()) {
         auto mousePos = sf::Mouse::getPosition(window);
         sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
