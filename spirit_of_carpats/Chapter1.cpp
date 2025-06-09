@@ -40,15 +40,12 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     b2Body_SetAwake(bodyId, true);
     b2Body_SetFixedRotation(bodyId, true);
 
-    sf::RectangleShape characterShape;
-    characterShape.setSize({ CHARACTER_HALF_WIDTH * 2 * SCALE, CHARACTER_HALF_HEIGHT * 2 * SCALE });
-    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
-    characterShape.setFillColor(sf::Color::Red);
+
 
     sf::Texture groundTexture, grassTexture, bushTexture, rockTexture, news_peper;
     std::vector<sf::Texture> treeTextures, news_peperTexturs;
 
-    /*grassTexture.loadFromFile("assets/img/grass_new.png");
+    grassTexture.loadFromFile("assets/img/grass_new.png");
     rockTexture.loadFromFile("assets/img/Kamin.png");
 
     vector<Sprite> trees;
@@ -57,7 +54,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     vector<Sprite> grassSprites;
     vector<Sprite> groundTiles;
     vector<Sprite> news_tiles;
-
 
     generateForestScene(
         window,
@@ -74,15 +70,8 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         grassTexture,
         groundTexture
 
-    );*/
+    );
     
-    sf::RectangleShape groundShape;
-    groundShape.setSize({ 200.0f * SCALE, 4.0f * SCALE });
-    groundShape.setOrigin({ 100.0f * SCALE, 2.0f * SCALE });
-    groundShape.setFillColor(sf::Color(100, 70, 30));
-
-    
-
     float timeStep = 1.0f / 60.0f;
     int subStepCount = 4;
     bool jumpHeldLastFrame = false;
@@ -171,17 +160,14 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.clear();
         window.draw(background);
 
-       /* for (const auto& tile : groundTiles) window.draw(tile);
+        for (const auto& tile : groundTiles) window.draw(tile);
         for (const auto& grass : grassSprites) window.draw(grass);
         for (const auto& bush : bushes) window.draw(bush);
         for (const auto& rock : rocks) window.draw(rock);
-        for (const auto& tree : trees) window.draw(tree);*/
+        for (const auto& tree : trees) window.draw(tree);
 
-        groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
-        window.draw(groundShape);
+
         pos = b2Body_GetPosition(bodyId);
-        characterShape.setPosition({ 1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE });
-        window.draw(characterShape);
         window.draw(backButton);
         window.display();
     }

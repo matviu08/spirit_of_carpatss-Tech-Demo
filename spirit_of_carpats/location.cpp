@@ -61,12 +61,13 @@ void generateForestScene(RenderWindow& window,
                 Sprite grass(grassTexture); 
                 grass.setPosition(Vector2f(
                     static_cast<float>(x * groundTileWidth + (distr(gen) % 1 - 5)),
-                    static_cast<float>(window.getSize().y - groundTileHeight - grassTexHeight + 10)
+                    static_cast<float>(window.getSize().y - groundTileHeight - grassTexHeight + 4)
                 ));
                 grassSprites.push_back(grass);
             }
         }
     }
+
 
     int treeCount = 1 + (distr(gen) % 10);
     for (int i = 0; i < treeCount; ++i) {
@@ -83,6 +84,8 @@ void generateForestScene(RenderWindow& window,
             trees.push_back(tree);
         }
     }
+
+
 
     int news_peper_count = 1 + (distr(gen) % 10);
     for (int i = 0; i < news_peper_count; ++i) {
