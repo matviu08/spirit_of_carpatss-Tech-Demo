@@ -1,4 +1,5 @@
 ﻿#include "menu.h"
+
 bool levelStarted = false;
 
 void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {

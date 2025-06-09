@@ -108,7 +108,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
             //ТУТ ТОЖЕ НЕ ВИДАЛЯТИ,Я ТЕСТУЮ!!!!!!!!!!
             /*window.draw(SpriteBgCountined);*/
            /* window.draw(news_Sprite);*/
-            createLevels1(window, backgroundSprite, backButtonForChap, pl, font);
+            createLevels1(window, backgroundSprite, backButtonForChap, pl);
             window.display();
         }
     
