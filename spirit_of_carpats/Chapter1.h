@@ -14,13 +14,12 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
-#include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
 
-
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl);
-
 using namespace std;
+
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl, sf::Font font);
+

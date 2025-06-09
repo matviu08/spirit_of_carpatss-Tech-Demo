@@ -13,7 +13,6 @@
 #include "logick.h"
 #include "location.h"
 #include "chapters.h"
-#include "Chapter1.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>

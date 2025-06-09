@@ -44,7 +44,7 @@ int main() {
     bool inLevel = false;
 
     while (window.isOpen()) {
-        while (const std::optional event = window.pollEvent()) {
+        while (const optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
 
