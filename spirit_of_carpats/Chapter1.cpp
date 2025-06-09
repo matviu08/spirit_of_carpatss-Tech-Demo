@@ -40,7 +40,10 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     b2Body_SetAwake(bodyId, true);
     b2Body_SetFixedRotation(bodyId, true);
 
-
+    sf::RectangleShape characterShape;
+    characterShape.setSize({ CHARACTER_HALF_WIDTH * 2 * SCALE, CHARACTER_HALF_HEIGHT * 2 * SCALE });
+    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
+    characterShape.setFillColor(sf::Color::Red);
 
     sf::Texture groundTexture, grassTexture, bushTexture, rockTexture, news_peper;
     std::vector<sf::Texture> treeTextures, news_peperTexturs;
@@ -166,11 +169,11 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         for (const auto& rock : rocks) window.draw(rock);
         for (const auto& tree : trees) window.draw(tree);
 
-
+        characterShape.setPosition({ 1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE });
+        window.draw(characterShape);
         pos = b2Body_GetPosition(bodyId);
         window.draw(backButton);
         window.display();
     }
-
     b2DestroyWorld(worldId);
 }
