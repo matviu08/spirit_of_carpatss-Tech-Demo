@@ -48,7 +48,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     sf::Texture groundTexture, grassTexture, bushTexture, rockTexture, news_peper;
     std::vector<sf::Texture> treeTextures, news_peperTexturs;
 
-    grassTexture.loadFromFile("assets/img/grass_new.png");
+    /*grassTexture.loadFromFile("assets/img/grass_new.png");
     rockTexture.loadFromFile("assets/img/Kamin.png");
 
     vector<Sprite> trees;
@@ -74,7 +74,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         grassTexture,
         groundTexture
 
-    );
+    );*/
     
     sf::RectangleShape groundShape;
     groundShape.setSize({ 200.0f * SCALE, 4.0f * SCALE });
@@ -171,11 +171,11 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.clear();
         window.draw(background);
 
-        for (const auto& tile : groundTiles) window.draw(tile);
+       /* for (const auto& tile : groundTiles) window.draw(tile);
         for (const auto& grass : grassSprites) window.draw(grass);
         for (const auto& bush : bushes) window.draw(bush);
         for (const auto& rock : rocks) window.draw(rock);
-        for (const auto& tree : trees) window.draw(tree);
+        for (const auto& tree : trees) window.draw(tree);*/
 
         groundShape.setPosition({ 1000 / 2, 1000 - ((-2.0f + 2.0f) * SCALE) });
         window.draw(groundShape);

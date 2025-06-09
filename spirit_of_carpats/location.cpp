@@ -41,10 +41,11 @@ void generateForestScene(RenderWindow& window,
 
     int groundTileWidth = static_cast<float>(groundTexture.getSize().x);
     int groundTileHeight = static_cast<float>(groundTexture.getSize().y);
-    int groundCols = window.getSize().x / (groundTileWidth + 3.0f);
+    int groundCols = window.getSize().x / (groundTileWidth + 1.0f);
 
     for (int x = 0; x < groundCols; ++x) {
         Sprite tile(groundTexture); 
+        tile.setScale(Vector2f(1.5f, 1.2f));
         tile.setPosition(Vector2f(static_cast<float>(x * groundTileWidth),
             static_cast<float>(window.getSize().y - groundTileHeight)));
         groundTiles.push_back(tile);
@@ -59,7 +60,7 @@ void generateForestScene(RenderWindow& window,
             if (distr(gen) % 3 == 0) {
                 Sprite grass(grassTexture); 
                 grass.setPosition(Vector2f(
-                    static_cast<float>(x * groundTileWidth + (distr(gen) % 50 - 25)),
+                    static_cast<float>(x * groundTileWidth + (distr(gen) % 1 - 5)),
                     static_cast<float>(window.getSize().y - groundTileHeight - grassTexHeight + 10)
                 ));
                 grassSprites.push_back(grass);
@@ -67,10 +68,10 @@ void generateForestScene(RenderWindow& window,
         }
     }
 
-    int treeCount = 15 + (distr(gen) % 10);
+    int treeCount = 1 + (distr(gen) % 10);
     for (int i = 0; i < treeCount; ++i) {
         if (!treeTextures.empty()) {
-            const Texture& tex = treeTextures[distr(gen) % treeTextures.size()];
+             const Texture& tex = treeTextures[distr(gen) % treeTextures.size()];
             Sprite tree(tex);
 
             float x = static_cast<float>(distr(gen) % (window.getSize().x + 200) - 100);
@@ -83,7 +84,7 @@ void generateForestScene(RenderWindow& window,
         }
     }
 
-    int news_peper_count = 3 + (distr(gen) % 10);
+    int news_peper_count = 1 + (distr(gen) % 10);
     for (int i = 0; i < news_peper_count; ++i) {
         if (!news_peperTexturs.empty()) {
             const Texture& tex = news_peperTexturs[distr(gen) % news_peperTexturs.size()];
@@ -109,7 +110,7 @@ void generateForestScene(RenderWindow& window,
         }
     };
 
-    int bushCount = 10 + (distr(gen) % 10);
+    int bushCount = 1 + (distr(gen) % 10);
     for (int i = 0; i < bushCount; ++i) {
         Sprite bush(bushTexture); 
         float x = static_cast<float>(distr(gen) % window.getSize().x);
@@ -118,7 +119,7 @@ void generateForestScene(RenderWindow& window,
         bushes.push_back(bush);
     }
 
-    int rockCount = 5 + (distr(gen) % 6);
+    int rockCount = 1 + (distr(gen) % 6);
     for (int i = 0; i < rockCount; ++i) {
         Sprite rock(rockTexture); 
         float x = static_cast<float>(distr(gen) % window.getSize().x);

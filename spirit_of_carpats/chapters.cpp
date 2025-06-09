@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include <optional>
 void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     std::cout << "Запускаємо Level 1..." << std::endl;
     Player pl;
@@ -44,7 +43,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     backButtonForChap.setFillColor(sf::Color::White);
     backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
 
-    std::vector<sf::Texture> treeTextures;
+    /*std::vector<sf::Texture> treeTextures;
     std::vector<sf::Texture> news_peperTextures;
     sf::Texture bushTexture, rockTexture, grassTexture, groundTexture;
 
@@ -64,17 +63,11 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
         std::cerr << "Не вдалося завантажити torn newspaper.png" << std::endl;
     }
 
-    if (!bushTexture.loadFromFile("assets/img/bush.png")) {
-        std::cerr << "Не вдалося завантажити bush.png" << std::endl;
-    }
-    if (!rockTexture.loadFromFile("assets/img/rock.png")) {
+    if (!rockTexture.loadFromFile("assets/img/Kamin.png")) {
         std::cerr << "Не вдалося завантажити rock.png" << std::endl;
     }
-    if (!grassTexture.loadFromFile("assets/img/grass.png")) {
+    if (!grassTexture.loadFromFile("assets/img/grass_new.png")) {
         std::cerr << "Не вдалося завантажити grass.png" << std::endl;
-    }
-    if (!groundTexture.loadFromFile("assets/img/ground.png")) {
-        std::cerr << "Не вдалося завантажити ground.png" << std::endl;
     }
 
     std::vector<sf::Sprite> trees, bushes, rocks, grassSprites, groundTiles, news_tiles;
@@ -93,7 +86,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
         rockTexture,
         grassTexture,
         groundTexture
-    );
+    );*/
 
     while (window.isOpen()) {
         while (const optional event = window.pollEvent()) {
@@ -106,12 +99,12 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
             window.clear();
 
             window.draw(backgroundSprite);
-            for (const auto& tile : groundTiles) window.draw(tile);
-            for (const auto& grass : grassSprites) window.draw(grass);
-            for (const auto& tree : trees) window.draw(tree);
-            for (const auto& bush : bushes) window.draw(bush);
-            for (const auto& rock : rocks) window.draw(rock);
-            for (const auto& news : news_tiles) window.draw(news);
+            //for (const auto& tile : groundTiles) window.draw(tile);
+            //for (const auto& grass : grassSprites) window.draw(grass);
+            //for (const auto& tree : trees) window.draw(tree);
+            //for (const auto& bush : bushes) window.draw(bush);
+            //for (const auto& rock : rocks) window.draw(rock);
+            //for (const auto& news : news_tiles) window.draw(news);
 
             window.draw(backgroundSprite);
             //ТУТ ТОЖЕ НЕ ВИДАЛЯТИ,Я ТЕСТУЮ!!!!!!!!!!
