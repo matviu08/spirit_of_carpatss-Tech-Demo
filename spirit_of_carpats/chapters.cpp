@@ -8,7 +8,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     Player pl;
        
     sf::Texture newBackgroundTexture;
-    if (!newBackgroundTexture.loadFromFile("assets/img/background_level 2.png")) {
+    if (!newBackgroundTexture.loadFromFile("assets/img/levl1_bg.png")) {
         std::cerr << "неможливо завантажити background.jpg!" << std::endl;
         return;
     }

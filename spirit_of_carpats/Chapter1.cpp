@@ -15,7 +15,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody;
-    groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float) windowSize.y- windowSize.y - 2.0f};
+    groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float) windowSize.y- windowSize.y};
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
 
     b2Polygon groundBox = b2MakeBox(100.0f, 2.0f);
@@ -25,9 +25,33 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
+
+    b2BodyDef leftWallDef = b2DefaultBodyDef();
+    leftWallDef.type = b2_staticBody;
+    leftWallDef.position = b2Vec2{ -10.0f, 5.0f };
+    b2BodyId leftWallId = b2CreateBody(worldId, &leftWallDef);
+
+    b2Polygon leftWallBox = b2MakeBox(0.5f, 50.0f);
+    b2ShapeDef leftWallShapeDef = b2DefaultShapeDef();
+    leftWallShapeDef.density = 0.0f;
+    leftWallShapeDef.material.friction = 0.5f;
+    b2CreatePolygonShape(leftWallId, &leftWallShapeDef, &leftWallBox);
+
+    float worldWidth = (float)window.getSize().x * 2;
+    b2BodyDef rightWallDef = b2DefaultBodyDef();
+    rightWallDef.type = b2_staticBody;
+    rightWallDef.position = b2Vec2{ worldWidth, 5.0f };
+    b2BodyId rightWallId = b2CreateBody(worldId, &rightWallDef);
+
+    b2Polygon rightWallBox = b2MakeBox(0.5f, 50.0f);
+    b2ShapeDef rightWallShapeDef = b2DefaultShapeDef();
+    rightWallShapeDef.density = 0.0f;
+    rightWallShapeDef.material.friction = 0.5f;
+    b2CreatePolygonShape(rightWallId, &rightWallShapeDef, &rightWallBox);
+
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 0.0f, 3.0f };
+    bodyDef.position = b2Vec2{ 0.0f, 5.0f };
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
 
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);
@@ -96,7 +120,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
 
         b2Vec2 pos = b2Body_GetPosition(bodyId);
-        float groundY = -2.0f + 2.0f + CHARACTER_HALF_HEIGHT;
+        float groundY = -2.0f + 4.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
         float jumpVelocity = 9.0f;
         float gravity = 6.0f;
@@ -136,7 +160,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             b2World_Step(worldId, timeStep, subStepCount);
             accumulator -= timeStep;
         }
-
 
         b2World_Step(worldId, timeStep, subStepCount);
         sf::Vector2f windowSize(window.getSize().x, window.getSize().y);
