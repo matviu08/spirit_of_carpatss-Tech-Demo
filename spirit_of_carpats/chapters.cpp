@@ -89,9 +89,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     );*/
 
     while (window.isOpen()) {
-        while (const optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
-                window.close();
+        
         
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
@@ -113,5 +111,5 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
             createLevels1(window, backgroundSprite, backButtonForChap, pl, font);
             window.display();
         }
-    }
+    
 }
