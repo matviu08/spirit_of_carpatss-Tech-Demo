@@ -74,6 +74,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
     grassTexture.loadFromFile("assets/img/grass_new.png");
     rockTexture.loadFromFile("assets/img/Kamin.png");
+    
 
     vector<Sprite> trees;
     vector<Sprite> bushes;
