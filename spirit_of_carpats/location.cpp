@@ -6,10 +6,18 @@ void generateForestScene(RenderWindow& window,
     vector<Sprite>& rock,
     vector<Sprite>& trees,
     vector<Sprite>& news,
+    vector<Sprite>& bushes,
+    vector<Sprite>& grassSprites,
+    vector<Sprite>& groundTiles,
+    vector<Sprite>& news_tiles,
     const Texture& grassTexture,
     const Texture& rockTexture,
     const Texture& treeTexture,
-    const Texture& newspaperTexture)
+    const Texture& newspaperTexture,
+    const vector<Texture>& treeTextures,
+    const vector<Texture>& news_peperTexturs,
+    const Texture& bushTexture,
+    const Texture& groundTexture)
 {
     // Очистка попередніх спрайтів
     trees.clear();
@@ -98,7 +106,7 @@ void generateForestScene(RenderWindow& window,
 
     int treeCount = 1;
     for(int i = 0; i < treeCount; ++i) {
-        Sprite tree(treeTesture);
+        Sprite tree(treeTexture);
         float x = 100.f;
         float y = 120.f;
     }
@@ -110,6 +118,7 @@ void generateForestScene(RenderWindow& window,
         float x = -75.f;
         float y = 975.f;
         rock.setPosition(Vector2f(x, y));
-        rocks.push_back(rock);
+        rock.push_back(rock);
     }
 }
+

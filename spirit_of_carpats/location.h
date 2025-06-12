@@ -30,15 +30,20 @@ class weather {};
 class news_peper {};
 
 void generateForestScene(RenderWindow& window,
+    vector<Sprite>& ground,
+    vector<Sprite>& grass,
+    vector<Sprite>& rock,
     vector<Sprite>& trees,
+    vector<Sprite>& news,
     vector<Sprite>& bushes,
-    vector<Sprite>& rocks,
     vector<Sprite>& grassSprites,
     vector<Sprite>& groundTiles,
     vector<Sprite>& news_tiles,
+    const Texture& grassTexture,
+    const Texture& rockTexture,
+    const Texture& treeTexture,
+    const Texture& newspaperTexture,
     const vector<Texture>& treeTextures,
     const vector<Texture>& news_peperTexturs,
     const Texture& bushTexture,
-    const Texture& rockTexture,
-    const Texture& grassTexture,
     const Texture& groundTexture);
