@@ -1,26 +1,22 @@
 ﻿#include "location.h"
 
 void generateForestScene(RenderWindow& window,
+    vector<Sprite>& ground,
+    vector<Sprite>& grass,
+    vector<Sprite>& rock,
     vector<Sprite>& trees,
-    vector<Sprite>& bushes,
-    vector<Sprite>& rocks,
-    vector<Sprite>& grassSprites,
-    vector<Sprite>& groundTiles,
-    vector<Sprite>& news_tiles,
-    const vector<Texture>& treeTextures,
-    const vector<Texture>& news_peperTexturs,
-    const Texture& bushTexture,
-    const Texture& rockTexture,
+    vector<Sprite>& news,
     const Texture& grassTexture,
-    const Texture& groundTexture)
+    const Texture& rockTexture,
+    const Texture& treeTexture,
+    const Texture& newspaperTexture)
 {
     // Очистка попередніх спрайтів
     trees.clear();
-    news_tiles.clear();
-    bushes.clear();
-    rocks.clear();
-    grassSprites.clear();
-    groundTiles.clear();
+    news.clear();
+    rock.clear();
+    grass.clear();
+    ground.clear();
 
     // Налаштування
     const int baseOffsetX = 100;
@@ -57,24 +53,24 @@ void generateForestScene(RenderWindow& window,
     }
 
     // Генерація дерев
-    int treeCount = 5;
+    /*int treeCount = 1;
     for (int i = 0; i < treeCount; ++i) {
         if (!treeTextures.empty()) {
             const Texture& tex = treeTextures[distr(gen) % treeTextures.size()];
             Sprite tree(tex);
 
             float scale = treeScaleMin + static_cast<float>(distr(gen) % 40) / 100.0f;
-            float x = static_cast<float>(baseOffsetX + distr(gen) % (window.getSize().x - 2 * baseOffsetX));
-            float y = static_cast<float>(window.getSize().y - groundTileHeight - tex.getSize().y * scale + 20);
+            float x = 12.f;
+            float y = 12.f;
 
             tree.setScale(Vector2f(scale, scale));
             tree.setPosition(Vector2f(x, y));
             trees.push_back(tree);
         }
-    }
+    }*/
 
     // Генерація газет
-    int newsCount = 3;
+    int newsCount = 1;
     for (int i = 0; i < newsCount; ++i) {
         if (!news_peperTexturs.empty()) {
             const Texture& tex = news_peperTexturs[distr(gen) % news_peperTexturs.size()];
@@ -99,6 +95,13 @@ void generateForestScene(RenderWindow& window,
         bush.setPosition(Vector2f(x, y));
         bushes.push_back(bush);
     }*/
+
+    int treeCount = 1;
+    for(int i = 0; i < treeCount; ++i) {
+        Sprite tree(treeTesture);
+        float x = 100.f;
+        float y = 120.f;
+    }
 
     // Камені
     int rockCount = 1;

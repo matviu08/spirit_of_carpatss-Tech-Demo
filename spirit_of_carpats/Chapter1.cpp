@@ -69,35 +69,27 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
     characterShape.setFillColor(sf::Color::Red);
 
-    sf::Texture groundTexture, grassTexture, bushTexture, rockTexture, news_peper;
-    std::vector<sf::Texture> treeTextures, news_peperTexturs;
-
-    grassTexture.loadFromFile("assets/img/grass_new.png");
+    sf::Texture grassTexture, rockTexture, newspaperTexture, treeTexture;
     rockTexture.loadFromFile("assets/img/Kamin.png");
-    
+    treeTexture.loadFromFile("assets/img/Tree_3.png");
 
-    vector<Sprite> trees;
-    vector<Sprite> bushes;
-    vector<Sprite> rocks;
-    vector<Sprite> grassSprites;
-    vector<Sprite> groundTiles;
-    vector<Sprite> news_tiles;
+    std::vector<sf::Sprite> groundTiles;
+    std::vector<sf::Sprite> grassSprites;
+    std::vector<sf::Sprite> rocks;
+    std::vector<sf::Sprite> trees;
+    std::vector<sf::Sprite> news;
 
     generateForestScene(
         window,
-        trees,
-        bushes,
-        rocks,
-        grassSprites,
         groundTiles,
-        news_tiles,
-        treeTextures,
-        news_peperTexturs,
-        bushTexture,
-        rockTexture,
+        grassSprites,
+        rocks,
+        trees,
+        news,
         grassTexture,
-        groundTexture
-
+        rockTexture,
+        treeTexture,
+        newspaperTexture
     );
     
     float timeStep = 1.0f / 60.0f;
@@ -187,11 +179,12 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.clear();
         window.draw(background);
 
+
         for (const auto& tile : groundTiles) window.draw(tile);
         for (const auto& grass : grassSprites) window.draw(grass);
-        for (const auto& bush : bushes) window.draw(bush);
         for (const auto& rock : rocks) window.draw(rock);
         for (const auto& tree : trees) window.draw(tree);
+        for (const auto& newspaper : news) window.draw(newspaper);
 
         characterShape.setPosition({ 1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE });
         window.draw(characterShape);
