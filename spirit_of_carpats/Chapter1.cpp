@@ -118,8 +118,8 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
             move = moveSpeed;
         }
-        float airControl = onGround ? 5.0f : 1.5f;
-        velocity.x = move * airControl * deltaTime * SCALE * 8.0f;
+        float airControl = onGround ? 2.0f : 13.0f;
+        velocity.x = move * airControl;
         
 
 

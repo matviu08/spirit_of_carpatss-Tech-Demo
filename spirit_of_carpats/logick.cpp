@@ -4,7 +4,7 @@ Player::Player()
 {
     hp = 100;
     damage = 0;
-    velocity = 1.0f;
+    velocity = 0.4f;
     maxHp = 100;
 }
 void Player::addDamage(int damage) {
