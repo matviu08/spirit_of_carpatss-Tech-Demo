@@ -18,7 +18,7 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
     groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float) windowSize.y- windowSize.y};
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
 
-    b2Polygon groundBox = b2MakeBox(100.0f, 2.0f);
+    b2Polygon groundBox = b2MakeBox(windowSize.x, 2.0f);
     b2ShapeDef groundShapeDef = b2DefaultShapeDef();
     groundShapeDef.density = 0.0f; 
     groundShapeDef.material.friction = 100.0f;
@@ -40,7 +40,7 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
     float worldWidth = (float)window.getSize().x * 2;
     b2BodyDef rightWallDef = b2DefaultBodyDef();
     rightWallDef.type = b2_staticBody;
-    rightWallDef.position = b2Vec2{ worldWidth, 5.0f };
+    rightWallDef.position = b2Vec2{ worldWidth - 10.0f, 5.0f };
     b2BodyId rightWallId = b2CreateBody(worldId, &rightWallDef);
 
     b2Polygon rightWallBox = b2MakeBox(0.5f, 50.0f);
@@ -109,21 +109,30 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         float moveSpeed = pl.characterSpeed();
         float move = 0.0f;
+        b2Vec2 pos = b2Body_GetPosition(bodyId);
+        float groundY = -2.0f + 4.0f + CHARACTER_HALF_HEIGHT;
+        bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
             move = -moveSpeed;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
             move = moveSpeed;
         }
-        velocity.x = move * deltaTime * 60.0f * 4.5f;
+        float airControl = onGround ? 5.0f : 1.5f;
+        velocity.x = move * airControl * deltaTime * SCALE * 8.0f;
+        
 
 
-        b2Vec2 pos = b2Body_GetPosition(bodyId);
-        float groundY = -2.0f + 4.0f + CHARACTER_HALF_HEIGHT;
-        bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
+        
+        
         float jumpVelocity = 9.0f;
         float gravity = 6.0f;
 
+        
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && onGround) {
+            velocity.y = jumpVelocity;
+        }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && onGround) {
             velocity.y = jumpVelocity;
