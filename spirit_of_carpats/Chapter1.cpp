@@ -19,14 +19,14 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
 
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody;
-    groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float) windowSize.y- windowSize.y + 2.0f};
+    groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float)windowSize.y - windowSize.y + 2.0f };
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
 
     b2Polygon groundBox = b2MakeBox(windowSize.x, 2.0f);
     b2ShapeDef groundShapeDef = b2DefaultShapeDef();
-    groundShapeDef.density = 0.0f; 
+    groundShapeDef.density = 0.0f;
     groundShapeDef.material.friction = 100.0f;
-    
+
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
 
@@ -84,7 +84,7 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
     Texture rockTexture;
     Texture treeTexture;
     Texture newspaperTexture;
-    
+
     rockTexture.loadFromFile("assets/img/Kamin.png");
     treeTexture.loadFromFile("assets/img/Tree_3.png");
     newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
@@ -118,27 +118,27 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
         float groundY = -2.0f + 6.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
 
-        
+
         float airControl = onGround ? 1.8f : 13.0f;
         velocity.x = move * airControl;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
             move = -moveSpeed;
-             airControl = onGround ? 1.8f : 13.0f;
+            airControl = onGround ? 1.8f : 13.0f;
             velocity.x = move * airControl;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
             move = moveSpeed;
-             airControl = onGround ? 1.8f : 13.0f;
+            airControl = onGround ? 1.8f : 13.0f;
             velocity.x = move * airControl;
         }
-         airControl = onGround ? 1.8f : 13.0f;
+        airControl = onGround ? 1.8f : 13.0f;
         velocity.x = move * airControl;
-        
+
 
         float jumpVelocity = 9.0f;
         float gravity = 6.0f;
 
-        
+
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && onGround) {
             velocity.y = jumpVelocity;
@@ -214,10 +214,8 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
         window.draw(characterShape);
         pos = b2Body_GetPosition(bodyId);
 
-        int repeatCount = 5;  
-
-        
         int repeatCount = 5;
+
 
         FloatRect backgroundBounds = background.getGlobalBounds();
         float width = backgroundBounds.width;
@@ -228,7 +226,8 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
             window.draw(tiledBackground);
 
 
-        window.display();
+            window.display();
+        }
+        b2DestroyWorld(worldId);
     }
-    b2DestroyWorld(worldId);
 }
