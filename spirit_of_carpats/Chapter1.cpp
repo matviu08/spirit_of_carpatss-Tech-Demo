@@ -6,7 +6,7 @@ const float CHARACTER_HALF_HEIGHT = 1.0f;
 
 extern bool levelStarted;
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
+void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
     sf::Vector2u windowSize = window.getSize();
 
     b2WorldDef worldDef = b2DefaultWorldDef();
@@ -69,21 +69,28 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
     characterShape.setFillColor(sf::Color::Red);
 
-    sf::Texture grassTexture, rockTexture, newspaperTexture, treeTexture;
+    vector<Sprite> ground;
+    vector<Sprite> grass;
+    vector<Sprite> rock;
+    vector<Sprite> trees;
+    vector<Sprite> news;
+
+    Texture grassTexture;
+    Texture rockTexture;
+    Texture treeTexture;
+    Texture newspaperTexture;
+    
     rockTexture.loadFromFile("assets/img/Kamin.png");
     treeTexture.loadFromFile("assets/img/Tree_3.png");
+    newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
 
-    std::vector<sf::Sprite> groundTiles;
-    std::vector<sf::Sprite> grassSprites;
-    std::vector<sf::Sprite> rocks;
-    std::vector<sf::Sprite> trees;
-    std::vector<sf::Sprite> news;
+
 
     generateForestScene(
         window,
-        groundTiles,
-        grassSprites,
-        rocks,
+        ground,
+        grass,
+        rock,
         trees,
         news,
         grassTexture,
@@ -91,7 +98,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         treeTexture,
         newspaperTexture
     );
-    
     float timeStep = 1.0f / 60.0f;
     int subStepCount = 4;
     bool jumpHeldLastFrame = false;
@@ -180,9 +186,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.draw(background);
 
 
-        for (const auto& tile : groundTiles) window.draw(tile);
-        for (const auto& grass : grassSprites) window.draw(grass);
-        for (const auto& rock : rocks) window.draw(rock);
+        for (const auto& rock : rock) window.draw(rock);
         for (const auto& tree : trees) window.draw(tree);
         for (const auto& newspaper : news) window.draw(newspaper);
 
