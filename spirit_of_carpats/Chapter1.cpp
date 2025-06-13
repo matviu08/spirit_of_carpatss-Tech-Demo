@@ -214,20 +214,21 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
         window.draw(characterShape);
         pos = b2Body_GetPosition(bodyId);
 
-        int repeatCount = 5;
+        window.draw(backButton);
+
+        //int repeatCount = 5;
 
 
-        FloatRect backgroundBounds = background.getGlobalBounds();
-        float width = backgroundBounds.width;
+        //FloatRect backgroundBounds = background.getGlobalBounds();
+        //float width = backgroundBounds.size.x;
 
-        for (int i = 0; i < repeatCount; ++i) {
-            Sprite tiledBackground = background;
-            tiledBackground.setPosition(Vector2f(i * width, 0));
-            window.draw(tiledBackground);
-
-
-            window.display();
-        }
-        b2DestroyWorld(worldId);
+        //for (int i = 0; i < repeatCount; ++i) {
+        //    Sprite tiledBackground = background;
+        //    tiledBackground.setPosition(Vector2f(i * width, 0));
+        //    window.draw(tiledBackground);
+        //}
+        window.display();
     }
+    b2DestroyWorld(worldId);
+    
 }
