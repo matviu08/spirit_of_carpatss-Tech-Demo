@@ -14,24 +14,6 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     }
     backgroundSprite.setTexture(newBackgroundTexture);
 
-    //КОМЕНТАРІ НЕ ВИДАЛЯТИ ЦЕ КОД З ЯКИМ Я БУДУ ПРАЦЮВАТИ
-
-   /* sf::Texture news_peper;
-    if (!news_peper.loadFromFile("assets/img/torn newspaper.png")) {
-        std::cerr << "неможливо завантажити background.jpg!" << std::endl;
-        return;
-    }
-    news_Sprite.setTexture(news_peper);
-    news_Sprite.setPosition(Vector2f(-65.f, 20.f));*/
-
-    /*sf::Texture BackgorundContinet;
-    if (!BackgorundContinet.loadFromFile("some bg")) {
-        std::cerr << "неможливо завантажити background.jpg!" << std::endl;
-        return;
-    }
-    SpriteBgCountined.setTexture(BackgorundContinet);*/
-    /*SpriteBgCountined.setPosition(sf::Vector2f(100.f, 100.f));*/
-    
     sf::Font font;
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
@@ -43,51 +25,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
     backButtonForChap.setFillColor(sf::Color::White);
     backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
 
-    /*std::vector<sf::Texture> treeTextures;
-    std::vector<sf::Texture> news_peperTextures;
-    sf::Texture bushTexture, rockTexture, grassTexture, groundTexture;
-
-    sf::Texture treeTex;
-    if (treeTex.loadFromFile("assets/img/tree1.png")) {
-        treeTextures.push_back(treeTex);
-    }
-    else {
-        std::cerr << "Не вдалося завантажити tree1.png" << std::endl;
-    }
-
-    sf::Texture newsTex;
-    if (newsTex.loadFromFile("assets/img/torn newspaper.png")) {
-        news_peperTextures.push_back(newsTex);
-    }
-    else {
-        std::cerr << "Не вдалося завантажити torn newspaper.png" << std::endl;
-    }
-
-    if (!rockTexture.loadFromFile("assets/img/Kamin.png")) {
-        std::cerr << "Не вдалося завантажити rock.png" << std::endl;
-    }
-    if (!grassTexture.loadFromFile("assets/img/grass_new.png")) {
-        std::cerr << "Не вдалося завантажити grass.png" << std::endl;
-    }
-
-    std::vector<sf::Sprite> trees, bushes, rocks, grassSprites, groundTiles, news_tiles;
-
-    generateForestScene(
-        window,
-        trees,
-        bushes,
-        rocks,
-        grassSprites,
-        groundTiles,
-        news_tiles,
-        treeTextures,
-        news_peperTextures,
-        bushTexture,
-        rockTexture,
-        grassTexture,
-        groundTexture
-    );*/
-
+    
     while (window.isOpen()) {
         
         
@@ -97,18 +35,23 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
             window.clear();
 
             window.draw(backgroundSprite);
-            //for (const auto& tile : groundTiles) window.draw(tile);
-            //for (const auto& grass : grassSprites) window.draw(grass);
-            //for (const auto& tree : trees) window.draw(tree);
-            //for (const auto& bush : bushes) window.draw(bush);
-            //for (const auto& rock : rocks) window.draw(rock);
-            //for (const auto& news : news_tiles) window.draw(news);
+
 
             window.draw(backgroundSprite);
-            //ТУТ ТОЖЕ НЕ ВИДАЛЯТИ,Я ТЕСТУЮ!!!!!!!!!!
-            /*window.draw(SpriteBgCountined);*/
-           /* window.draw(news_Sprite);*/
+
             createLevels1(window, backgroundSprite, backButtonForChap, pl);
+
+            sf::FloatRect bgBounds = backgroundSprite.getGlobalBounds();
+            float bgWidth = bgBounds.size.x;
+
+            int repeatCount = (window.getSize().x / bgWidth) + 2; // +2 на запас
+
+            for (int i = 0; i < repeatCount; ++i) {
+                sf::Sprite tiledBg = backgroundSprite;
+                tiledBg.setPosition(Vector2f(i * bgWidth, 0.f));
+                window.draw(tiledBg);
+            }
+
             window.display();
         }
     

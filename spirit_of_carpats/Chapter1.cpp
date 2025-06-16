@@ -216,17 +216,7 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
 
         window.draw(backButton);
 
-        //int repeatCount = 5;
 
-
-        //FloatRect backgroundBounds = background.getGlobalBounds();
-        //float width = backgroundBounds.size.x;
-
-        //for (int i = 0; i < repeatCount; ++i) {
-        //    Sprite tiledBackground = background;
-        //    tiledBackground.setPosition(Vector2f(i * width, 0));
-        //    window.draw(tiledBackground);
-        //}
         window.display();
     }
     b2DestroyWorld(worldId);

@@ -9,6 +9,7 @@ void generateForestScene(RenderWindow& window,
     const Texture& grassTexture,
     const Texture& rockTexture,
     const Texture& treeTexture,
+    const Texture& backgroundTexture,
     const Texture& newspaperTexture)
 {
     // Очистка попередніх спрайтів
@@ -19,6 +20,7 @@ void generateForestScene(RenderWindow& window,
     ground.clear();
 
     // Налаштування
+    const int backgroundRepeatCount = 5; // Кількість повторів фону
     const int baseOffsetX = 100;
     const int groundYShift = 5;
     const float treeScaleMin = 0.8f;
@@ -30,7 +32,15 @@ void generateForestScene(RenderWindow& window,
     mt19937 gen(rd());
     uniform_int_distribution<> distr(0, 100);
 
-    // Генерація газет
+    //// 🎨 Генерація повторюваного фону
+    //const float backgroundWidth = backgroundTexture.getSize().x;
+    //for (int i = 0; i < backgroundRepeatCount; ++i) {
+    //    Sprite backgroundSprite(backgroundTexture);
+    //    backgroundSprite.setPosition(Vector2f(i * backgroundWidth, 0.f));
+    //    ground.push_back(backgroundSprite); // додаємо у ground
+    //}
+
+    // 📰 Генерація газет
     int newsCount = 1;
     for (int i = 0; i < newsCount; ++i) {
         Sprite newspaper(newspaperTexture);
@@ -43,7 +53,7 @@ void generateForestScene(RenderWindow& window,
         news.push_back(newspaper);
     }
 
-    // Генерація дерев
+    // 🌲 Генерація дерев
     int treeCount = 1;
     for (int i = 0; i < treeCount; ++i) {
         Sprite tree(treeTexture);
@@ -53,7 +63,7 @@ void generateForestScene(RenderWindow& window,
         trees.push_back(tree);
     }
 
-    // Камені
+    // 🪨 Генерація каменів
     int rockCount = 1;
     for (int i = 0; i < rockCount; ++i) {
         Sprite rockSprite(rockTexture);
