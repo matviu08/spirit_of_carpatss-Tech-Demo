@@ -10,7 +10,7 @@ const float wallHalfHeight = WORLD_HEIGHT_METERS / 2.0f;
 
 extern bool levelStarted;
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
     sf::Vector2u windowSize = window.getSize();
 
     const float REFERENCE_WIDTH = 1920.0f;
@@ -116,6 +116,8 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     sf::Clock frameClock;
     float accumulator = 0.0f;
 
+    Menu menu(font, window);
+
     while (window.isOpen()) {
 
         float deltaTime = frameClock.restart().asSeconds();
@@ -158,7 +160,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
         if (!mousePressed && mouseWasPressed) { 
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            sf::Vector2f mouseWorldPos = window.mapPixelToCoords(mousePos);
+            sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
             if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
                 std::cout << "backButton to menu!" << std::endl;

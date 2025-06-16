@@ -22,4 +22,4 @@
 
 using namespace std;
 
-void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite);
+void createLevel1(sf::RenderWindow&, sf::Sprite&, const std::optional<sf::Event>& );

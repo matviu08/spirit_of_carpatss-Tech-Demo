@@ -116,7 +116,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
         else if (levelStarted) {
             if (chapterButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = true; 
-                createLevel1(window, backgroundSprite);
+                createLevel1(window, backgroundSprite, event);
             }
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = false;

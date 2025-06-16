@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
+void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const std::optional<sf::Event>& event) {
     std::cout << "Запускаємо Level 1..." << std::endl;
     Player pl;
        
@@ -39,7 +39,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
 
             window.draw(backgroundSprite);
 
-            createLevels1(window, backgroundSprite, backButtonForChap, pl);
+            createLevels1(window, backgroundSprite, backButtonForChap, pl, font, event);
 
             sf::FloatRect bgBounds = backgroundSprite.getGlobalBounds();
             float bgWidth = bgBounds.size.x;

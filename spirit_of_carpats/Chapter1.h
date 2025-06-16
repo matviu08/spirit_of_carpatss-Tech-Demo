@@ -21,6 +21,6 @@
 #include <box2d/box2d.h>
 
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl);
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl, sf::Font font, const std::optional<sf::Event>& event);
 
 using namespace std;
