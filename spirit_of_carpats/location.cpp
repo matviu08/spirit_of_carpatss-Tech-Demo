@@ -9,7 +9,7 @@ void generateForestScene(RenderWindow& window,
     const Texture& grassTexture,
     const Texture& rockTexture,
     const Texture& treeTexture,
-    const Texture& backgroundTexture,
+    /*const Texture& backgroundTexture,*/
     const Texture& newspaperTexture)
 {
     // Очистка попередніх спрайтів

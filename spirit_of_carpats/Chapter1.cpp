@@ -3,15 +3,21 @@
 const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
-const float WORLD_WIDTH_METERS = 77.0f; 
+const float WORLD_WIDTH_METERS = 77.0f;
 const float WORLD_HEIGHT_METERS = 20.0f;
 const float wallHalfWidth = 0.5f;
 const float wallHalfHeight = WORLD_HEIGHT_METERS / 2.0f;
 
 extern bool levelStarted;
 
-void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl) {
     sf::Vector2u windowSize = window.getSize();
+
+    const float REFERENCE_WIDTH = 1920.0f;
+    const float REFERENCE_HEIGHT = 1080.0f;
+    float scaleFactorX = (float)windowSize.x / REFERENCE_WIDTH;
+    float scaleFactorY = (float)windowSize.y / REFERENCE_HEIGHT;
+    float uniformScale = min(scaleFactorX, scaleFactorY); 
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
@@ -19,29 +25,26 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
 
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody;
-    groundBodyDef.position = b2Vec2{ (float)windowSize.x - windowSize.x,(float)windowSize.y - windowSize.y + 2.0f };
+    groundBodyDef.position = b2Vec2{ WORLD_WIDTH_METERS / 2.0f, -7.0f };
     b2BodyId groundId = b2CreateBody(worldId, &groundBodyDef);
 
-    b2Polygon groundBox = b2MakeBox(windowSize.x, 2.0f);
+    b2Polygon groundBox = b2MakeBox(WORLD_WIDTH_METERS / 2.0f, 1.0f);
     b2ShapeDef groundShapeDef = b2DefaultShapeDef();
     groundShapeDef.density = 0.0f;
     groundShapeDef.material.friction = 100.0f;
-
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
-
 
     b2BodyDef leftWallDef = b2DefaultBodyDef();
     leftWallDef.type = b2_staticBody;
-    leftWallDef.position = b2Vec2{ 0.0f, 6.0f };
+    leftWallDef.position = b2Vec2{ 0.0f, wallHalfHeight };
     b2BodyId leftWallId = b2CreateBody(worldId, &leftWallDef);
 
-    b2Polygon leftWallBox = b2MakeBox(0.5f, 50.0f);
+    b2Polygon leftWallBox = b2MakeBox(wallHalfWidth, wallHalfHeight);
     b2ShapeDef leftWallShapeDef = b2DefaultShapeDef();
     leftWallShapeDef.density = 0.0f;
     leftWallShapeDef.material.friction = 0.5f;
     b2CreatePolygonShape(leftWallId, &leftWallShapeDef, &leftWallBox);
 
-    float worldWidth = (float)window.getSize().x;
     b2BodyDef rightWallDef = b2DefaultBodyDef();
     rightWallDef.type = b2_staticBody;
     rightWallDef.position = b2Vec2{ WORLD_WIDTH_METERS + wallHalfWidth, wallHalfHeight };
@@ -53,10 +56,9 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
     rightWallShapeDef.material.friction = 0.5f;
     b2CreatePolygonShape(rightWallId, &rightWallShapeDef, &rightWallBox);
 
-
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 1.0f, 6.0f };
+    bodyDef.position = b2Vec2{ 2.0f, -5.0f };
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
 
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);
@@ -70,26 +72,24 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
     b2Body_SetFixedRotation(bodyId, true);
 
     sf::RectangleShape characterShape;
-    characterShape.setSize({ CHARACTER_HALF_WIDTH * 2 * SCALE, CHARACTER_HALF_HEIGHT * 2 * SCALE });
-    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE, CHARACTER_HALF_HEIGHT * SCALE });
+    characterShape.setSize({ CHARACTER_HALF_WIDTH * 2 * SCALE * uniformScale, CHARACTER_HALF_HEIGHT * 2 * SCALE * uniformScale });
+    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * uniformScale, CHARACTER_HALF_HEIGHT * SCALE * uniformScale });
     characterShape.setFillColor(sf::Color::Red);
 
-    vector<Sprite> ground;
-    vector<Sprite> grass;
-    vector<Sprite> rock;
-    vector<Sprite> trees;
-    vector<Sprite> news;
+    std::vector<sf::Sprite> ground;
+    std::vector<sf::Sprite> grass;
+    std::vector<sf::Sprite> rock;
+    std::vector<sf::Sprite> trees;
+    std::vector<sf::Sprite> news;
 
-    Texture grassTexture;
-    Texture rockTexture;
-    Texture treeTexture;
-    Texture newspaperTexture;
+    sf::Texture grassTexture;
+    sf::Texture rockTexture;
+    sf::Texture treeTexture;
+    sf::Texture newspaperTexture;
 
     rockTexture.loadFromFile("assets/img/Kamin.png");
     treeTexture.loadFromFile("assets/img/Tree_3.png");
     newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
-
-
 
     generateForestScene(
         window,
@@ -103,122 +103,126 @@ void createLevels1(RenderWindow& window, sf::Sprite& background, sf::Text& backB
         treeTexture,
         newspaperTexture
     );
-    float timeStep = 1.0f / 60.0f;
-    int subStepCount = 4;
+
+    const float FIXED_TIMESTEP = 1.0f / 60.0f;
+    const int SUB_STEP_COUNT = 4;
+
+    const float MOVE_SPEED = 8.0f;           
+    const float JUMP_VELOCITY = 8.0f;       
+    const float AIR_CONTROL_FACTOR = 0.3f;   
+
     bool jumpHeldLastFrame = false;
+    bool mouseWasPressed = false; 
     sf::Clock frameClock;
     float accumulator = 0.0f;
+
     while (window.isOpen()) {
+
         float deltaTime = frameClock.restart().asSeconds();
 
+        deltaTime = min(deltaTime, 0.033f);
+        accumulator += deltaTime;
+
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
-        float moveSpeed = pl.characterSpeed();
-        float move = 0.0f;
         b2Vec2 pos = b2Body_GetPosition(bodyId);
-        float groundY = -2.0f + 6.0f + CHARACTER_HALF_HEIGHT;
-        bool onGround = (fabs(pos.y - groundY) < 0.05f) && (fabs(velocity.y) < 0.5f);
 
+        float groundY = -5.9f + CHARACTER_HALF_HEIGHT;
+        bool onGround = (pos.y <= groundY + 0.1f) && (velocity.y <= 0.1f);
 
-        float airControl = onGround ? 1.8f : 13.0f;
-        velocity.x = move * airControl;
+        float horizontalInput = 0.0f;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-            move = -moveSpeed;
-            airControl = onGround ? 1.8f : 13.0f;
-            velocity.x = move * airControl;
+            horizontalInput = -1.0f;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            move = moveSpeed;
-            airControl = onGround ? 1.8f : 13.0f;
-            velocity.x = move * airControl;
-        }
-        airControl = onGround ? 1.8f : 13.0f;
-        velocity.x = move * airControl;
-
-
-        float jumpVelocity = 9.0f;
-        float gravity = 6.0f;
-
-
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && onGround) {
-            velocity.y = jumpVelocity;
+            horizontalInput = 1.0f;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && onGround) {
-            velocity.y = jumpVelocity;
+        float targetVelocityX = horizontalInput * MOVE_SPEED;
+        float velocityChangeX = targetVelocityX - velocity.x;
+
+        if (onGround) {
+            velocity.x = targetVelocityX;
         }
+        else {
+            velocity.x += velocityChangeX * AIR_CONTROL_FACTOR;
+        }
+
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
-            velocity.y = jumpVelocity;
-
+            velocity.y = JUMP_VELOCITY;
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
 
-        if (!onGround) {
-            b2Body_SetAwake(bodyId, false);
-            velocity.y -= gravity * timeStep;
-            sf::Clock timer;
-            while (timer.getElapsedTime().asSeconds() < 0.008f) {
-            }
-
-            b2Body_SetAwake(bodyId, true);
-        }
-
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && backButton.getGlobalBounds().contains(mouseWorldPos)) {
-            cout << "backButton to menu!" << endl;
-            levelStarted = false;
-            window.close();
-        }
-
         b2Body_SetLinearVelocity(bodyId, velocity);
-        while (accumulator >= timeStep) {
-            b2World_Step(worldId, timeStep, subStepCount);
-            accumulator -= timeStep;
+
+        bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+        if (!mousePressed && mouseWasPressed) { 
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            sf::Vector2f mouseWorldPos = window.mapPixelToCoords(mousePos);
+
+            if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
+                std::cout << "backButton to menu!" << std::endl;
+                levelStarted = false;
+                b2DestroyWorld(worldId);
+                window.close();
+                return; 
+            }
         }
+        mouseWasPressed = mousePressed;
 
-        b2World_Step(worldId, timeStep, subStepCount);
-        sf::Vector2f windowSize(window.getSize().x, window.getSize().y);
-        sf::View view(windowSize * 0.5f, windowSize);
-        window.setView(view);
-
-        float worldStartX = 0.0f;
-        float worldEndX = (float)windowSize.x * 2;
-
-        float viewHeight = window.getSize().y;
-        float viewWidth = window.getSize().x;
-        float halfViewWidth = viewWidth / 2.0f;
+        while (accumulator >= FIXED_TIMESTEP) {
+            b2World_Step(worldId, FIXED_TIMESTEP, SUB_STEP_COUNT);
+            accumulator -= FIXED_TIMESTEP;
+        }
 
         pos = b2Body_GetPosition(bodyId);
-        sf::Vector2f charScreenPos(1000 / 2 + pos.x * SCALE, 1000 - pos.y * SCALE);
 
-        float unclampedCenterX = charScreenPos.x;
-        float minCenterX = worldStartX + halfViewWidth;
-        float maxCenterX = worldEndX - halfViewWidth;
-        float clampedCenterX = max(minCenterX, min(unclampedCenterX, maxCenterX));
+        float viewWidth = (float)windowSize.x / uniformScale;
+        float viewHeight = (float)windowSize.y / uniformScale;
 
+        float cameraX = pos.x * SCALE;
+        float cameraY = (float)windowSize.y * 0.5f; 
 
-        sf::View view1(sf::Vector2f(clampedCenterX, window.getSize().y / 2.0f), sf::Vector2f(viewWidth, window.getSize().y));
-        window.setView(view1);
+        float halfViewWidth = viewWidth * 0.5f;
+        float worldStartX = halfViewWidth;
+        float worldEndX = WORLD_WIDTH_METERS * SCALE - halfViewWidth;
+
+        cameraX = max(worldStartX, min(cameraX, worldEndX));
+
+        sf::View gameView(sf::Vector2f(cameraX, cameraY), sf::Vector2f(viewWidth, viewHeight));
+        window.setView(gameView);
+
         window.clear();
         window.draw(background);
 
+        for (auto& rockSprite : rock) {
+            sf::Vector2f originalPos = rockSprite.getPosition();
+            rockSprite.setScale(sf::Vector2f(uniformScale, uniformScale));
+            window.draw(rockSprite);
+        }
 
-        for (const auto& rock : rock) window.draw(rock);
-        for (const auto& tree : trees) window.draw(tree);
-        for (const auto& newspaper : news) window.draw(newspaper);
+        for (auto& treeSprite : trees) {
+            sf::Vector2f originalPos = treeSprite.getPosition();
+            treeSprite.setScale(sf::Vector2f(uniformScale, uniformScale));
+            window.draw(treeSprite);
+        }
 
-        characterShape.setPosition(Vector2f(pos.x * SCALE, viewHeight - pos.y * SCALE));
+        for (auto& newsSprite : news) {
+            sf::Vector2f originalPos = newsSprite.getPosition();
+            newsSprite.setScale(sf::Vector2f(uniformScale, uniformScale));
+            window.draw(newsSprite);
+        }
+
+        characterShape.setPosition(sf::Vector2f(pos.x * SCALE, (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE));
         window.draw(characterShape);
-        pos = b2Body_GetPosition(bodyId);
 
+        sf::View defaultView = window.getDefaultView();
+        window.setView(defaultView);
         window.draw(backButton);
-
+        window.setView(gameView);
 
         window.display();
     }
+
     b2DestroyWorld(worldId);
-    
 }
