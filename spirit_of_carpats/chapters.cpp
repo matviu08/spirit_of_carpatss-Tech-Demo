@@ -12,7 +12,6 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
         std::cerr << "неможливо завантажити background.jpg!" << std::endl;
         return;
     }
-    backgroundSprite.setTexture(newBackgroundTexture);
 
     sf::Font font;
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
@@ -47,10 +46,6 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
             for (auto& tile : tiledBackgrounds) {
                 window.draw(tile);
             }
-
-            window.draw(backgroundSprite);
-
-            window.draw(backgroundSprite);
 
             createLevels1(window, backgroundSprite, backButtonForChap, pl, font, event);
 

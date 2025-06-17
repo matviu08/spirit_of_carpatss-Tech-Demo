@@ -22,62 +22,45 @@ void generateForestScene(
     ground.clear();
     background.clear();
 
-    // Налаштування
-    const int backgroundRepeatCount = 5; // Кількість повторів фону
-    const int baseOffsetX = 100;
-    const int groundYShift = 5;
-    const float treeScaleMin = 0.8f;
-    const float treeScaleMax = 1.2f;
-    const float newsScaleMin = 0.8f;
-    const float newsScaleMax = 1.2f;
+    const int backgroundRepeatCount = 10; // 🔹 Розширюємо фон для великої сцени
 
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> distr(0, 100);
-
-    int bgRepeatingCount = 5;
-
-    // 🎨 Генерація повторюваного фону
+    // 🎨 Генерація повторюваного бекграунду
     const float backgroundWidth = backgroundTexture.getSize().x;
     for (int i = 0; i < backgroundRepeatCount; ++i) {
-        Sprite backgroundSprite(backgroundTexture);
-        backgroundSprite.setPosition(Vector2f(i * backgroundWidth, 0.f));
-        ground.push_back(backgroundSprite); // додаємо у ground
+        sf::Sprite backgroundSprite(backgroundTexture);
+        backgroundSprite.setPosition(sf::Vector2f(i * backgroundWidth, 0.0f));
+        background.push_back(backgroundSprite); // додаємо у background
     }
-
-    
-
 
     // 📰 Генерація газет
     int newsCount = 1;
     for (int i = 0; i < newsCount; ++i) {
-        Sprite newspaper(newspaperTexture);
-        float scale = newsScaleMin + static_cast<float>(distr(gen) % 440) / 200.0f;
+        sf::Sprite newspaper(newspaperTexture);
+        float scale = 0.8f + static_cast<float>(rand() % 40) / 100.0f;
         float x = 1000.f;
         float y = 856.f;
-
-        newspaper.setScale(Vector2f(scale, scale));
-        newspaper.setPosition(Vector2f(x, y));
+        newspaper.setScale(sf::Vector2f(scale, scale));
+        newspaper.setPosition(sf::Vector2f(x, y));
         news.push_back(newspaper);
     }
 
     // 🌲 Генерація дерев
     int treeCount = 1;
     for (int i = 0; i < treeCount; ++i) {
-        Sprite tree(treeTexture);
+        sf::Sprite tree(treeTexture);
         float x = 1400.f;
         float y = 425.f;
-        tree.setPosition(Vector2f(x, y));
+        tree.setPosition(sf::Vector2f(x, y));
         trees.push_back(tree);
     }
 
     // 🪨 Генерація каменів
     int rockCount = 1;
     for (int i = 0; i < rockCount; ++i) {
-        Sprite rockSprite(rockTexture);
+        sf::Sprite rockSprite(rockTexture);
         float x = -75.f;
         float y = 975.f;
-        rockSprite.setPosition(Vector2f(x, y));
+        rockSprite.setPosition(sf::Vector2f(x, y));
         rock.push_back(rockSprite);
     }
 }

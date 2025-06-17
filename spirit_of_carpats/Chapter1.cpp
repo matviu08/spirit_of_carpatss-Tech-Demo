@@ -92,7 +92,8 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     std::vector<sf::Sprite> rock;
     std::vector<sf::Sprite> trees;
     std::vector<sf::Sprite> news;
-    std::vector<sf::Sprite> background;
+    std::vector<sf::Sprite> tiledBackgrounds;
+
 
     generateForestScene(
         window,
@@ -101,7 +102,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         rock,
         trees,
         news,
-        background,
+        tiledBackgrounds,
         grassTexture,
         rockTexture,
         treeTexture,
@@ -206,6 +207,10 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             sf::Vector2f originalPos = rockSprite.getPosition();
             rockSprite.setScale(sf::Vector2f(uniformScale, uniformScale));
             window.draw(rockSprite);
+        }
+
+        for (auto& tile : tiledBackgrounds) {
+            window.draw(tile);
         }
 
         for (auto& treeSprite : trees) {
