@@ -29,6 +29,10 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
             sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 500 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
             button.setPosition(pos_6);
         }
+        else if (&button == &musicButton) {
+            sf::Vector2f pos_7(static_cast<float>(windowSize.x) / 2 - 320 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_7);
+        }
     }
     else {
         if (&button == &newGameButton) {
@@ -55,10 +59,14 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
             sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 530 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
             button.setPosition(pos_6);
         }
+        else if (&button == &musicButton) {
+            sf::Vector2f pos_7(static_cast<float>(windowSize.x) / 2 - 400 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+            button.setPosition(pos_7);
+        }
     }
 }
 
-Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font){
+Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font), musicButton(font) {
     newGameButton.setString("New Game");
     newGameButton.setCharacterSize(50); 
     newGameButton.setFillColor(sf::Color(252, 228, 204));
@@ -85,7 +93,7 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     backButton.setString("Back");
     backButton.setCharacterSize(50);
     backButton.setFillColor(sf::Color(252, 228, 204));
-    centerButton(backButton, window, 0);
+    centerButton(backButton, window, 100);
 
   
     languageButton.setString("Language: English");
@@ -93,7 +101,19 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     languageButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(languageButton, window, -100);
 
-    
+    musicButton.setString("Music: ON");
+    musicButton.setCharacterSize(50);
+    musicButton.setFillColor(sf::Color(252, 228, 204));
+    centerButton(musicButton, window, 0);
+
+    if (!menuMusic.openFromFile("assets/sound/MainMenuMusicks.ogg")) {
+        cout << "Помилка: не вдалося завантажити музику" << endl;
+    }
+    else {
+        menuMusic.setLooping(true);
+        menuMusic.setVolume(100);
+        menuMusic.play();
+    }
 }
 
 void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
@@ -124,40 +144,69 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
         }
 
         else if (settingsOpened) {
-            if (languageButton.getGlobalBounds().contains(mouseWorldPos)) {
-                isEnglish = !isEnglish;
-                if (isEnglish) {
-                    newGameButton.setString("New Game");
-                    settingsButton.setString("Settings");
-                    quitButton.setString("Quit");
-                    chapterButton.setString("Chapter 1");
-                    backButton.setString("Back");
-                    languageButton.setString("Language: English");
-                    tohnoEnglish = true;
+            if (languageButton.getGlobalBounds().contains(mouseWorldPos) || musicButton.getGlobalBounds().contains(mouseWorldPos)) {
+                if (languageButton.getGlobalBounds().contains(mouseWorldPos)) {
+                    isEnglish = !isEnglish;
+                    if (isEnglish) {
+                        newGameButton.setString("New Game");
+                        settingsButton.setString("Settings");
+                        quitButton.setString("Quit");
+                        chapterButton.setString("Chapter 1");
+                        backButton.setString("Back");
+                        languageButton.setString("Language: English");
+                        musicButton.setString(musicEnabled ? "Music: ON" : "Music: OFF");
+                        tohnoEnglish = true;
+                    }
+                    else {
+                        std::cout << "Перемкнули на Українську!" << std::endl;
+                        newGameButton.setString(L"Нова гра");
+                        settingsButton.setString(L"Налаштування");
+                        quitButton.setString(L"Вийти");
+                        chapterButton.setString(L"Глава 1");
+                        backButton.setString(L"Назад");
+                        languageButton.setString(L"Мова: Українська");
+                        musicButton.setString(musicEnabled ? L"Музика: Вкл" : L"Музика: Викл"); 
+                        tohnoEnglish = false;
+                    }
                 }
-                else {
-                    std::cout << "Перемкнули на Українську!" << std::endl;
-                    newGameButton.setString(L"Нова гра");
-                    settingsButton.setString(L"Налаштування");
-                    quitButton.setString(L"Вийти");
-                    chapterButton.setString(L"Глава 1");
-                    backButton.setString(L"Назад");
-                    languageButton.setString(L"Мова: Українська");
-                    tohnoEnglish = false;
+
+                if (musicButton.getGlobalBounds().contains(mouseWorldPos)) {
+                    musicEnabled = !musicEnabled;
+                    if (musicEnabled) {
+                        menuMusic.play();
+                        if (!isEnglish) {
+                            musicButton.setString(L"Музика: Вкл");
+                        }
+                        else {
+                            musicButton.setString("Music: ON");
+                        }
+                    }
+                    else {
+                        menuMusic.pause();
+                        if (!isEnglish) {
+                            musicButton.setString(L"Музика: Викл");
+                        }
+                        else {
+                            musicButton.setString("Music: OFF");
+                        }
+                    }
                 }
+
                 centerButton(newGameButton, window, -100);
                 centerButton(settingsButton, window, 0);
                 centerButton(quitButton, window, 100);
                 centerButton(chapterButton, window, -100);
-                centerButton(backButton, window, 0);
+                centerButton(backButton, window, 100);
                 centerButton(languageButton, window, -100);
-
+                centerButton(musicButton, window, 0);
             }
+
             else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
                 std::cout << "Натиснуто: Back!" << std::endl;
                 settingsOpened = false;
             }
         }
+
     }
 }
 
@@ -174,5 +223,6 @@ void Menu::draw(sf::RenderWindow& window) {
     else if (settingsOpened) {
         window.draw(languageButton);
         window.draw(backButton);
+        window.draw(musicButton);
     }
 }

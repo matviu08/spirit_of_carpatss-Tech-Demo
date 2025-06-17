@@ -17,6 +17,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 #include <box2d/box2d.h>
 #include <optional>
 
@@ -27,6 +28,8 @@ private:
     bool settingsOpened = false;
     bool isEnglish = true;
     bool tohnoEnglish = true;
+    bool musicEnabled = true;
+
     sf::RectangleShape newGameRect;
     sf::RectangleShape settingsRect;
     sf::RectangleShape quitRect;
@@ -39,7 +42,9 @@ private:
     sf::Text backButton;
     sf::RectangleShape languageRect;
     sf::Text languageButton;
-    
+
+    sf::Text musicButton;
+    sf::Music menuMusic;
 
     void centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset);
 public:
