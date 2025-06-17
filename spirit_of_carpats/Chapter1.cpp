@@ -76,20 +76,23 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * uniformScale, CHARACTER_HALF_HEIGHT * SCALE * uniformScale });
     characterShape.setFillColor(sf::Color::Red);
 
+    sf::Texture grassTexture;
+    sf::Texture rockTexture;
+    sf::Texture treeTexture;
+    sf::Texture newspaperTexture;
+    sf::Texture backgroundTexture;
+
+    rockTexture.loadFromFile("assets/img/Kamin.png");
+    treeTexture.loadFromFile("assets/img/Tree_3.png");
+    newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
+    backgroundTexture.loadFromFile("assets/img/levl1_bg.png"); // ✅
+
     std::vector<sf::Sprite> ground;
     std::vector<sf::Sprite> grass;
     std::vector<sf::Sprite> rock;
     std::vector<sf::Sprite> trees;
     std::vector<sf::Sprite> news;
-
-    sf::Texture grassTexture;
-    sf::Texture rockTexture;
-    sf::Texture treeTexture;
-    sf::Texture newspaperTexture;
-
-    rockTexture.loadFromFile("assets/img/Kamin.png");
-    treeTexture.loadFromFile("assets/img/Tree_3.png");
-    newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
+    std::vector<sf::Sprite> background;
 
     generateForestScene(
         window,
@@ -98,9 +101,11 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         rock,
         trees,
         news,
+        background,
         grassTexture,
         rockTexture,
         treeTexture,
+        backgroundTexture,
         newspaperTexture
     );
 

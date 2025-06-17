@@ -29,13 +29,16 @@ class ground {};
 class weather {};  
 class news_peper {};
 
-void generateForestScene(RenderWindow& window,
-    vector<Sprite>& ground,
-    vector<Sprite>& grass,
-    vector<Sprite>& rock,
-    vector<Sprite>& trees,
-    vector<Sprite>& news,
-    const Texture& grassTexture,
-    const Texture& rockTexture,
-    const Texture& treeTexture,
-    const Texture& newspaperTexture);
+void generateForestScene(
+    sf::RenderWindow& window,
+    std::vector<sf::Sprite>& ground,
+    std::vector<sf::Sprite>& grass,
+    std::vector<sf::Sprite>& rock,
+    std::vector<sf::Sprite>& trees,
+    std::vector<sf::Sprite>& news,
+    std::vector<sf::Sprite>& background,
+    const sf::Texture& grassTexture,
+    const sf::Texture& rockTexture,
+    const sf::Texture& treeTexture,
+    const sf::Texture& backgroundTexture,
+    const sf::Texture& newspaperTexture);

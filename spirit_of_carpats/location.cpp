@@ -1,16 +1,18 @@
 ﻿#include "location.h"
 
-void generateForestScene(RenderWindow& window,
-    vector<Sprite>& ground,
-    vector<Sprite>& grass,
-    vector<Sprite>& rock,
-    vector<Sprite>& trees,
-    vector<Sprite>& news,
-    const Texture& grassTexture,
-    const Texture& rockTexture,
-    const Texture& treeTexture,
-    /*const Texture& backgroundTexture,*/
-    const Texture& newspaperTexture)
+void generateForestScene(
+    sf::RenderWindow& window,
+    std::vector<sf::Sprite>& ground,
+    std::vector<sf::Sprite>& grass,
+    std::vector<sf::Sprite>& rock,
+    std::vector<sf::Sprite>& trees,
+    std::vector<sf::Sprite>& news,
+    std::vector<sf::Sprite>& background,
+    const sf::Texture& grassTexture,
+    const sf::Texture& rockTexture,
+    const sf::Texture& treeTexture,
+    const sf::Texture& backgroundTexture,
+    const sf::Texture& newspaperTexture)
 {
     // Очистка попередніх спрайтів
     trees.clear();
@@ -18,6 +20,7 @@ void generateForestScene(RenderWindow& window,
     rock.clear();
     grass.clear();
     ground.clear();
+    background.clear();
 
     // Налаштування
     const int backgroundRepeatCount = 5; // Кількість повторів фону
@@ -32,13 +35,18 @@ void generateForestScene(RenderWindow& window,
     mt19937 gen(rd());
     uniform_int_distribution<> distr(0, 100);
 
-    //// 🎨 Генерація повторюваного фону
-    //const float backgroundWidth = backgroundTexture.getSize().x;
-    //for (int i = 0; i < backgroundRepeatCount; ++i) {
-    //    Sprite backgroundSprite(backgroundTexture);
-    //    backgroundSprite.setPosition(Vector2f(i * backgroundWidth, 0.f));
-    //    ground.push_back(backgroundSprite); // додаємо у ground
-    //}
+    int bgRepeatingCount = 5;
+
+    // 🎨 Генерація повторюваного фону
+    const float backgroundWidth = backgroundTexture.getSize().x;
+    for (int i = 0; i < backgroundRepeatCount; ++i) {
+        Sprite backgroundSprite(backgroundTexture);
+        backgroundSprite.setPosition(Vector2f(i * backgroundWidth, 0.f));
+        ground.push_back(backgroundSprite); // додаємо у ground
+    }
+
+    
+
 
     // 📰 Генерація газет
     int newsCount = 1;
