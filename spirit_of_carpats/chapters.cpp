@@ -25,17 +25,30 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
     backButtonForChap.setFillColor(sf::Color::White);
     backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));
 
+
+    sf::Vector2f textureSize = Vector2f(newBackgroundTexture.getSize());
+
+    int repeatCount = 5;
+
+    std::vector<sf::Sprite> tiledBackgrounds;
+    for (int i = 0; i < repeatCount; ++i) {
+        sf::Sprite tile(backgroundSprite);
+        tile.setPosition(sf::Vector2f(static_cast<float>(i * textureSize.x), 0.f));
+        tiledBackgrounds.push_back(tile);
+    }
     
     while (window.isOpen()) {
-        
-        
+                
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
             window.clear();
 
-            window.draw(backgroundSprite);
+            for (auto& tile : tiledBackgrounds) {
+                window.draw(tile);
+            }
 
+            window.draw(backgroundSprite);
 
             window.draw(backgroundSprite);
 
@@ -44,7 +57,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
             sf::FloatRect bgBounds = backgroundSprite.getGlobalBounds();
             float bgWidth = bgBounds.size.x;
 
-            int repeatCount = (window.getSize().x / bgWidth) + 2; // +2 на запас
+            int repeatCount = 5;
 
             for (int i = 0; i < repeatCount; ++i) {
                 sf::Sprite tiledBg = backgroundSprite;
