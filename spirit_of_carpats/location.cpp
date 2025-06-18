@@ -1,5 +1,16 @@
 ﻿#include "location.h"
 
+void generateHomeScene(
+    sf::RenderWindow& window,
+    std::vector<sf::Sprite>& spawn_pleyer,
+    std::vector<sf::Sprite>& background_home)
+{
+    background_home.clear();
+
+
+}
+
+
 void generateForestScene(
     sf::RenderWindow& window,
     std::vector<sf::Sprite>& ground,
@@ -62,13 +73,15 @@ void generateForestScene(
     }
 
     // 🌲 Генерація дерев
-    int treeCount = 1;
+    const int treeCount = 3;
+    float pos_tree_x = 1400.f;
+    float y_pos_tree = 425.f;
+    float space_tree = 1200.f;
 
     for (int i = 0; i < treeCount; ++i) {
         sf::Sprite tree(treeTexture);
-        float x = 1400.f;
-        float y = 425.f;
-        tree.setPosition(sf::Vector2f(x, y));
+        float x_tree = pos_tree_x + i * space_tree;
+        tree.setPosition(sf::Vector2f(x_tree, y_pos_tree));
         trees.push_back(tree);
     }
 

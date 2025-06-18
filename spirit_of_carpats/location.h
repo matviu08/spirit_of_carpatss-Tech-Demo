@@ -42,3 +42,9 @@ void generateForestScene(
     const sf::Texture& treeTexture,
     const sf::Texture& backgroundTexture,
     const sf::Texture& newspaperTexture);
+
+void generateHomeScene(
+    sf::RenderWindow& window,
+    std::vector<sf::Sprite>& spawn_pleyer,
+    std::vector<sf::Sprite>& background_home);
+
