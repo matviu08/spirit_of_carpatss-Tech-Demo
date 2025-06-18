@@ -16,8 +16,8 @@ void generateForestScene(
 {
     // Очистка попередніх спрайтів
     trees.clear();
-    news.clear();
     rock.clear();
+    news.clear();
     grass.clear();
     ground.clear();
     background.clear();
@@ -25,27 +25,45 @@ void generateForestScene(
     const int backgroundRepeatCount = 10; // 🔹 Розширюємо фон для великої сцени
 
     // 🎨 Генерація повторюваного бекграунду
-    const float backgroundWidth = backgroundTexture.getSize().x;
+    const float windowWidth = static_cast<float>(window.getSize().x);
+    const float windowHeight = static_cast<float>(window.getSize().y);
+    const float textureWidth = static_cast<float>(backgroundTexture.getSize().x);
+    const float textureHeight = static_cast<float>(backgroundTexture.getSize().y);
+
+   
+    float scaleX = windowWidth / textureWidth;
+    float scaleY = windowHeight / textureHeight;
+
+    
+
     for (int i = 0; i < backgroundRepeatCount; ++i) {
         sf::Sprite backgroundSprite(backgroundTexture);
-        backgroundSprite.setPosition(sf::Vector2f(i * backgroundWidth, 0.0f));
-        background.push_back(backgroundSprite); // додаємо у background
+        backgroundSprite.setScale(Vector2f(scaleX, scaleY)); 
+        backgroundSprite.setPosition(sf::Vector2f(i * windowWidth, 0.f)); 
+        background.push_back(backgroundSprite);
     }
 
     // 📰 Генерація газет
-    int newsCount = 1;
+    int newsCount = 3;
+    float startX = 1000.f;
+    float y = 856.f;
+    float spacing = 1200.f;
     for (int i = 0; i < newsCount; ++i) {
+
         sf::Sprite newspaper(newspaperTexture);
+
         float scale = 0.8f + static_cast<float>(rand() % 40) / 100.0f;
-        float x = 1000.f;
-        float y = 856.f;
         newspaper.setScale(sf::Vector2f(scale, scale));
+
+        float x = startX + i * spacing;
         newspaper.setPosition(sf::Vector2f(x, y));
+        
         news.push_back(newspaper);
     }
 
     // 🌲 Генерація дерев
     int treeCount = 1;
+
     for (int i = 0; i < treeCount; ++i) {
         sf::Sprite tree(treeTexture);
         float x = 1400.f;
