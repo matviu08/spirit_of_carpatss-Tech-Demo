@@ -4,66 +4,8 @@ bool levelStarted = false;
 
 void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
     sf::Vector2u windowSize = window.getSize();
-    if (tohnoEnglish) {
-        if (&button == &newGameButton) {
-            sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - 300 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_1);
-        }
-        else if (&button == &settingsButton) {
-            sf::Vector2f pos_2(static_cast<float>(windowSize.x) / 2 - 250 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_2);
-        }
-        else if (&button == &quitButton) {
-            sf::Vector2f pos_3(static_cast<float>(windowSize.x) / 2 - 160 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_3);
-        }
-        else if (&button == &chapterButton) {
-            sf::Vector2f pos_4(static_cast<float>(windowSize.x) / 2 - 280 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_4);
-        }
-        else if (&button == &backButton) {
-            sf::Vector2f pos_5(static_cast<float>(windowSize.x) / 2 - 200 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_5);
-        }
-        else if (&button == &languageButton) {
-            sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 500 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_6);
-        }
-        else if (&button == &musicButton) {
-            sf::Vector2f pos_7(static_cast<float>(windowSize.x) / 2 - 320 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_7);
-        }
-    }
-    else {
-        if (&button == &newGameButton) {
-            sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - 300 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_1);
-        }
-        else if (&button == &settingsButton) {
-            sf::Vector2f pos_2(static_cast<float>(windowSize.x) / 2 - 465 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_2);
-        }
-        else if (&button == &quitButton) {
-            sf::Vector2f pos_3(static_cast<float>(windowSize.x) / 2 - 260 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_3);
-        }
-        else if (&button == &chapterButton) {
-            sf::Vector2f pos_4(static_cast<float>(windowSize.x) / 2 - 280 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_4);
-        }
-        else if (&button == &backButton) {
-            sf::Vector2f pos_5(static_cast<float>(windowSize.x) / 2 - 250 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_5);
-        }
-        else if (&button == &languageButton) {
-            sf::Vector2f pos_6(static_cast<float>(windowSize.x) / 2 - 530 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_6);
-        }
-        else if (&button == &musicButton) {
-            sf::Vector2f pos_7(static_cast<float>(windowSize.x) / 2 - 400 / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
-            button.setPosition(pos_7);
-        }
-    }
+    sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - button.getLocalBounds().size.x / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+    button.setPosition(pos_1);
 }
 
 Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font), musicButton(font) {

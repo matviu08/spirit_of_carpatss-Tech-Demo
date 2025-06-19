@@ -46,6 +46,7 @@ private:
     sf::Text musicButton;
     sf::Music menuMusic;
 
+
     void centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset);
 public:
     Menu(sf::Font& font, sf::RenderWindow& window);
