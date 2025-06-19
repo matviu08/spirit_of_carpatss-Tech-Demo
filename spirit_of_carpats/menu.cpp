@@ -8,7 +8,7 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
     button.setPosition(pos_1);
 }
 
-Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButton(font), languageButton(font), musicButton(font) {
+Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButtonWithSetings(font), languageButton(font), musicButton(font), leftKeyButton(font), rightKeyButton(font), backButtonWithChapters(font) {
     newGameButton.setString("New Game");
     newGameButton.setCharacterSize(50); 
     newGameButton.setFillColor(sf::Color(252, 228, 204));
@@ -32,11 +32,15 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     centerButton(chapterButton, window, -100);
 
 
-    backButton.setString("Back");
-    backButton.setCharacterSize(50);
-    backButton.setFillColor(sf::Color(252, 228, 204));
-    centerButton(backButton, window, 100);
+    backButtonWithSetings.setString("Back");
+    backButtonWithSetings.setCharacterSize(50);
+    backButtonWithSetings.setFillColor(sf::Color(252, 228, 204));
+    centerButton(backButtonWithSetings, window, 300);
 
+    backButtonWithChapters.setString("Back");
+    backButtonWithChapters.setCharacterSize(50);
+    backButtonWithChapters.setFillColor(sf::Color(252, 228, 204));
+    centerButton(backButtonWithChapters, window, 0);
   
     languageButton.setString("Language: English");
     languageButton.setCharacterSize(50);
@@ -47,6 +51,17 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     musicButton.setCharacterSize(50);
     musicButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(musicButton, window, 0);
+
+    leftKeyButton.setCharacterSize(50);
+    leftKeyButton.setFillColor(sf::Color(252, 228, 204));
+    leftKeyButton.setString("Left: " + keyToString(leftKey));
+    centerButton(leftKeyButton, window, 100);
+
+    rightKeyButton.setCharacterSize(50);
+    rightKeyButton.setFillColor(sf::Color(252, 228, 204));
+    rightKeyButton.setString("Right: " + keyToString(rightKey));
+    centerButton(rightKeyButton, window, 200);
+
 
     if (!menuMusic.openFromFile("assets/sound/MainMenuMusicks.ogg")) {
         cout << "Помилка: не вдалося завантажити музику" << endl;
@@ -59,10 +74,11 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
 }
 
 void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite) {
-    if (event->is<sf::Event::MouseButtonPressed>()) {
-        auto mousePos = sf::Mouse::getPosition(window);
-        sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
+    auto mousePos = sf::Mouse::getPosition(window);
+    sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+
+    if (event->is<sf::Event::MouseButtonPressed>()) {
         if (!levelStarted && !settingsOpened) {
             if (newGameButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = true;
@@ -77,79 +93,134 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
 
         else if (levelStarted) {
             if (chapterButton.getGlobalBounds().contains(mouseWorldPos)) {
-                levelStarted = true; 
+                levelStarted = true;
                 createLevel1(window, backgroundSprite, event);
             }
-            else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
+            else if (backButtonWithChapters.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = false;
             }
         }
 
         else if (settingsOpened) {
-            if (languageButton.getGlobalBounds().contains(mouseWorldPos) || musicButton.getGlobalBounds().contains(mouseWorldPos)) {
-                if (languageButton.getGlobalBounds().contains(mouseWorldPos)) {
-                    isEnglish = !isEnglish;
-                    if (isEnglish) {
-                        newGameButton.setString("New Game");
-                        settingsButton.setString("Settings");
-                        quitButton.setString("Quit");
-                        chapterButton.setString("Chapter 1");
-                        backButton.setString("Back");
-                        languageButton.setString("Language: English");
-                        musicButton.setString(musicEnabled ? "Music: ON" : "Music: OFF");
-                        tohnoEnglish = true;
-                    }
-                    else {
-                        std::cout << "Перемкнули на Українську!" << std::endl;
-                        newGameButton.setString(L"Нова гра");
-                        settingsButton.setString(L"Налаштування");
-                        quitButton.setString(L"Вийти");
-                        chapterButton.setString(L"Глава 1");
-                        backButton.setString(L"Назад");
-                        languageButton.setString(L"Мова: Українська");
-                        musicButton.setString(musicEnabled ? L"Музика: Вкл" : L"Музика: Викл"); 
-                        tohnoEnglish = false;
-                    }
+            if (languageButton.getGlobalBounds().contains(mouseWorldPos)) {
+                isEnglish = !isEnglish;
+                if (isEnglish) {
+                    newGameButton.setString("New Game");
+                    settingsButton.setString("Settings");
+                    quitButton.setString("Quit");
+                    chapterButton.setString("Chapter 1");
+                    backButtonWithSetings.setString("Back");
+                    backButtonWithChapters.setString("Back");
+                    languageButton.setString("Language: English");
+                    musicButton.setString(musicEnabled ? "Music: ON" : "Music: OFF");
+                    leftKeyButton.setString("Left: " + keyToString(leftKey));
+                    rightKeyButton.setString("Right: " + keyToString(rightKey));
+                }
+                else {
+                    newGameButton.setString(L"Нова гра");
+                    settingsButton.setString(L"Налаштування");
+                    quitButton.setString(L"Вийти");
+                    chapterButton.setString(L"Глава 1");
+                    backButtonWithSetings.setString(L"Назад");
+                    backButtonWithChapters.setString(L"Назад");
+                    languageButton.setString(L"Мова: Українська");
+                    musicButton.setString(musicEnabled ? L"Музика: Вкл" : L"Музика: Викл");
+                    leftKeyButton.setString(L"Вліво: " + keyToWideString(leftKey));
+                    rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
                 }
 
-                if (musicButton.getGlobalBounds().contains(mouseWorldPos)) {
-                    musicEnabled = !musicEnabled;
-                    if (musicEnabled) {
-                        menuMusic.play();
-                        if (!isEnglish) {
-                            musicButton.setString(L"Музика: Вкл");
-                        }
-                        else {
-                            musicButton.setString("Music: ON");
-                        }
-                    }
-                    else {
-                        menuMusic.pause();
-                        if (!isEnglish) {
-                            musicButton.setString(L"Музика: Викл");
-                        }
-                        else {
-                            musicButton.setString("Music: OFF");
-                        }
-                    }
-                }
-
-                centerButton(newGameButton, window, -100);
-                centerButton(settingsButton, window, 0);
-                centerButton(quitButton, window, 100);
-                centerButton(chapterButton, window, -100);
-                centerButton(backButton, window, 100);
-                centerButton(languageButton, window, -100);
-                centerButton(musicButton, window, 0);
             }
 
-            else if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "Натиснуто: Back!" << std::endl;
+            else if (musicButton.getGlobalBounds().contains(mouseWorldPos)) {
+                musicEnabled = !musicEnabled;
+                if (musicEnabled) {
+                    menuMusic.play();
+                    if (isEnglish) {
+                        musicButton.setString("Music: ON");
+                    }
+                    else {
+                        musicButton.setString(L"Музика: Вкл");
+                    }
+                }
+                else {
+                    menuMusic.pause();
+                    if (isEnglish) {
+                        musicButton.setString("Music: OFF");
+                    }
+                    else {
+                        musicButton.setString(L"Музика: Викл");
+                    }
+                }
+                if (musicEnabled) menuMusic.play();
+                else menuMusic.pause();
+            }
+
+            else if (leftKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
+                waitingForLeftKey = true;
+                if (isEnglish) {
+                    leftKeyButton.setString("Left: ...");
+                }
+                else {
+                    leftKeyButton.setString(L"Вліво: ...");
+                }
+            }
+
+            else if (rightKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
+                waitingForRightKey = true;
+                if (isEnglish) {
+                    rightKeyButton.setString("Right: ...");
+                }
+                else {
+                    rightKeyButton.setString(L"Вправо: ...");
+                }
+            }
+
+            else if (backButtonWithSetings.getGlobalBounds().contains(mouseWorldPos)) {
                 settingsOpened = false;
             }
-        }
 
+            // Центруємо всі кнопки після змін
+            centerButton(newGameButton, window, -100);
+            centerButton(settingsButton, window, 0);
+            centerButton(quitButton, window, 100);
+            centerButton(chapterButton, window, -100);
+            centerButton(backButtonWithSetings, window, 300);
+            centerButton(backButtonWithChapters, window, 0);
+            centerButton(musicButton, window, 0);
+            centerButton(languageButton, window, -100);
+            centerButton(musicButton, window, 0);
+            centerButton(leftKeyButton, window, 100);
+            centerButton(rightKeyButton, window, 200);
+        }
     }
+
+    else if (event->is<sf::Event::KeyPressed>()) {
+        // отримати підструктуру KeyPressed
+        if (const auto* keyEvt = event->getIf<sf::Event::KeyPressed>()) {
+            // конвертувати scancode в логічну клавішу
+            sf::Keyboard::Key pressed = sf::Keyboard::localize(keyEvt->scancode);
+
+            if (waitingForLeftKey) {
+                leftKey = pressed;
+                if (isEnglish)
+                    leftKeyButton.setString("Left: " + keyToString(leftKey));
+                else
+                    leftKeyButton.setString(L"Вліво: " + keyToWideString(leftKey));
+                centerButton(leftKeyButton, window, 100);
+                waitingForLeftKey = false;
+            }
+            else if (waitingForRightKey) {
+                rightKey = pressed;
+                if (isEnglish)
+                    rightKeyButton.setString("Right: " + keyToString(rightKey));
+                else
+                    rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
+                centerButton(rightKeyButton, window, 200);
+                waitingForRightKey = false;
+            }
+        }
+    }
+
 }
 
 void Menu::draw(sf::RenderWindow& window) {
@@ -160,11 +231,57 @@ void Menu::draw(sf::RenderWindow& window) {
     }
     else if (levelStarted) {
         window.draw(chapterButton);
-        window.draw(backButton);
+        window.draw(backButtonWithChapters);
     }
     else if (settingsOpened) {
         window.draw(languageButton);
-        window.draw(backButton);
+        window.draw(backButtonWithSetings);
         window.draw(musicButton);
+        window.draw(leftKeyButton);
+        window.draw(rightKeyButton);
     }
+}
+
+std::string Menu::keyToString(sf::Keyboard::Key key) {
+    using K = sf::Keyboard::Key;
+    switch (key) {
+    case K::A: return "A";
+    case K::B: return "B";
+    case K::C: return "C";
+    case K::D: return "D";
+    case K::E: return "E";
+    case K::F: return "F";
+    case K::G: return "G";
+    case K::H: return "H";
+    case K::I: return "I";
+    case K::J: return "J";
+    case K::K: return "K";
+    case K::L: return "L";
+    case K::M: return "M";
+    case K::N: return "N";
+    case K::O: return "O";
+    case K::P: return "P";
+    case K::Q: return "Q";
+    case K::R: return "R";
+    case K::S: return "S";
+    case K::T: return "T";
+    case K::U: return "U";
+    case K::V: return "V";
+    case K::W: return "W";
+    case K::X: return "X";
+    case K::Y: return "Y";
+    case K::Z: return "Z";
+    case K::Left: return "←";
+    case K::Right: return "→";
+    case K::Space: return "Space";
+    case K::Enter: return "Enter";
+    case K::LControl: return "Ctrl";
+    case K::LShift: return "Shift";
+    default: return "Unknown";
+    }
+}
+
+std::wstring Menu::keyToWideString(sf::Keyboard::Key key) {
+    std::string latin = keyToString(key);
+    return std::wstring(latin.begin(), latin.end());
 }

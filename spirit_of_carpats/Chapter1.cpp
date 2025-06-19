@@ -10,7 +10,7 @@ const float wallHalfHeight = WORLD_HEIGHT_METERS / 2.0f;
 
 extern bool levelStarted;
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButton, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
     sf::Vector2u windowSize = window.getSize();
 
     const float REFERENCE_WIDTH = 1920.0f;
@@ -138,10 +138,13 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bool onGround = (pos.y <= groundY + 0.1f) && (velocity.y <= 0.1f);
 
         float horizontalInput = 0.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+        sf::Keyboard::Key leftBind = menu.getLeftKey();
+        sf::Keyboard::Key rightBind = menu.getRightKey();
+
+        if (sf::Keyboard::isKeyPressed(leftBind)) {
             horizontalInput = -1.0f;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+        else if (sf::Keyboard::isKeyPressed(rightBind)) {
             horizontalInput = 1.0f;
         }
 
@@ -168,7 +171,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-            if (backButton.getGlobalBounds().contains(mouseWorldPos)) {
+            if (backButtonWithSetings.getGlobalBounds().contains(mouseWorldPos)) {
                 std::cout << "backButton to menu!" << std::endl;
                 levelStarted = false;
                 b2DestroyWorld(worldId);
@@ -230,7 +233,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         sf::View defaultView = window.getDefaultView();
         window.setView(defaultView);
-        window.draw(backButton);
+        window.draw(backButtonWithSetings);
         window.setView(gameView);
 
         window.display();
