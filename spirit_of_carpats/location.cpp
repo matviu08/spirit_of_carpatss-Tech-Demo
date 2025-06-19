@@ -55,43 +55,72 @@ void generateForestScene(
     }
 
     // 📰 Генерація газет
+    const float baseWidth = 1920.f;
+    const float baseHeight = 1080.f;
+    sf::Vector2u windowSize = window.getSize();
+
+    float xRatio = static_cast<float>(windowSize.x) / baseWidth;
+    float yRatio = static_cast<float>(windowSize.y) / baseHeight;
+
+    const float baseStartX = 1000.f;
+    const float baseY = 856.f;
+    const float baseSpacing = 1200.f;
+
+    float startX = baseStartX * xRatio;
+    float y = baseY * yRatio;
+    float spacing = baseSpacing * xRatio;
+
     int newsCount = 3;
-    float startX = 1000.f;
-    float y = 856.f;
-    float spacing = 1200.f;
+
     for (int i = 0; i < newsCount; ++i) {
-
         sf::Sprite newspaper(newspaperTexture);
-
         float scale = 0.8f + static_cast<float>(rand() % 40) / 100.0f;
-        newspaper.setScale(sf::Vector2f(scale, scale));
+
+        float uniformScale = min(xRatio, yRatio);
+        newspaper.setScale(sf::Vector2f(scale * uniformScale, scale * uniformScale));
 
         float x = startX + i * spacing;
         newspaper.setPosition(sf::Vector2f(x, y));
-        
+
         news.push_back(newspaper);
     }
+    // базове розширення
+    const float baseWidth_for_tree = 1920.f;
+    const float baseHeight_for_tree = 1080.f;
 
-    // 🌲 Генерація дерев
+    float xRatio_tree = static_cast<float>(windowSize.x) / baseWidth;
+    float yRatio_tree = static_cast<float>(windowSize.y) / baseHeight;
+
+    //adaprive generation of tree
     const int treeCount = 3;
-    float pos_tree_x = 1400.f;
-    float y_pos_tree = 425.f;
-    float space_tree = 1200.f;
+    const float baseTreeX = 1400.f;
+    const float baseTreeY = 425.f;
+    const float baseTreeSpacing = 1200.f;
+
+    float treeX = baseTreeX * xRatio;
+    float treeY = baseTreeY * yRatio;
+    float treeSpacing = baseTreeSpacing * xRatio;
 
     for (int i = 0; i < treeCount; ++i) {
         sf::Sprite tree(treeTexture);
-        float x_tree = pos_tree_x + i * space_tree;
-        tree.setPosition(sf::Vector2f(x_tree, y_pos_tree));
+        float x = treeX + i * treeSpacing;
+        tree.setPosition(sf::Vector2f(x, treeY));
+        tree.setScale(sf::Vector2f(xRatio, yRatio)); 
         trees.push_back(tree);
     }
 
-    // 🪨 Генерація каменів
-    int rockCount = 1;
+    // adaprive generation of rock
+    const int rockCount = 1;
+    const float baseRockX = -75.f;
+    const float baseRockY = 975.f;
+
+    float rockX = baseRockX * xRatio;
+    float rockY = baseRockY * yRatio;
+
     for (int i = 0; i < rockCount; ++i) {
         sf::Sprite rockSprite(rockTexture);
-        float x = -75.f;
-        float y = 975.f;
-        rockSprite.setPosition(sf::Vector2f(x, y));
+        rockSprite.setPosition(sf::Vector2f(rockX, rockY));
+        rockSprite.setScale(sf::Vector2f(xRatio, yRatio));
         rock.push_back(rockSprite);
     }
 }

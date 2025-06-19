@@ -23,4 +23,4 @@
 using namespace std;
 
 void createHomeLocation(sf::RenderWindow&, sf::Sprite&, const std::optional<sf::Event>&);
-void createLevel1(sf::RenderWindow&, sf::Sprite&, const std::optional<sf::Event>& );
+void createLevel1(sf::RenderWindow&, sf::Sprite&, const std::optional<sf::Event>&);
