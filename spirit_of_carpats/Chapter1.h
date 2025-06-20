@@ -21,6 +21,7 @@
 #include <box2d/box2d.h>
 
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event);
 
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
+    sf::Vector2u windowSize = window.getSize();
 using namespace std;
