@@ -18,14 +18,16 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     float scaleFactorY = (float)windowSize.y / REFERENCE_HEIGHT;
     float uniformScale = min(scaleFactorX, scaleFactorY);
 
-    float screenGroundY = -((float)windowSize.y * 0.35f) / SCALE;
-    float screenCenterY = 0.0f;
-    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; 
+    // Calculate screen-dependent positions
+    float screenGroundY = -((float)windowSize.y * 0.35f) / SCALE; // Ground relative to screen bottom
+    float screenCenterY = 0.0f; // Screen center in world coordinates
+    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; // Wall height based on screen height
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
     b2WorldId worldId = b2CreateWorld(&worldDef);
 
+    // Ground positioned relative to screen
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody;
     groundBodyDef.position = b2Vec2{ WORLD_WIDTH_METERS / 2.0f, screenGroundY };
@@ -37,6 +39,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     groundShapeDef.material.friction = 100.0f;
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
+    // Left wall scaled to screen height
     b2BodyDef leftWallDef = b2DefaultBodyDef();
     leftWallDef.type = b2_staticBody;
     leftWallDef.position = b2Vec2{ 0.0f, screenCenterY };
@@ -48,6 +51,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     leftWallShapeDef.material.friction = 0.5f;
     b2CreatePolygonShape(leftWallId, &leftWallShapeDef, &leftWallBox);
 
+    // Right wall scaled to screen height
     b2BodyDef rightWallDef = b2DefaultBodyDef();
     rightWallDef.type = b2_staticBody;
     rightWallDef.position = b2Vec2{ WORLD_WIDTH_METERS + wallHalfWidth, screenCenterY };
@@ -59,9 +63,10 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     rightWallShapeDef.material.friction = 0.5f;
     b2CreatePolygonShape(rightWallId, &rightWallShapeDef, &rightWallBox);
 
+    // Character positioned relative to ground
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 2.0f, screenGroundY + 2.0f }; 
+    bodyDef.position = b2Vec2{ 2.0f, screenGroundY + 2.0f }; // 2 meters above ground
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
 
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);
@@ -74,6 +79,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     b2Body_SetAwake(bodyId, true);
     b2Body_SetFixedRotation(bodyId, true);
 
+    // Character visual scaled to screen
     sf::RectangleShape characterShape;
     float charVisualScale = uniformScale * ((float)windowSize.y / REFERENCE_HEIGHT);
     characterShape.setSize({ CHARACTER_HALF_WIDTH * 2 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 2 * SCALE * charVisualScale });
@@ -116,6 +122,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int SUB_STEP_COUNT = 4;
 
+    // Movement constants scaled to screen size
     float screenMoveScale = (float)windowSize.y / REFERENCE_HEIGHT;
     const float MOVE_SPEED = 8.0f * screenMoveScale;
     const float JUMP_VELOCITY = 8.0f * screenMoveScale;
@@ -138,6 +145,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         b2Vec2 pos = b2Body_GetPosition(bodyId);
 
+        // Ground detection relative to screen-based ground
         float groundCheckY = screenGroundY + 1.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (pos.y <= groundCheckY + 0.1f) && (velocity.y <= 0.1f);
 
@@ -192,6 +200,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         pos = b2Body_GetPosition(bodyId);
 
+        // Camera system that works with scaled world
         float viewWidth = (float)windowSize.x / uniformScale;
         float viewHeight = (float)windowSize.y / uniformScale;
 
@@ -210,6 +219,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.clear();
         window.draw(background);
 
+        // Scale sprites based on screen size
         float spriteScale = uniformScale * screenMoveScale;
 
         for (auto& rockSprite : rock) {
@@ -231,6 +241,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             window.draw(newsSprite);
         }
 
+        // Character positioning that works with scaled world
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
