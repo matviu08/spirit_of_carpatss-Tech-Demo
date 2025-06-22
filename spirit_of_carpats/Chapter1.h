@@ -14,6 +14,7 @@
 #include "menu.h"
 #include "logick.h"
 #include "location.h"
+#include "chapter1_house.h"
 #include "chapters.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>

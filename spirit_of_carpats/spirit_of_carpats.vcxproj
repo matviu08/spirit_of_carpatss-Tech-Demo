@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Chapter1.cpp" />
     <ClCompile Include="chapters.cpp" />
+    <ClCompile Include="chapter1_house.cpp" />
     <ClCompile Include="location.cpp" />
     <ClCompile Include="logick.cpp" />
     <ClCompile Include="menu.cpp" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="Chapter1.h" />
     <ClInclude Include="chapters.h" />
+    <ClInclude Include="chapter1_house.h" />
     <ClInclude Include="location.h" />
     <ClInclude Include="logick.h" />
     <ClInclude Include="menu.h" />
