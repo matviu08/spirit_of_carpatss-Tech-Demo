@@ -86,39 +86,73 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale });
     characterShape.setFillColor(sf::Color::Red);
 
+    //outside
     sf::Texture grassTexture;
     sf::Texture rockTexture;
     sf::Texture treeTexture;
     sf::Texture newspaperTexture;
     sf::Texture backgroundTexture;
 
+    //home_location
+    sf::Texture background_home_texture;
+    sf::Texture bed_texture;
+
+    //outside
     rockTexture.loadFromFile("assets/img/Kamin.png");
     treeTexture.loadFromFile("assets/img/Tree_3.png");
     newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
     backgroundTexture.loadFromFile("assets/img/levl1_bg.png");
 
+    //home_location
+    background_home_texture.loadFromFile("assets/img/home_background.png");
+    bed_texture.loadFromFile("assets/img/bed_texture.png");
+
+    //location_2_ountside
     std::vector<sf::Sprite> ground;
     std::vector<sf::Sprite> grass;
     std::vector<sf::Sprite> rock;
     std::vector<sf::Sprite> trees;
     std::vector<sf::Sprite> news;
-    std::vector<sf::Sprite> tiledBackgrounds;
 
-    generateForestScene(
+    //location_1_home
+    std::vector<sf::Sprite> tiledBackgrounds;
+    std::vector<sf::Sprite>bed;
+    std::vector<sf::Sprite>bacground_home;
+
+    generateHomeScene(
         window,
-        ground,
-        grass,
-        rock,
-        trees,
-        news,
-        tiledBackgrounds,
-        grassTexture,
-        rockTexture,
-        treeTexture,
-        backgroundTexture,
-        newspaperTexture
+        bed,
+        bacground_home,
+        background_home_texture,
+        bed_texture
     );
 
+    for (auto& homeBg : bacground_home)
+        window.draw(homeBg);
+
+    for (auto& tile : tiledBackgrounds)
+        window.draw(tile);
+
+    for (auto& bedSprite : bed)
+        window.draw(bedSprite);
+
+
+    //тимчасово не працює
+    //generateForestScene(
+    //    window,
+    //    ground,
+    //    grass,
+    //    rock,
+    //    trees,
+    //    news,
+    //    tiledBackgrounds,
+    //    grassTexture,
+    //    rockTexture,
+    //    treeTexture,
+    //    backgroundTexture,
+    //    newspaperTexture
+    //);
+    //
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int SUB_STEP_COUNT = 4;
 
@@ -217,10 +251,21 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.setView(gameView);
 
         window.clear();
-        window.draw(background);
+        
+        for (auto& homeBg : bacground_home)
+            window.draw(homeBg);
+
+        for (auto& tile : tiledBackgrounds)
+            window.draw(tile);
+
+        for (auto& bedSprite : bed)
+            window.draw(bedSprite);
 
         // Scale sprites based on screen size
         float spriteScale = uniformScale * screenMoveScale;
+
+ 
+
 
         for (auto& rockSprite : rock) {
             rockSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
