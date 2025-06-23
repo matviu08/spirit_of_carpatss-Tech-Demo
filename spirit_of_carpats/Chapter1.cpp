@@ -136,23 +136,21 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     for (auto& bedSprite : bed)
         window.draw(bedSprite);
 
-
-    //тимчасово не працює
-    //generateForestScene(
-    //    window,
-    //    ground,
-    //    grass,
-    //    rock,
-    //    trees,
-    //    news,
-    //    tiledBackgrounds,
-    //    grassTexture,
-    //    rockTexture,
-    //    treeTexture,
-    //    backgroundTexture,
-    //    newspaperTexture
-    //);
-    //
+    /*generateForestScene(
+        window,
+        ground,
+        grass,
+        rock,
+        trees,
+        news,
+        tiledBackgrounds,
+        grassTexture,
+        rockTexture,
+        treeTexture,
+        backgroundTexture,
+        newspaperTexture
+    );*/
+    
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int SUB_STEP_COUNT = 4;
 
