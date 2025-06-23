@@ -1,4 +1,5 @@
 #include "chapter1_house.h"
+#include "logick.h"
 
 void generateHomeScene(
     sf::RenderWindow& window,
@@ -6,8 +7,13 @@ void generateHomeScene(
     std::vector<sf::Sprite>& bacground_home,
     const sf::Texture& background_home_texture,
     const sf::Texture& bed_texture) {
+    
     bed.clear();
     bacground_home.clear();
+    
+    //sf::FloatRect Colision(300, 100, 100, 100);
+    //sf::Vector2f velociry(0.1f, 0.0f);
+
 
     const float windowWidth = static_cast<float>(window.getSize().x);
     const float windowHeight = static_cast<float>(window.getSize().y);

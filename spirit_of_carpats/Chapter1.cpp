@@ -104,7 +104,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     backgroundTexture.loadFromFile("assets/img/levl1_bg.png");
 
     //home_location
-    background_home_texture.loadFromFile("assets/img/home_background.png");
+    background_home_texture.loadFromFile("assets/img/home_bg.png");
     bed_texture.loadFromFile("assets/img/bed_texture.png");
 
     //location_2_ountside
