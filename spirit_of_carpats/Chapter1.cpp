@@ -119,24 +119,24 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     std::vector<sf::Sprite>bed;
     std::vector<sf::Sprite>bacground_home;
 
-    generateHomeScene(
+   /* generateHomeScene(
         window,
         bed,
         bacground_home,
         background_home_texture,
         bed_texture
-    );
+    );*/
 
-    for (auto& homeBg : bacground_home)
+    /*for (auto& homeBg : bacground_home)
         window.draw(homeBg);
 
     for (auto& tile : tiledBackgrounds)
         window.draw(tile);
 
     for (auto& bedSprite : bed)
-        window.draw(bedSprite);
+        window.draw(bedSprite);*/
 
-    /*generateForestScene(
+    generateForestScene(
         window,
         ground,
         grass,
@@ -149,7 +149,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         treeTexture,
         backgroundTexture,
         newspaperTexture
-    );*/
+    );
     
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int SUB_STEP_COUNT = 4;

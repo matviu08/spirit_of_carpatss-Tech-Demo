@@ -1,8 +1,7 @@
 #include "location.h"
 #include "chapter1_house.h"
 
-void Generation_of_locations(sf::RenderWindow& window, sf::Sprite& background) {
-    // Загружаем необходимые текстуры
+void Generation_of_chapter1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
     sf::Texture grassTexture;
     sf::Texture rockTexture;
     sf::Texture treeTexture;
@@ -20,7 +19,6 @@ void Generation_of_locations(sf::RenderWindow& window, sf::Sprite& background) {
     background_home_texture.loadFromFile("assets/img/home_bg.png");
     bed_texture.loadFromFile("assets/img/bed_texture.png");
 
-    // Объявляем векторы спрайтов для различных элементов
     std::vector<sf::Sprite> ground;
     std::vector<sf::Sprite> grass;
     std::vector<sf::Sprite> rock;
@@ -31,7 +29,7 @@ void Generation_of_locations(sf::RenderWindow& window, sf::Sprite& background) {
     std::vector<sf::Sprite> bed;
     std::vector<sf::Sprite> bacground_home;
 
-    generateHomeScene(window, bed, bacground_home, background_home_texture, bed_texture);
+    generateHomeScene(window, background, backButtonWithSetings, pl, font, event, bed, bacground_home, background_home_texture, bed_texture);
 
 
     for (auto& sprite : bacground_home)

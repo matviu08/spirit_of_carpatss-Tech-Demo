@@ -2,7 +2,7 @@
 #include "logick.h"
 
 void generateHomeScene(
-    sf::RenderWindow& window,
+    sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event,
     std::vector<sf::Sprite>& bed,
     std::vector<sf::Sprite>& bacground_home,
     const sf::Texture& background_home_texture,

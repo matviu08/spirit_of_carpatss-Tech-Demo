@@ -51,7 +51,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
             for (auto& tile : tiledBackgrounds) {
                 window.draw(tile);
             }
-            createLevels1(window, backgroundSprite, backButtonForChap, pl, font, event);
+            Generation_of_chapter1(window, backgroundSprite, backButtonForChap, pl, font, event);
             window.display();
         }
     
