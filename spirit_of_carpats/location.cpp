@@ -138,7 +138,19 @@ void generateHomeScene(
     std::vector<sf::Sprite>& background_home,
     const sf::Texture& background_home_texture,
     const sf::Texture& bed_texture
-) {
+){
 
+    const float windowWidth = static_cast<float>(window.getSize().x);
+    const float windowHeight = static_cast<float>(window.getSize().y);
+    const float textureWidth = static_cast<float>(background_home_texture.getSize().x);
+    const float textureHeight = static_cast<float>(background_home_texture.getSize().y);
 
+    float scaleX = windowWidth / textureWidth;
+    float scaleY = windowHeight / textureHeight;
+
+    sf::Sprite backgroundSprite(background_home_texture);
+    backgroundSprite.setScale(Vector2f(scaleX, scaleY));
+    backgroundSprite.setPosition(sf::Vector2f(1 * windowWidth, 0.f));
+    background_home.push_back(backgroundSprite);
+    
 }
