@@ -1,37 +1,4 @@
 ﻿#include "location.h"
-#include"chapter1_house.h"
-
-void Generation_of_locations(
-    sf::RenderWindow& window,
-    sf::Sprite& background,
-    std::vector<sf::Sprite>& bed,
-    std::vector<sf::Sprite>& background_home
-) {
-    sf::Texture background_home_texture;
-    sf::Texture bed_texture;
-
-    background_home_texture.loadFromFile("assets/img/home_bg.png");
-    bed_texture.loadFromFile("assets/img/bed_texture.png");
-
-    std::vector<sf::Sprite> tiledBackgrounds;
-
-    generateHomeScene(
-        window,
-        bed,
-        background_home,
-        background_home_texture,
-        bed_texture
-    );
-
-    for (auto& homeBg : background_home)
-        window.draw(homeBg);
-
-    for (auto& tile : tiledBackgrounds)
-        window.draw(tile);
-
-    for (auto& bedSprite : bed)
-        window.draw(bedSprite);
-}
 
 
 void generateForestScene(
