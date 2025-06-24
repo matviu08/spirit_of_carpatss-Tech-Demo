@@ -142,6 +142,7 @@
     <ClCompile Include="logick.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="spirit_of_carpats.cpp" />
+    <ClCompile Include="Сhapter1General.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chapter1.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="location.h" />
     <ClInclude Include="logick.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="Сhapter1General.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

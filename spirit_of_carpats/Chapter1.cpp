@@ -283,8 +283,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             newsSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
             window.draw(newsSprite);
         }
-
-        // Character positioning that works with scaled world
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE

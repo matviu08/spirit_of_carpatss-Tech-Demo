@@ -43,3 +43,9 @@ void generateForestScene(
     const sf::Texture& backgroundTexture,
     const sf::Texture& newspaperTexture);
 
+void Generation_of_locations(
+    sf::RenderWindow& window,
+    sf::Sprite& background,
+    std::vector<sf::Sprite>& bed,
+    std::vector<sf::Sprite>& background_home
+);
