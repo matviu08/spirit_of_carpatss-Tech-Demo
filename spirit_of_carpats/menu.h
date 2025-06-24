@@ -25,6 +25,7 @@ using namespace std;
 class Menu {
 private:
     bool settingsOpened = false;
+    bool bindsOpened = false;
     bool isEnglish = true;
     bool tohnoEnglish = true;
     bool musicEnabled = true;
@@ -47,6 +48,8 @@ private:
     sf::Text backButtonWithChapters;
     sf::RectangleShape languageRect;
     sf::Text languageButton;
+    sf::Text bindsButton;
+    sf::Text backButtonWithBinds;
 
     sf::Text musicButton;
     sf::Music menuMusic;
