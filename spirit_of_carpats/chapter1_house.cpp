@@ -67,7 +67,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     // Character positioned relative to ground
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 2.0f, screenGroundY + 1.5f }; // 2 meters above ground
+    bodyDef.position = b2Vec2{ 2.0f, screenGroundY + 2.0f }; // 2 meters above ground
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
 
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);
@@ -87,23 +87,11 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 2, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 2 });
     characterShape.setFillColor(sf::Color::Red);
 
-    //outside
-    sf::Texture grassTexture;
-    sf::Texture rockTexture;
-    sf::Texture treeTexture;
-    sf::Texture newspaperTexture;
-    sf::Texture backgroundTexture;
-
     //home_location
     sf::Texture background_home_texture;
     sf::Texture bed_texture;
 
-    //outside
-    rockTexture.loadFromFile("assets/img/Kamin.png");
-    treeTexture.loadFromFile("assets/img/Tree_3.png");
-    newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
-    backgroundTexture.loadFromFile("assets/img/levl1_bg.png");
-
+    
     //home_location
     background_home_texture.loadFromFile("assets/img/home_bg.png");
     bed_texture.loadFromFile("assets/img/bed_texture.png");
@@ -168,6 +156,18 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         b2Vec2 pos = b2Body_GetPosition(bodyId);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
+
+
+            float doorX = WORLD_WIDTH_METERS - 6.0f;
+            float tolerance = 6.0f;
+
+            if (abs(pos.x - doorX) <= tolerance) {
+                b2DestroyWorld(worldId);
+                createLevels1(window, background, backButtonWithSetings, pl, font, event);
+                return;
+            }
+        }
 
         float groundCheckY = screenGroundY + 1.0f + CHARACTER_HALF_HEIGHT;
         bool onGround = (pos.y <= groundCheckY + 0.1f) && (velocity.y <= 0.1f);

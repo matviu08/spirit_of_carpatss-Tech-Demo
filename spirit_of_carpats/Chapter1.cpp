@@ -93,9 +93,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     sf::Texture newspaperTexture;
     sf::Texture backgroundTexture;
 
-    //home_location
-    sf::Texture background_home_texture;
-    sf::Texture bed_texture;
+
 
     //outside
     rockTexture.loadFromFile("assets/img/Kamin.png");
@@ -103,38 +101,19 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
     backgroundTexture.loadFromFile("assets/img/levl1_bg.png");
 
-    //home_location
-    background_home_texture.loadFromFile("assets/img/home_bg.png");
-    bed_texture.loadFromFile("assets/img/bed_texture.png");
 
     //location_2_ountside
-    std::vector<sf::Sprite> ground;
-    std::vector<sf::Sprite> grass;
-    std::vector<sf::Sprite> rock;
-    std::vector<sf::Sprite> trees;
-    std::vector<sf::Sprite> news;
+    vector<sf::Sprite> ground;
+    vector<sf::Sprite> grass;
+    vector<sf::Sprite> rock;
+    vector<sf::Sprite> trees;
+    vector<sf::Sprite> news;
 
     //location_1_home
-    std::vector<sf::Sprite> tiledBackgrounds;
-    std::vector<sf::Sprite>bed;
-    std::vector<sf::Sprite>bacground_home;
+    vector<sf::Sprite> tiledBackgrounds;
+    vector<sf::Sprite>bed;
+    vector<sf::Sprite>bacground_home;
 
-   /* generateHomeScene(
-        window,
-        bed,
-        bacground_home,
-        background_home_texture,
-        bed_texture
-    );*/
-
-    /*for (auto& homeBg : bacground_home)
-        window.draw(homeBg);
-
-    for (auto& tile : tiledBackgrounds)
-        window.draw(tile);
-
-    for (auto& bedSprite : bed)
-        window.draw(bedSprite);*/
 
     generateForestScene(
         window,
