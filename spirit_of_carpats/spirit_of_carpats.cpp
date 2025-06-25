@@ -44,6 +44,7 @@ int main() {
     bool inLevel = false;
 
     while (window.isOpen()) {
+        extern bool gamebuttonOn;
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
@@ -53,7 +54,14 @@ int main() {
         window.clear();
         window.draw(backgroundSprite);
 
-        menu.draw(window);
+        if (!gamebuttonOn) {
+            menu.draw(window);
+        }
+        else {
+            createLevel1(window, backgroundSprite, window.pollEvent());
+        }
+        
+      
 
         window.display();
     }

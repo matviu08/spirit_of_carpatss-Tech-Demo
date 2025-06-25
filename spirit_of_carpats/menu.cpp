@@ -1,6 +1,7 @@
 ﻿#include "menu.h"
 
 bool levelStarted = false;
+bool gamebuttonOn = false;
 
 void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
     sf::Vector2u windowSize = window.getSize();
@@ -102,7 +103,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
         else if (levelStarted) {
             if (chapterButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = true;
-                createLevel1(window, backgroundSprite, event);
+                gamebuttonOn = true;
             }
             else if (backButtonWithChapters.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = false;
@@ -208,7 +209,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     leftKeyButton.setString("Left: " + keyToString(leftKey));
                 else
                     leftKeyButton.setString(L"Вліво: " + keyToWideString(leftKey));
-                centerButton(leftKeyButton, window, 100);
+                centerButton(leftKeyButton, window, -100);
                 waitingForLeftKey = false;
             }
             else if (waitingForRightKey) {
@@ -217,7 +218,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     rightKeyButton.setString("Right: " + keyToString(rightKey));
                 else
                     rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
-                centerButton(rightKeyButton, window, 200);
+                centerButton(rightKeyButton, window, 0);
                 waitingForRightKey = false;
             }
         }
