@@ -3,7 +3,7 @@
 const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
-const float WORLD_WIDTH_METERS = 77.0f/2.0f;
+const float WORLD_WIDTH_METERS = 100.0f/2.0f;
 const float WORLD_HEIGHT_METERS = 20.0f;
 const float wallHalfWidth = 0.5f;
 
@@ -265,7 +265,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
         window.display();
     }
-
+    
     b2DestroyWorld(worldId);
 }
     
