@@ -150,7 +150,7 @@ void generateHomeScene(
 
     sf::Sprite backgroundSprite(background_home_texture);
     backgroundSprite.setScale(Vector2f(scaleX, scaleY));
-    backgroundSprite.setPosition(sf::Vector2f(1 * windowWidth, 0.f));
+    backgroundSprite.setPosition(sf::Vector2f(0.0f, 0.f));
     background_home.push_back(backgroundSprite);
     
 }
