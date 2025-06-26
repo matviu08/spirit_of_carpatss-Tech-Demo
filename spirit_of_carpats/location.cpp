@@ -84,10 +84,10 @@ void generateForestScene(
     float yRatio_tree = static_cast<float>(windowSize.y) / baseHeight;
 
     //adaprive generation of tree
-    const int treeCount = 3;
-    const float baseTreeX = 1400.f;
+    const int treeCount = 7;
+    const float baseTreeX = 300.f;
     const float baseTreeY = 425.f;
-    const float baseTreeSpacing = 1200.f;
+    const float baseTreeSpacing = 550.f;
 
     float treeX = baseTreeX * xRatio;
     float treeY = baseTreeY * yRatio;
@@ -152,28 +152,26 @@ void generateHomeScene(
     
 
     
-	sf::Sprite axeSprite(axe_texture);
+    sf::Sprite axeSprite(axe_texture);
 
-	axeSprite.setOrigin(Vector2f(
-		axe_texture.getSize().x * 0.5f,
-		axe_texture.getSize().y * 0.5f
-	));
+    const float baseW = 1920.f, baseH = 1080.f;
+    float xRatio = windowWidth / baseW;
+    float yRatio = windowHeight / baseH;
+    float uniform = min(xRatio, yRatio);
 
-	const float baseW = 1920.f, baseH = 1080.f;
-	float xRatio = windowWidth / baseW;
-	float yRatio = windowHeight / baseH;
-	float uniform = min(xRatio, yRatio);
+    float rnd = 0.8f + (std::rand() % 41) / 100.f;
 
-	float rnd = 0.8f + (std::rand() % 41) / 100.f;
-	axeSprite.setScale(Vector2f(uniform * rnd, uniform * rnd));
+    sf::Vector2u texSize = axe_texture.getSize();
 
-	axeSprite.setPosition(Vector2f(
-		windowWidth * 0.5f,
-		windowHeight * 0.6f
-	));
+    axeSprite.setOrigin(Vector2f(texSize.x / 2.f, texSize.y / 2.f));
 
+    axeSprite.setScale(Vector2f(uniform * rnd, uniform * rnd));
 
-	axe.push_back(axeSprite);
-    
+    axeSprite.setPosition(Vector2f(
+        windowWidth * 0.4f,
+        windowHeight * 0.6f
+    ));
+
+    axe.push_back(axeSprite);
 
 }

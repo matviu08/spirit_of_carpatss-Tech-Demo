@@ -89,8 +89,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     
     //home_location
     background_home_texture.loadFromFile("assets/img/home_bg.png");
-    bed_texture.loadFromFile("assets/img/bed_texture.png");
-    axe_texture.loadFromFile("assets/img/axe_2.png");
+    axe_texture.loadFromFile("assets/img/axe_4.png");
 
     //location_2_ountside
     std::vector<sf::Sprite> ground;
@@ -113,24 +112,19 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         font,
         event,
         bed,
-         axe,
-         background_home,
-         axe_texture,
-         background_home_texture,
-         bed_texture
+		axe,
+		background_home,
+		axe_texture,
+		background_home_texture,
+		bed_texture
     );
 
      for (auto& homeBg : background_home)
          window.draw(homeBg);
 
-     for (auto& spr : axe)
-         window.draw(spr);
 
      for (auto& tile : tiledBackgrounds)
          window.draw(tile);
-
-     for (auto& bedSprite : bed)
-         window.draw(bedSprite);
 
     
 
@@ -247,8 +241,8 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         for (auto& tile : tiledBackgrounds)
             window.draw(tile);
 
-        for (auto& bedSprite : bed)
-            window.draw(bedSprite);
+        for (auto& spr : axe)
+            window.draw(spr);
 
         float spriteScale = uniformScale * screenMoveScale;
 
