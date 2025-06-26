@@ -49,7 +49,7 @@ int main() {
             if (event->is<sf::Event::Closed>())
                 window.close();
 
-            menu.handleEvent(event, window, backgroundSprite);
+            menu.handleEvent(event, window, backgroundSprite, menu);
         }
         window.clear();
         window.draw(backgroundSprite);
@@ -58,7 +58,7 @@ int main() {
             menu.draw(window);
         }
         else {
-            createLevel1(window, backgroundSprite, window.pollEvent());
+            createLevel1(window, backgroundSprite, window.pollEvent(), menu);
         }
         
       

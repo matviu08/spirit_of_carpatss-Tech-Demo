@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const std::optional<sf::Event>& event) {
+void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const std::optional<sf::Event>& event, Menu& menu) {
     std::cout << "Запускаємо Level 1..." << std::endl;
     Player pl;
        
@@ -51,7 +51,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
             for (auto& tile : tiledBackgrounds) {
                 window.draw(tile);
             }
-            Generation_of_chapter1(window, backgroundSprite, backButtonForChap, pl, font, event);
+            Generation_of_chapter1(window, backgroundSprite, backButtonForChap, pl, font, event, menu);
             window.display();
         }
     

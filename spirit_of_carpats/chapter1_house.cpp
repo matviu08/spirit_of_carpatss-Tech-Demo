@@ -9,7 +9,7 @@ const float wallHalfWidth = 0.5f;
 
 extern bool levelStarted;
 
-void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
+void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu) {
 
     sf::Vector2u windowSize = window.getSize();
 
@@ -147,7 +147,6 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     sf::Clock frameClock;
     float accumulator = 0.0f;
 
-    Menu menu(font, window);
 
     while (window.isOpen()) {
 
@@ -166,7 +165,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
             if (abs(pos.x - doorX) <= tolerance) {
                 b2DestroyWorld(worldId);
-                createLevels1(window, background, backButtonWithSetings, pl, font, event);
+                createLevels1(window, background, backButtonWithSetings, pl, font, event, menu);
                 return;
             }
         }

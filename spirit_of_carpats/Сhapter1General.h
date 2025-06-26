@@ -19,7 +19,7 @@
 #include <random>
 #include <vector>
 
-void Generation_of_chapter1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event);
+void Generation_of_chapter1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu);
 
 using namespace std;
 using namespace sf;

@@ -11,8 +11,6 @@
 #include <fstream>
 #include "logick.h"
 #include "location.h"
-#include "chapters.h"
-#include "Chapter1.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -63,7 +61,7 @@ private:
 
 public:
     Menu(sf::Font& font, sf::RenderWindow& window);
-    void handleEvent(const std::optional<sf::Event>&, sf::RenderWindow&, sf::Sprite&);
+    void handleEvent(const std::optional<sf::Event>&, sf::RenderWindow&, sf::Sprite&, Menu& menu);
     void draw(sf::RenderWindow& window);
 
     sf::Keyboard::Key getLeftKey() const { 

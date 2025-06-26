@@ -9,7 +9,7 @@ const float wallHalfWidth = 0.5f;
 
 extern bool levelStarted;
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event) {
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu) {
     sf::Vector2u windowSize = window.getSize();
 
     const float REFERENCE_WIDTH = 1920.0f;
@@ -144,7 +144,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     sf::Clock frameClock;
     float accumulator = 0.0f;
 
-    Menu menu(font, window);
 
     while (window.isOpen()) {
 
