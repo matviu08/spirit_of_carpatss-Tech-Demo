@@ -3,10 +3,10 @@
 const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
-const float WORLD_WIDTH_METERS = 100.0f/2.0f;
+const float WORLD_WIDTH_METERS = 77.0f/2.0f;
 const float WORLD_HEIGHT_METERS = 20.0f;
 const float wallHalfWidth = 0.5f;
-
+const float WINDOW_SCALE = 384.0f;
 extern bool levelStarted;
 
 void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu) {
@@ -144,7 +144,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //
     bool theAxIsTaken = false;
     sf::Text promptText(font);
-    promptText.setString("Go to the door");
+    promptText.setString("Press E near the axe to take it");
     promptText.setCharacterSize(60);
     promptText.setFillColor(sf::Color::White);
     sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - promptText.getLocalBounds().size.x / 2, 100);
@@ -153,7 +153,6 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
 
     while (window.isOpen()) {
-
         float deltaTime = frameClock.restart().asSeconds();
 
         deltaTime = min(deltaTime, 0.033f);
@@ -162,15 +161,15 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         b2Vec2 pos = b2Body_GetPosition(bodyId);
 
-        float dooreX = WORLD_WIDTH_METERS - 6.0f;
-        float tol = 6.0f;
-
-        //
+        float doorX = WORLD_WIDTH_METERS - (windowSize.x/WINDOW_SCALE);
+        float tolerance = 6.0f;
+        float axeX = (windowSize.x / WINDOW_SCALE) * 2;
+        
         if (!theAxIsTaken) {
-            // тут впихнеш перевірку маленьку і все готово
+            
         }
         else{
-            if (abs(pos.x - dooreX) <= tol) {
+            if (abs(pos.x - doorX) <= tolerance) {
                 promptText.setString("Press E");
                 promptText.setPosition(pos_1);
             }
@@ -179,17 +178,23 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
                 promptText.setPosition(pos_1);
             }
         }
-        //
         
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && theAxIsTaken) {
             
-            float doorX = WORLD_WIDTH_METERS - 6.0f;
-            float tolerance = 6.0f;
-
+            
             if (abs(pos.x - doorX) <= tolerance) {
                 b2DestroyWorld(worldId);
                 createLevels1(window, background, backButtonWithSetings, pl, font, event, menu);
                 return;
+            }
+            
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && !theAxIsTaken) {
+            
+            if (abs(pos.x - axeX) <= tolerance) {
+                theAxIsTaken = true;
+                axe.clear();
             }
         }
 
