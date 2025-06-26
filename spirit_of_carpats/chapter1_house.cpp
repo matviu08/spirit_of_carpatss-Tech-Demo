@@ -3,15 +3,23 @@
 const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
-const float WORLD_WIDTH_METERS = 77.0f/2.0f;
+const float WORLD_WIDTH_METERS = 77.0f / 2.0f;
 const float WORLD_HEIGHT_METERS = 20.0f;
 const float wallHalfWidth = 0.5f;
 const float WINDOW_SCALE = 384.0f;
 extern bool levelStarted;
 
+enum AnimationState {
+    IDLE,
+    WALKING_LEFT,
+    WALKING_RIGHT
+};
+
 void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu) {
 
     sf::Vector2u windowSize = window.getSize();
+
+    AnimationState currentAnimation = IDLE;
 
     const float REFERENCE_WIDTH = 1920.0f;
     const float REFERENCE_HEIGHT = 1080.0f;
@@ -19,9 +27,9 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     float scaleFactorY = (float)windowSize.y / REFERENCE_HEIGHT;
     float uniformScale = min(scaleFactorX, scaleFactorY);
 
-    float screenGroundY = -((float)windowSize.y * 0.42f) / SCALE; 
+    float screenGroundY = -((float)windowSize.y * 0.42f) / SCALE;
     float screenCenterY = 0.0f;
-    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; 
+    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE;
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
@@ -77,32 +85,40 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
     sf::RectangleShape characterShape;
     float charVisualScale = uniformScale * ((float)windowSize.y / REFERENCE_HEIGHT);
-    characterShape.setSize({ CHARACTER_HALF_WIDTH * 4 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 4 * SCALE * charVisualScale });
-    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 2, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 2 });
-    characterShape.setFillColor(sf::Color::Red);
+    characterShape.setSize({ CHARACTER_HALF_WIDTH * 6 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 6 * SCALE * charVisualScale });
+    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
+    characterShape.setFillColor(sf::Color::Transparent);
+    sf::Texture characterTexture;
+
+
+    if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
+        cout << "Failed to load character texture!" << std::endl;
+    }
+
+    sf::Sprite characterSprite(characterTexture);
 
     //home_location
     sf::Texture background_home_texture;
     sf::Texture bed_texture;
     sf::Texture axe_texture;
 
-    
+
     //home_location
     background_home_texture.loadFromFile("assets/img/home_bg.png");
     axe_texture.loadFromFile("assets/img/axe_4.png");
 
     //location_2_ountside
-    std::vector<sf::Sprite> ground;
-    std::vector<sf::Sprite> grass;
-    std::vector<sf::Sprite> rock;
-    std::vector<sf::Sprite> trees;
-    std::vector<sf::Sprite> news;
+    vector<sf::Sprite> ground;
+    vector<sf::Sprite> grass;
+    vector<sf::Sprite> rock;
+    vector<sf::Sprite> trees;
+    vector<sf::Sprite> news;
 
     //location_1_home
-    std::vector<sf::Sprite> tiledBackgrounds;
-    std::vector<sf::Sprite>bed;
-    std::vector<sf::Sprite> axe;
-    std::vector<sf::Sprite>background_home;
+    vector<sf::Sprite> tiledBackgrounds;
+    vector<sf::Sprite>bed;
+    vector<sf::Sprite> axe;
+    vector<sf::Sprite>background_home;
 
     generateHomeScene(
         window,
@@ -112,21 +128,21 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         font,
         event,
         bed,
-		axe,
-		background_home,
-		axe_texture,
-		background_home_texture,
-		bed_texture
+        axe,
+        background_home,
+        axe_texture,
+        background_home_texture,
+        bed_texture
     );
 
-     for (auto& homeBg : background_home)
-         window.draw(homeBg);
+    for (auto& homeBg : background_home)
+        window.draw(homeBg);
 
 
-     for (auto& tile : tiledBackgrounds)
-         window.draw(tile);
+    for (auto& tile : tiledBackgrounds)
+        window.draw(tile);
 
-    
+
 
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int SUB_STEP_COUNT = 4;
@@ -151,6 +167,22 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     promptText.setPosition(pos_1);
     //
 
+    sf::IntRect currentFrame;
+    int frameWidth = 300;
+    int frameHeight = 300;
+    int currentFrameIndex = 0;
+    int totalFrames = 4;
+    sf::Clock animationClock;
+    float animationSpeed = 0.2f;
+
+
+
+    currentFrame = IntRect(Vector2i(40, 80), Vector2i(static_cast<int>(frameWidth), static_cast<int>(frameHeight)));
+
+    characterSprite.setTextureRect(currentFrame);
+
+
+    characterSprite.setOrigin(sf::Vector2f(frameWidth / 2.0f, frameHeight / 2.0f));
 
     while (window.isOpen()) {
         float deltaTime = frameClock.restart().asSeconds();
@@ -161,21 +193,14 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         b2Vec2 pos = b2Body_GetPosition(bodyId);
 
-        float doorX = WORLD_WIDTH_METERS - (windowSize.x/WINDOW_SCALE);
+        float doorX = WORLD_WIDTH_METERS - (windowSize.x / WINDOW_SCALE);
         float tolerance = 6.0f;
         float axeX = (windowSize.x / WINDOW_SCALE) * 2;
-        
+
         if (!theAxIsTaken) {
-            if (abs(pos.x - axeX) <= tolerance) {
-                promptText.setString("Press E");
-                promptText.setPosition(pos_1);
-            }
-            else {
-                promptText.setString("pick up the axe on the nightstand");
-                promptText.setPosition(pos_1);
-            }
+
         }
-        else{
+        else {
             if (abs(pos.x - doorX) <= tolerance) {
                 promptText.setString("Press E");
                 promptText.setPosition(pos_1);
@@ -185,20 +210,20 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
                 promptText.setPosition(pos_1);
             }
         }
-        
-        
+
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && theAxIsTaken) {
-            
-            
+
+
             if (abs(pos.x - doorX) <= tolerance) {
                 b2DestroyWorld(worldId);
                 createLevels1(window, background, backButtonWithSetings, pl, font, event, menu);
                 return;
             }
-            
+
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && !theAxIsTaken) {
-            theAxIsTaken = true;
+
             if (abs(pos.x - axeX) <= tolerance) {
                 theAxIsTaken = true;
                 axe.clear();
@@ -212,11 +237,15 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         sf::Keyboard::Key leftBind = menu.getLeftKey();
         sf::Keyboard::Key rightBind = menu.getRightKey();
 
+        AnimationState newAnimation = IDLE;
+
         if (sf::Keyboard::isKeyPressed(leftBind)) {
             horizontalInput = -1.0f;
+            /*newAnimation = WALKING_LEFT;*/
         }
         else if (sf::Keyboard::isKeyPressed(rightBind)) {
             horizontalInput = 1.0f;
+            /*newAnimation = WALKING_RIGHT;*/
         }
 
         float targetVelocityX = horizontalInput * MOVE_SPEED;
@@ -228,13 +257,34 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         else {
             velocity.x += velocityChangeX * AIR_CONTROL_FACTOR;
         }
-
-        /*bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
-        if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
-            velocity.y = JUMP_VELOCITY;
+        if (newAnimation != currentAnimation) {
+            currentAnimation = newAnimation;
+            currentFrameIndex = 0;
+            animationClock.restart();
         }
-        jumpHeldLastFrame = jumpHeldThisFrame;*/
 
+        /* if (animationClock.getElapsedTime().asSeconds() >= animationSpeed) {
+             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
+
+
+             int row = 0;
+             switch (currentAnimation) {
+             case IDLE:
+                 row = 0;
+                 break;
+             case WALKING_LEFT:
+                 row = 1;
+                 break;
+             case WALKING_RIGHT:
+                 row = 2;
+                 break;
+             }
+             currentFrame.position.x = currentFrameIndex * frameWidth;
+             currentFrame.position.y = row * frameHeight;
+             characterSprite.setTextureRect(currentFrame);
+
+             animationClock.restart();
+         }*/
         b2Body_SetLinearVelocity(bodyId, velocity);
 
         bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
@@ -269,7 +319,10 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         cameraX = max(worldStartX, min(cameraX, worldEndX));
 
         sf::View gameView(sf::Vector2f(cameraX, cameraY), sf::Vector2f(viewWidth, viewHeight));
+
         window.setView(gameView);
+
+
 
         window.clear();
 
@@ -282,14 +335,20 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         for (auto& spr : axe)
             window.draw(spr);
 
-        float spriteScale = uniformScale * screenMoveScale;
 
-
+        float spriteScale = uniformScale * screenMoveScale * 1.5f;
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
         ));
         window.draw(characterShape);
+        characterSprite.setPosition(sf::Vector2f(
+            pos.x * SCALE,
+            (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
+        ));
+        characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+
+        window.draw(characterSprite);
         sf::View defaultView = window.getDefaultView();
         window.setView(defaultView);
         window.draw(promptText);
@@ -297,8 +356,8 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         window.setView(gameView);
         window.display();
     }
-    
+
     b2DestroyWorld(worldId);
 }
-    
+
 
