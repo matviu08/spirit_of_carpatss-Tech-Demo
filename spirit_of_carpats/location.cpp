@@ -1,6 +1,5 @@
 ﻿#include "location.h"
 
-
 void generateForestScene(
     sf::RenderWindow& window,
     std::vector<sf::Sprite>& ground,
@@ -31,11 +30,8 @@ void generateForestScene(
     const float textureWidth = static_cast<float>(backgroundTexture.getSize().x);
     const float textureHeight = static_cast<float>(backgroundTexture.getSize().y);
 
-   
     float scaleX = windowWidth / textureWidth;
     float scaleY = windowHeight / textureHeight;
-
-    
 
     for (int i = 0; i < backgroundRepeatCount; ++i) {
         sf::Sprite backgroundSprite(backgroundTexture);
@@ -44,7 +40,6 @@ void generateForestScene(
         background.push_back(backgroundSprite);
     }
    
-
     // 📰 Генерація газет
     const float baseWidth = 1920.f;
     const float baseHeight = 1080.f;
@@ -66,8 +61,6 @@ void generateForestScene(
     srand(time(NULL));
     float agle = rand() % (100 - 0) + 0;
 
-
-
     for (int i = 0; i < newsCount; ++i) {
         sf::Sprite newspaper(newspaperTexture);
         float scale = 0.8f + static_cast<float>(rand() % 40) / 100.0f;
@@ -82,6 +75,7 @@ void generateForestScene(
 
         news.push_back(newspaper);
     }
+
     // базове розширення
     const float baseWidth_for_tree = 1920.f;
     const float baseHeight_for_tree = 1080.f;
@@ -123,8 +117,6 @@ void generateForestScene(
     }
 }
 
-
-
 //генерація хати
 
 void generateHomeScene(
@@ -135,26 +127,52 @@ void generateHomeScene(
     sf::Font font,
     const std::optional<sf::Event>& event,
     std::vector<sf::Sprite>& bed,
+    //std::vector<sf::Sprite>& axe,
     std::vector<sf::Sprite>& background_home,
     const sf::Texture& background_home_texture,
     const sf::Texture& bed_texture
-) {
-    
-    const float windowWidth = static_cast<float>(window.getSize().x);
-    const float windowHeight = static_cast<float>(window.getSize().y);
-    const float textureWidth = static_cast<float>(background_home_texture.getSize().x);
-    const float textureHeight = static_cast<float>(background_home_texture.getSize().y);
+    //const sf::Texture& axe_texture
+){
+    float windowWidth = float(window.getSize().x);
+    float windowHeight = float(window.getSize().y);
+    float texWidth = float(background_home_texture.getSize().x);
+    float texHeight = float(background_home_texture.getSize().y);
 
-   
-    float scaleX = windowWidth / textureWidth;
-    float scaleY = windowHeight / textureHeight;
-
-    
     background_home.clear();
+   /* axe.clear();*/
 
     
-    sf::Sprite backgroundSprite(background_home_texture);
-    backgroundSprite.setScale(sf::Vector2f(scaleX, scaleY));
-    backgroundSprite.setPosition(sf::Vector2f(0.0f, 0.0f));
-    background_home.push_back(backgroundSprite);
+	sf::Sprite bg(background_home_texture);
+	float sx = windowWidth / texWidth;
+	float sy = windowHeight / texHeight;
+	bg.setScale(Vector2f(sx, sy));
+	bg.setPosition(Vector2f(0.f, 0.f));
+	background_home.push_back(bg);
+    
+
+    
+	/*sf::Sprite axeSprite(axe_texture);
+
+	axeSprite.setOrigin(Vector2f(
+		axe_texture.getSize().x * 0.5f,
+		axe_texture.getSize().y * 0.5f
+	));
+
+	const float baseW = 1920.f, baseH = 1080.f;
+	float xRatio = windowWidth / baseW;
+	float yRatio = windowHeight / baseH;
+	float uniform = min(xRatio, yRatio);
+
+	float rnd = 0.8f + (std::rand() % 41) / 100.f;
+	axeSprite.setScale(Vector2f(uniform * rnd, uniform * rnd));
+
+	axeSprite.setPosition(Vector2f(
+		windowWidth * 0.5f,
+		windowHeight * 0.6f
+	));
+
+
+	axe.push_back(axeSprite);*/
+    
+
 }

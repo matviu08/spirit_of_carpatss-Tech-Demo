@@ -90,11 +90,13 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //home_location
     sf::Texture background_home_texture;
     sf::Texture bed_texture;
+    //sf::Texture axe_texture;
 
     
     //home_location
     background_home_texture.loadFromFile("assets/img/home_bg.png");
-    bed_texture.loadFromFile("assets/img/bed_texture.png");
+    /*bed_texture.loadFromFile("assets/img/bed_texture.png");*/
+ /*   axe_texture.loadFromFile("assets/img/axe_2.png");*/
 
     //location_2_ountside
     std::vector<sf::Sprite> ground;
@@ -106,6 +108,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //location_1_home
     std::vector<sf::Sprite> tiledBackgrounds;
     std::vector<sf::Sprite>bed;
+    //std::vector<sf::Sprite> axe;
     std::vector<sf::Sprite>background_home;
 
     generateHomeScene(
@@ -115,14 +118,19 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         pl,
         font,
         event,
+        //axe,
         bed,
         background_home,
+  /*      axe_texture,*/
         background_home_texture,
         bed_texture
     );
 
      for (auto& homeBg : background_home)
          window.draw(homeBg);
+
+     //for (auto& spr : axe)
+     //    window.draw(spr);
 
      for (auto& tile : tiledBackgrounds)
          window.draw(tile);
