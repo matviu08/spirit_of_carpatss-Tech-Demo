@@ -2,6 +2,7 @@
 
 bool levelStarted = false;
 bool gamebuttonOn = false;
+bool tohnoEnglish = true;
 
 void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
     sf::Vector2u windowSize = window.getSize();
@@ -145,6 +146,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                         rightKeyButton.setString("Right: " + keyToString(rightKey));
                         bindsButton.setString("Binds");
                         backButtonWithBinds.setString("Back");
+                        tohnoEnglish = true;
                     }
                     else {
                         newGameButton.setString(L"Нова гра");
@@ -159,6 +161,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                         rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
                         bindsButton.setString(L"Бінди");
                         backButtonWithBinds.setString(L"Назад");
+                        tohnoEnglish = false;
                     }
                 }
                 else if (musicButton.getGlobalBounds().contains(mouseWorldPos)) {

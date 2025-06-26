@@ -28,8 +28,14 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
     }
 
+    extern bool tohnoEnglish;
     sf::Text backButtonForChap(font);
-    backButtonForChap.setString("Back to Chapters");
+    if (tohnoEnglish) {
+        backButtonForChap.setString("Back to Chapters");
+    }
+    else {
+        backButtonForChap.setString(L"Назад до чаптерів");
+    }
     backButtonForChap.setCharacterSize(50);
     backButtonForChap.setFillColor(sf::Color::White);
     backButtonForChap.setPosition(sf::Vector2f(20.f, 20.f));

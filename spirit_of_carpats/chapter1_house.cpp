@@ -160,7 +160,6 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //
     bool theAxIsTaken = false;
     sf::Text promptText(font);
-    promptText.setString("Press E near the axe to take it");
     promptText.setCharacterSize(60);
     promptText.setFillColor(sf::Color::White);
     sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - promptText.getLocalBounds().size.x / 2, 100);
@@ -196,27 +195,41 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         float doorX = WORLD_WIDTH_METERS - (windowSize.x / WINDOW_SCALE);
         float tolerance = 6.0f;
         float axeX = (windowSize.x / WINDOW_SCALE) * 2;
+        extern bool tohnoEnglish;
 
-        if (!theAxIsTaken) {
-            /*if (abs(pos.x - axeX) <= tolerance) {
-                promptText.setString("Press E");
+        if (tohnoEnglish) {
+            if (!theAxIsTaken) {
+                promptText.setString("Press E near the axe to take it");
                 promptText.setPosition(pos_1);
             }
             else {
-                promptText.setString("Pick up the axe on the nightstand");
-                promptText.setPosition(pos_1);
-            }*/
+                if (abs(pos.x - doorX) <= tolerance) {
+                    promptText.setString("Press E");
+                    promptText.setPosition(pos_1);
+                }
+                else {
+                    promptText.setString("Go to the door");
+                    promptText.setPosition(pos_1);
+                }
+            }
         }
         else {
-            if (abs(pos.x - doorX) <= tolerance) {
-                promptText.setString("Press E");
+            if (!theAxIsTaken) {
+                promptText.setString(L"Натисніть E біля сокири, щоб взяти її");
                 promptText.setPosition(pos_1);
             }
             else {
-                promptText.setString("Go to the door");
-                promptText.setPosition(pos_1);
+                if (abs(pos.x - doorX) <= tolerance) {
+                    promptText.setString(L"Натисніть E");
+                    promptText.setPosition(pos_1);
+                }
+                else {
+                    promptText.setString(L"Іди до дверей");
+                    promptText.setPosition(pos_1);
+                }
             }
         }
+        
 
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && theAxIsTaken) {

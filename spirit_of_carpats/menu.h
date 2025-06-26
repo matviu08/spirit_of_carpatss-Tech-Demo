@@ -25,7 +25,6 @@ private:
     bool settingsOpened = false;
     bool bindsOpened = false;
     bool isEnglish = true;
-    bool tohnoEnglish = true;
     bool musicEnabled = true;
     bool waitingForLeftKey = false;
     bool waitingForRightKey = false;
