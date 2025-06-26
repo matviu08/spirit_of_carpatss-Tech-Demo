@@ -108,7 +108,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         }
         idleFrame.push_back(texture);
     }
-
+    sf::Texture characterTexture;
     if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
         cout << "Failed to load character texture!" << std::endl;
     }

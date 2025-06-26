@@ -194,7 +194,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
         float doorX = WORLD_WIDTH_METERS - (windowSize.x / WINDOW_SCALE);
         float tolerance = 6.0f;
-        float axeX = (windowSize.x / WINDOW_SCALE) * 2;
+        float axeX = (windowSize.x / WINDOW_SCALE) * 2.5f;
         extern bool tohnoEnglish;
 
         if (tohnoEnglish) {
