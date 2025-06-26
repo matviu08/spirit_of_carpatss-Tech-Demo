@@ -126,12 +126,13 @@ void generateHomeScene(
     Player& pl,
     sf::Font font,
     const std::optional<sf::Event>& event,
-    std::vector<sf::Sprite>& bed,
-    //std::vector<sf::Sprite>& axe,
-    std::vector<sf::Sprite>& background_home,
+    vector<sf::Sprite>& bed,
+    vector<sf::Sprite>& axe,
+    vector<sf::Sprite>& background_home,
+    const sf::Texture& axe_texture,
     const sf::Texture& background_home_texture,
     const sf::Texture& bed_texture
-    //const sf::Texture& axe_texture
+    
 ){
     float windowWidth = float(window.getSize().x);
     float windowHeight = float(window.getSize().y);
@@ -139,7 +140,7 @@ void generateHomeScene(
     float texHeight = float(background_home_texture.getSize().y);
 
     background_home.clear();
-   /* axe.clear();*/
+    axe.clear();
 
     
 	sf::Sprite bg(background_home_texture);
@@ -151,7 +152,7 @@ void generateHomeScene(
     
 
     
-	/*sf::Sprite axeSprite(axe_texture);
+	sf::Sprite axeSprite(axe_texture);
 
 	axeSprite.setOrigin(Vector2f(
 		axe_texture.getSize().x * 0.5f,
@@ -172,7 +173,7 @@ void generateHomeScene(
 	));
 
 
-	axe.push_back(axeSprite);*/
+	axe.push_back(axeSprite);
     
 
 }

@@ -19,16 +19,14 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     float scaleFactorY = (float)windowSize.y / REFERENCE_HEIGHT;
     float uniformScale = min(scaleFactorX, scaleFactorY);
 
-    // Calculate screen-dependent positions
-    float screenGroundY = -((float)windowSize.y * 0.42f) / SCALE; // Ground relative to screen bottom
-    float screenCenterY = 0.0f; // Screen center in world coordinates
-    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; // Wall height based on screen height
+    float screenGroundY = -((float)windowSize.y * 0.42f) / SCALE; 
+    float screenCenterY = 0.0f;
+    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; 
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
     b2WorldId worldId = b2CreateWorld(&worldDef);
 
-    // Ground positioned relative to screen
     b2BodyDef groundBodyDef = b2DefaultBodyDef();
     groundBodyDef.type = b2_staticBody;
     groundBodyDef.position = b2Vec2{ WORLD_WIDTH_METERS / 2.0f, screenGroundY };
@@ -40,7 +38,6 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     groundShapeDef.material.friction = 100.0f;
     b2CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
-    // Left wall scaled to screen height
     b2BodyDef leftWallDef = b2DefaultBodyDef();
     leftWallDef.type = b2_staticBody;
     leftWallDef.position = b2Vec2{ 0.0f, screenCenterY };
@@ -52,7 +49,6 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     leftWallShapeDef.material.friction = 0.5f;
     b2CreatePolygonShape(leftWallId, &leftWallShapeDef, &leftWallBox);
 
-    // Right wall scaled to screen height
     b2BodyDef rightWallDef = b2DefaultBodyDef();
     rightWallDef.type = b2_staticBody;
     rightWallDef.position = b2Vec2{ WORLD_WIDTH_METERS + wallHalfWidth, screenCenterY };
@@ -64,10 +60,9 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     rightWallShapeDef.material.friction = 0.5f;
     b2CreatePolygonShape(rightWallId, &rightWallShapeDef, &rightWallBox);
 
-    // Character positioned relative to ground
     b2BodyDef bodyDef = b2DefaultBodyDef();
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position = b2Vec2{ 2.0f, screenGroundY + 2.0f }; // 2 meters above ground
+    bodyDef.position = b2Vec2{ 2.0f, screenGroundY + 2.0f };
     b2BodyId bodyId = b2CreateBody(worldId, &bodyDef);
 
     b2Polygon dynamicBox = b2MakeBox(CHARACTER_HALF_WIDTH, CHARACTER_HALF_HEIGHT);
@@ -80,7 +75,6 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     b2Body_SetAwake(bodyId, true);
     b2Body_SetFixedRotation(bodyId, true);
 
-    // Character visual scaled to screen
     sf::RectangleShape characterShape;
     float charVisualScale = uniformScale * ((float)windowSize.y / REFERENCE_HEIGHT);
     characterShape.setSize({ CHARACTER_HALF_WIDTH * 4 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 4 * SCALE * charVisualScale });
@@ -90,13 +84,13 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //home_location
     sf::Texture background_home_texture;
     sf::Texture bed_texture;
-    //sf::Texture axe_texture;
+    sf::Texture axe_texture;
 
     
     //home_location
     background_home_texture.loadFromFile("assets/img/home_bg.png");
-    /*bed_texture.loadFromFile("assets/img/bed_texture.png");*/
- /*   axe_texture.loadFromFile("assets/img/axe_2.png");*/
+    bed_texture.loadFromFile("assets/img/bed_texture.png");
+    axe_texture.loadFromFile("assets/img/axe_2.png");
 
     //location_2_ountside
     std::vector<sf::Sprite> ground;
@@ -108,7 +102,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //location_1_home
     std::vector<sf::Sprite> tiledBackgrounds;
     std::vector<sf::Sprite>bed;
-    //std::vector<sf::Sprite> axe;
+    std::vector<sf::Sprite> axe;
     std::vector<sf::Sprite>background_home;
 
     generateHomeScene(
@@ -118,19 +112,19 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         pl,
         font,
         event,
-        //axe,
         bed,
-        background_home,
-  /*      axe_texture,*/
-        background_home_texture,
-        bed_texture
+         axe,
+         background_home,
+         axe_texture,
+         background_home_texture,
+         bed_texture
     );
 
      for (auto& homeBg : background_home)
          window.draw(homeBg);
 
-     //for (auto& spr : axe)
-     //    window.draw(spr);
+     for (auto& spr : axe)
+         window.draw(spr);
 
      for (auto& tile : tiledBackgrounds)
          window.draw(tile);

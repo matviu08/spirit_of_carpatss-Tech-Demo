@@ -52,9 +52,11 @@ void generateHomeScene(
     sf::Font font,
     const std::optional<sf::Event>& event,
     std::vector<sf::Sprite>& bed,
-    //std::vector<sf::Sprite>& axe,
+    std::vector<sf::Sprite>& axe,
+    
     std::vector<sf::Sprite>& background_home,
+    const sf::Texture& axe_texture,
     const sf::Texture& background_home_texture,
     const sf::Texture& bed_texture
-    //const sf::Texture& axe_texture
+    
 );
