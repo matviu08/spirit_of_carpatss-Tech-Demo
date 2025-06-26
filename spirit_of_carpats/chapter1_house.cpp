@@ -198,7 +198,14 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         float axeX = (windowSize.x / WINDOW_SCALE) * 2;
 
         if (!theAxIsTaken) {
-
+            if (abs(pos.x - axeX) <= tolerance) {
+                promptText.setString("Press E");
+                promptText.setPosition(pos_1);
+            }
+            else {
+                promptText.setString("Pick up the axe on the nightstand");
+                promptText.setPosition(pos_1);
+            }
         }
         else {
             if (abs(pos.x - doorX) <= tolerance) {
