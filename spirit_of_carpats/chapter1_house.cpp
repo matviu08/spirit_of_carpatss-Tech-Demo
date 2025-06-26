@@ -201,11 +201,11 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             velocity.x += velocityChangeX * AIR_CONTROL_FACTOR;
         }
 
-        bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
+        /*bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = JUMP_VELOCITY;
         }
-        jumpHeldLastFrame = jumpHeldThisFrame;
+        jumpHeldLastFrame = jumpHeldThisFrame;*/
 
         b2Body_SetLinearVelocity(bodyId, velocity);
 
