@@ -95,11 +95,26 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setSize({ CHARACTER_HALF_WIDTH * 6 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 6 * SCALE * charVisualScale });
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
     characterShape.setFillColor(sf::Color::Transparent);
-    sf::Texture characterTexture;
+
+    std::vector<sf::Texture>idleFrame;
+    const int counter = 4;
+
+    for (int i = 1; i <= counter; ++i) {
+        sf::Texture texture;
+        std::string filname = "assets/img/Right_state_" + to_string(i) + ".png";
+        if (!texture.loadFromFile(filname)) {
+            cout << "errot player file!";
+
+        }
+        idleFrame.push_back(texture);
+    }
 
     if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
         cout << "Failed to load character texture!" << std::endl;
     }
+
+
+    
 
     sf::Sprite characterSprite(characterTexture);
 

@@ -84,7 +84,7 @@ void generateForestScene(
     float yRatio_tree = static_cast<float>(windowSize.y) / baseHeight;
 
     //adaprive generation of tree
-    const int treeCount = 7;
+    const int treeCount = 12;
     const float baseTreeX = 300.f;
     const float baseTreeY = 425.f;
     const float baseTreeSpacing = 550.f;
