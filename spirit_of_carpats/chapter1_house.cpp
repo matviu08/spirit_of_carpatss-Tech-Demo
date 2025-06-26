@@ -199,12 +199,12 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
         if (tohnoEnglish) {
             if (!theAxIsTaken) {
-                promptText.setString("Press E near the axe to take it");
+                promptText.setString("Press " + menu.getInteractionText() + " near the axe to take it");
                 promptText.setPosition(pos_1);
             }
             else {
                 if (abs(pos.x - doorX) <= tolerance) {
-                    promptText.setString("Press E");
+                    promptText.setString("Press " + menu.getInteractionText());
                     promptText.setPosition(pos_1);
                 }
                 else {
@@ -215,12 +215,12 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         }
         else {
             if (!theAxIsTaken) {
-                promptText.setString(L"Натисніть E біля сокири, щоб взяти її");
+                promptText.setString(L"Натисніть " + menu.getInteractionText() + L" біля сокири, щоб взяти її");
                 promptText.setPosition(pos_1);
             }
             else {
                 if (abs(pos.x - doorX) <= tolerance) {
-                    promptText.setString(L"Натисніть E");
+                    promptText.setString(L"Натисніть " + menu.getInteractionText());
                     promptText.setPosition(pos_1);
                 }
                 else {
@@ -232,7 +232,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
         
 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && theAxIsTaken) {
+        if (sf::Keyboard::isKeyPressed(menu.getInteractiontKey()) && theAxIsTaken) {
 
 
             if (abs(pos.x - doorX) <= tolerance) {
@@ -242,7 +242,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             }
 
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && !theAxIsTaken) {
+        else if (sf::Keyboard::isKeyPressed(menu.getInteractiontKey()) && !theAxIsTaken) {
 
             if (abs(pos.x - axeX) <= tolerance) {
                 theAxIsTaken = true;

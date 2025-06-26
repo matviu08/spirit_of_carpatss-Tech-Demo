@@ -228,7 +228,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             velocity.x += velocityChangeX * AIR_CONTROL_FACTOR;
         }
 
-        bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
+        bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(menu.getJumptKey());
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = JUMP_VELOCITY;
         }

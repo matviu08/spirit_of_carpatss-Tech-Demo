@@ -10,7 +10,7 @@ void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffse
     button.setPosition(pos_1);
 }
 
-Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButtonWithSetings(font), languageButton(font), musicButton(font), leftKeyButton(font), rightKeyButton(font), backButtonWithChapters(font), bindsButton(font), backButtonWithBinds(font) {
+Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButtonWithSetings(font), languageButton(font), musicButton(font), leftKeyButton(font), rightKeyButton(font), backButtonWithChapters(font), bindsButton(font), backButtonWithBinds(font), interactionKeyButton(font), jumpKeyButton(font) {
     newGameButton.setString("New Game");
     newGameButton.setCharacterSize(50); 
     newGameButton.setFillColor(sf::Color(252, 228, 204));
@@ -72,8 +72,17 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     backButtonWithBinds.setCharacterSize(50);
     backButtonWithBinds.setFillColor(sf::Color(252, 228, 204));
     backButtonWithBinds.setString("Back");
-    centerButton(backButtonWithBinds, window, 100);
+    centerButton(backButtonWithBinds, window, 300);
 
+    interactionKeyButton.setCharacterSize(50);
+    interactionKeyButton.setFillColor(sf::Color(252, 228, 204));
+    interactionKeyButton.setString("Interaction: " + keyToString(interactionKey));
+    centerButton(interactionKeyButton, window, 100);
+
+    jumpKeyButton.setCharacterSize(50);
+    jumpKeyButton.setFillColor(sf::Color(252, 228, 204));
+    jumpKeyButton.setString("Jump: " + keyToString(jumpKey));
+    centerButton(jumpKeyButton, window, 200);
 
     if (!menuMusic.openFromFile("assets/sound/MainMenuMusicks.ogg")) {
         cout << "Помилка: не вдалося завантажити музику" << endl;
@@ -126,6 +135,20 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     else
                         rightKeyButton.setString(L"Вправо: ...");
                 }
+                else if (interactionKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
+                    waitingForInteractionKey = true;
+                    if (isEnglish)
+                        interactionKeyButton.setString("Interaction: ...");
+                    else
+                        interactionKeyButton.setString(L"Взаємодія: ...");
+                }
+                else if (jumpKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
+                    waitingForJumpKey = true;
+                    if (isEnglish)
+                        jumpKeyButton.setString("Jump: ...");
+                    else
+                        jumpKeyButton.setString(L"Стрибок: ...");
+                }
                 else if (backButtonWithBinds.getGlobalBounds().contains(mouseWorldPos)) {
                     bindsOpened = false;
                 }
@@ -146,6 +169,8 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                         rightKeyButton.setString("Right: " + keyToString(rightKey));
                         bindsButton.setString("Binds");
                         backButtonWithBinds.setString("Back");
+                        interactionKeyButton.setString("Interaction: " + keyToString(interactionKey));
+                        jumpKeyButton.setString("Jump: " + keyToString(jumpKey));
                         tohnoEnglish = true;
                     }
                     else {
@@ -161,6 +186,8 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                         rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
                         bindsButton.setString(L"Бінди");
                         backButtonWithBinds.setString(L"Назад");
+                        interactionKeyButton.setString(L"Взаємодія: " + keyToString(interactionKey));
+                        jumpKeyButton.setString(L"Стрибок: " + keyToString(jumpKey));
                         tohnoEnglish = false;
                     }
                 }
@@ -200,7 +227,9 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
             centerButton(leftKeyButton, window, -100);
             centerButton(rightKeyButton, window, 0);
             centerButton(bindsButton, window, 100);
-            centerButton(backButtonWithBinds, window, 100);
+            centerButton(backButtonWithBinds, window, 300);
+            centerButton(interactionKeyButton, window, 100);
+            centerButton(jumpKeyButton, window, 200);
         }
     }
     else if (event->is<sf::Event::KeyPressed>()) {
@@ -224,6 +253,26 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                 centerButton(rightKeyButton, window, 0);
                 waitingForRightKey = false;
             }
+            else if (waitingForInteractionKey) {
+                interactionKey = pressed;
+                interactionText = " " + keyToWideString(interactionKey);
+                if (isEnglish) 
+                    interactionKeyButton.setString("Interaction: " + keyToString(interactionKey));
+                else
+                    interactionKeyButton.setString(L"Взаємодія: " + keyToWideString(interactionKey));
+                centerButton(interactionKeyButton, window, 100);
+                waitingForInteractionKey = false;
+                
+            }
+            else if (waitingForJumpKey) {
+                jumpKey = pressed;
+                if (isEnglish)
+                    jumpKeyButton.setString("Jump: " + keyToString(jumpKey));
+                else
+                    jumpKeyButton.setString(L"Стрибок: " + keyToWideString(jumpKey));
+                centerButton(jumpKeyButton, window, 200);
+                waitingForJumpKey = false;
+            }
         }
     }
 }
@@ -242,6 +291,8 @@ void Menu::draw(sf::RenderWindow& window) {
         if (bindsOpened) {
             window.draw(leftKeyButton);
             window.draw(rightKeyButton);
+            window.draw(interactionKeyButton);
+            window.draw(jumpKeyButton);
             window.draw(backButtonWithBinds);
         }
         else {

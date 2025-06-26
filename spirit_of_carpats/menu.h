@@ -28,22 +28,21 @@ private:
     bool musicEnabled = true;
     bool waitingForLeftKey = false;
     bool waitingForRightKey = false;
+    bool waitingForInteractionKey = false;
+    bool waitingForJumpKey = false;
+    string interactionText = "E";
 
     sf::Keyboard::Key leftKey = sf::Keyboard::Key::A;
     sf::Keyboard::Key rightKey = sf::Keyboard::Key::D;
+    sf::Keyboard::Key interactionKey = sf::Keyboard::Key::E;
+    sf::Keyboard::Key jumpKey = sf::Keyboard::Key::Space;
 
-    sf::RectangleShape newGameRect;
-    sf::RectangleShape settingsRect;
-    sf::RectangleShape quitRect;
     sf::Text newGameButton;
     sf::Text settingsButton;
     sf::Text quitButton;
-    sf::RectangleShape chapterRect;
-    sf::RectangleShape backRect;
     sf::Text chapterButton;
     sf::Text backButtonWithSetings;
     sf::Text backButtonWithChapters;
-    sf::RectangleShape languageRect;
     sf::Text languageButton;
     sf::Text bindsButton;
     sf::Text backButtonWithBinds;
@@ -53,6 +52,8 @@ private:
 
     sf::Text leftKeyButton;
     sf::Text rightKeyButton;
+    sf::Text interactionKeyButton;
+    sf::Text jumpKeyButton;
 
     void centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset);
     std::string keyToString(sf::Keyboard::Key key);
@@ -68,6 +69,15 @@ public:
     }
     sf::Keyboard::Key getRightKey() const {
         return rightKey;
+    }
+    sf::Keyboard::Key getInteractiontKey() const {
+        return interactionKey;
+    }
+    sf::Keyboard::Key getJumptKey() const {
+        return jumpKey;
+    }
+    string getInteractionText() {
+       return interactionText;
     }
 
 };
