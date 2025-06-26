@@ -9,8 +9,18 @@ const float wallHalfWidth = 0.5f;
 
 extern bool levelStarted;
 
+enum AnimationState {
+    IDLE,
+    WALKING_LEFT,
+    WALKING_RIGHT
+};
+
+
 void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu) {
     sf::Vector2u windowSize = window.getSize();
+
+    AnimationState currentAnimation = IDLE;
+
 
     const float REFERENCE_WIDTH = 1920.0f;
     const float REFERENCE_HEIGHT = 1080.0f;
@@ -82,11 +92,17 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     // Character visual scaled to screen
     sf::RectangleShape characterShape;
     float charVisualScale = uniformScale * ((float)windowSize.y / REFERENCE_HEIGHT);
-    characterShape.setSize({ CHARACTER_HALF_WIDTH * 2 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 2 * SCALE * charVisualScale });
-    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale });
-    characterShape.setFillColor(sf::Color::Red);
+    characterShape.setSize({ CHARACTER_HALF_WIDTH * 6 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 6 * SCALE * charVisualScale });
+    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
+    characterShape.setFillColor(sf::Color::Transparent);
+    sf::Texture characterTexture;
 
-    //outside
+    if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
+        cout << "Failed to load character texture!" << std::endl;
+    }
+
+    sf::Sprite characterSprite(characterTexture);
+
     sf::Texture grassTexture;
     sf::Texture rockTexture;
     sf::Texture treeTexture;
@@ -95,21 +111,18 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
 
 
-    //outside
     rockTexture.loadFromFile("assets/img/Kamin.png");
     treeTexture.loadFromFile("assets/img/Tree_3.png");
     newspaperTexture.loadFromFile("assets/img/torn newspaper_2.png");
     backgroundTexture.loadFromFile("assets/img/levl1_bg.png");
 
 
-    //location_2_ountside
     vector<sf::Sprite> ground;
     vector<sf::Sprite> grass;
     vector<sf::Sprite> rock;
     vector<sf::Sprite> trees;
     vector<sf::Sprite> news;
 
-    //location_1_home
     vector<sf::Sprite> tiledBackgrounds;
     vector<sf::Sprite>bed;
     vector<sf::Sprite>bacground_home;
@@ -129,7 +142,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         backgroundTexture,
         newspaperTexture
     );
-    
+
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int SUB_STEP_COUNT = 4;
 
@@ -144,6 +157,22 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     sf::Clock frameClock;
     float accumulator = 0.0f;
 
+    sf::IntRect currentFrame;
+    int frameWidth = 300;
+    int frameHeight = 300;
+    int currentFrameIndex = 0;
+    int totalFrames = 4;
+    sf::Clock animationClock;
+    float animationSpeed = 0.2f;
+
+
+
+    currentFrame = IntRect(Vector2i(40, 80), Vector2i(static_cast<int>(frameWidth), static_cast<int>(frameHeight)));
+
+    characterSprite.setTextureRect(currentFrame);
+
+
+    characterSprite.setOrigin(sf::Vector2f(frameWidth / 2.0f, frameHeight / 2.0f));
 
     while (window.isOpen()) {
 
@@ -163,11 +192,15 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         sf::Keyboard::Key leftBind = menu.getLeftKey();
         sf::Keyboard::Key rightBind = menu.getRightKey();
 
+        AnimationState newAnimation = IDLE;
+
         if (sf::Keyboard::isKeyPressed(leftBind)) {
             horizontalInput = -1.0f;
+            /*newAnimation = WALKING_LEFT;*/
         }
         else if (sf::Keyboard::isKeyPressed(rightBind)) {
             horizontalInput = 1.0f;
+            /*newAnimation = WALKING_RIGHT;*/
         }
 
         float targetVelocityX = horizontalInput * MOVE_SPEED;
@@ -185,6 +218,36 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             velocity.y = JUMP_VELOCITY;
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
+
+        if (newAnimation != currentAnimation) {
+            currentAnimation = newAnimation;
+            currentFrameIndex = 0;
+            animationClock.restart();
+        }
+
+        /* if (animationClock.getElapsedTime().asSeconds() >= animationSpeed) {
+            currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
+
+
+            int row = 0;
+            switch (currentAnimation) {
+            case IDLE:
+                row = 0;
+                break;
+            case WALKING_LEFT:
+                row = 1;
+                break;
+            case WALKING_RIGHT:
+                row = 2;
+                break;
+            }
+            currentFrame.position.x = currentFrameIndex * frameWidth;
+            currentFrame.position.y = row * frameHeight;
+            characterSprite.setTextureRect(currentFrame);
+
+            animationClock.restart();
+        }*/
+
 
         b2Body_SetLinearVelocity(bodyId, velocity);
 
@@ -227,7 +290,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         window.setView(gameView);
 
         window.clear();
-        
+
         for (auto& homeBg : bacground_home)
             window.draw(homeBg);
 
@@ -238,9 +301,9 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             window.draw(bedSprite);
 
         // Scale sprites based on screen size
-        float spriteScale = uniformScale * screenMoveScale;
+        float spriteScale = uniformScale * screenMoveScale / 1.5f;
 
- 
+
 
 
         for (auto& rockSprite : rock) {
@@ -261,11 +324,19 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             newsSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
             window.draw(newsSprite);
         }
+
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
         ));
         window.draw(characterShape);
+        characterSprite.setPosition(sf::Vector2f(
+            pos.x * SCALE,
+            (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
+        ));
+        characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+
+        window.draw(characterSprite);
 
         sf::View defaultView = window.getDefaultView();
         window.setView(defaultView);
