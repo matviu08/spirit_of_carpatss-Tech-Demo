@@ -3,7 +3,7 @@
 const float SCALE = 50.0f;
 const float CHARACTER_HALF_WIDTH = 0.5f;
 const float CHARACTER_HALF_HEIGHT = 1.0f;
-const float WORLD_WIDTH_METERS = 77.0f/2.0f;
+const float WORLD_WIDTH_METERS = 100.0f/2.0f;
 const float WORLD_HEIGHT_METERS = 20.0f;
 const float wallHalfWidth = 0.5f;
 
@@ -141,6 +141,16 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     sf::Clock frameClock;
     float accumulator = 0.0f;
 
+    //
+    bool theAxIsTaken = false;
+    sf::Text promptText(font);
+    promptText.setString("Go to the door");
+    promptText.setCharacterSize(60);
+    promptText.setFillColor(sf::Color::White);
+    sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - promptText.getLocalBounds().size.x / 2, 100);
+    promptText.setPosition(pos_1);
+    //
+
 
     while (window.isOpen()) {
 
@@ -151,9 +161,28 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
         b2Vec2 velocity = b2Body_GetLinearVelocity(bodyId);
         b2Vec2 pos = b2Body_GetPosition(bodyId);
+
+        float dooreX = WORLD_WIDTH_METERS - 6.0f;
+        float tol = 6.0f;
+
+        //
+        if (!theAxIsTaken) {
+            // тут впихнеш перевірку маленьку і все готово
+        }
+        else{
+            if (abs(pos.x - dooreX) <= tol) {
+                promptText.setString("Press E");
+                promptText.setPosition(pos_1);
+            }
+            else {
+                promptText.setString("Go to the door");
+                promptText.setPosition(pos_1);
+            }
+        }
+        //
+        
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-
-
+            
             float doorX = WORLD_WIDTH_METERS - 6.0f;
             float tolerance = 6.0f;
 
@@ -203,10 +232,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
             if (backButtonWithSetings.getGlobalBounds().contains(mouseWorldPos)) {
                 std::cout << "backButton to menu!" << std::endl;
-                levelStarted = false;
-                b2DestroyWorld(worldId);
                 window.close();
-                return;
             }
         }
         mouseWasPressed = mousePressed;
@@ -252,12 +278,11 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
         ));
         window.draw(characterShape);
-
         sf::View defaultView = window.getDefaultView();
         window.setView(defaultView);
+        window.draw(promptText);
         window.draw(backButtonWithSetings);
         window.setView(gameView);
-
         window.display();
     }
     
