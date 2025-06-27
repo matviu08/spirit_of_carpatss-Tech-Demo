@@ -48,7 +48,6 @@ private:
     sf::Text backButtonWithBinds;
 
     sf::Text musicButton;
-    sf::Music menuMusic;
 
     sf::Text leftKeyButton;
     sf::Text rightKeyButton;

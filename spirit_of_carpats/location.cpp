@@ -1,5 +1,6 @@
 ﻿#include "location.h"
 #include <ctime>
+extern sf::Music menuMusic;
 
 // Функція генерації сцени лісу
 void generateForestScene(
@@ -25,8 +26,8 @@ void generateForestScene(
         Embient_Munsic.setLooping(true);
         Embient_Munsic.setVolume(30);
         Embient_Munsic.play();
+        menuMusic.pause();
     }
-
 
     // Очищуємо всі попередні спрайти, щоб створити сцену заново
     trees.clear();

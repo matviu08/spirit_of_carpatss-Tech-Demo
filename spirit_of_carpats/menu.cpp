@@ -3,6 +3,7 @@
 bool levelStarted = false;
 bool gamebuttonOn = false;
 bool tohnoEnglish = true;
+sf::Music menuMusic;
 
 void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
     sf::Vector2u windowSize = window.getSize();
