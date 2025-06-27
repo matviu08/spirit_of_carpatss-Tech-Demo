@@ -29,7 +29,7 @@ void generateForestScene(
         menuMusic.pause();
     }
 
-    // Очищуємо всі попередні спрайти, щоб створити сцену заново
+    
     trees.clear();
     rock.clear();
     news.clear();
@@ -37,15 +37,15 @@ void generateForestScene(
     ground.clear();
     background.clear();
 
-    const int backgroundRepeatCount = 10; // Кількість повторів фонового зображення для розширення сцени
+    const int backgroundRepeatCount = 10; 
 
-    // Отримуємо розміри вікна та текстури фону (float для точності розрахунків)
+    
     const float windowWidth = static_cast<float>(window.getSize().x);
     const float windowHeight = static_cast<float>(window.getSize().y);
     const float textureWidth = static_cast<float>(backgroundTexture.getSize().x);
     const float textureHeight = static_cast<float>(backgroundTexture.getSize().y);
 
-    // Обчислюємо масштаб по осях X та Y, щоб текстура фону покривала вікно повністю
+    
     // Масштаб по X = ширина вікна / ширина текстури
     float scaleX = windowWidth / textureWidth;
     // Масштаб по Y = висота вікна / висота текстури
@@ -59,10 +59,8 @@ void generateForestScene(
         background.push_back(backgroundSprite);
     }
 
-    // ----------------------------------------------------
+    
     // Генерація газет (news) — адаптивне позиціювання
-
-    // Базові розміри екрану (орієнтовно Full HD)
     const float baseWidth = 1920.f;
     const float baseHeight = 1080.f;
     sf::Vector2u windowSize = window.getSize();
@@ -71,12 +69,12 @@ void generateForestScene(
     float xRatio = static_cast<float>(windowSize.x) / baseWidth;  // Співвідношення поточної ширини до базової
     float yRatio = static_cast<float>(windowSize.y) / baseHeight; // Аналогічно по висоті
 
-    // Початкові позиції та відстань між газетами в базових пікселях
+   
     const float baseStartX = 1000.f;
     const float baseY = 857.f;
     const float baseSpacing = 1200.f;
 
-    // Обчислюємо масштабовані позиції на основі коефіцієнтів масштабування
+   
     float startX = baseStartX * xRatio;  // Початкова позиція по X
     float y = baseY * yRatio;             // Фіксована позиція по Y
     float spacing = baseSpacing * xRatio; // Відстань між газетами
@@ -88,40 +86,39 @@ void generateForestScene(
     for (int i = 0; i < newsCount; ++i) {
         sf::Sprite newspaper(newspaperTexture);
 
-        // Випадковий масштаб газети у діапазоні [0.8, 1.2]
+        // Випадковий масштаб газети
         float scale = 0.8f + static_cast<float>(rand() % 40) / 100.0f;
-        // Вибираємо мінший коефіцієнт масштабу для збереження пропорцій
+        //масштаб для збереження пропорцій
         float uniformScale = min(xRatio, yRatio);
         // Масштабуємо газету пропорційно
         newspaper.setScale(sf::Vector2f(scale * uniformScale, scale * uniformScale));
 
-        // Випадковий кут обертання в межах [-15°, 15°]
+        // Випадковий кут обертання
         float rotation = static_cast<float>((rand() % 31) - 15);
         newspaper.setRotation(sf::degrees(rotation));
 
-        // Позиція по X з урахуванням індексу та відступу
+        // Позиція по X
         float x = startX + i * spacing;
         newspaper.setPosition(sf::Vector2f(x, y));
 
-        // Додаємо газету до списку спрайтів
         news.push_back(newspaper);
     }
 
-    // ----------------------------------------------------
-    // Генерація дерев — адаптивне розміщення і масштабування
+  
+    // Генерація дерев
 
-    const int treeCount = 36;               // Кількість дерев
-    const float baseTreeX = 290.f;          // Початкова X позиція в базових пікселях
-    const float baseTreeY = 125.f;          // Початкова Y позиція в базових пікселях
-    const float baseTreeSpacing = 250.f;    // Відстань між деревами
+    const int treeCount = 36;               
+    const float baseTreeX = 290.f;         
+    const float baseTreeY = 125.f;         
+    const float baseTreeSpacing = 250.f;   
 
-    // Розрахунок масштабу для позиції дерев (xRatio і yRatio знову ж)
-    float treeX = baseTreeX * xRatio / 4;  // Зменшена початкова позиція X (для кращої композиції)
-    float treeY = baseTreeY * yRatio;      // Масштабована позиція Y
-    float treeSpacing = baseTreeSpacing * xRatio; // Масштабована відстань між деревами
+  
+    float treeX = baseTreeX * xRatio / 4;
+    float treeY = baseTreeY * yRatio;
+    float treeSpacing = baseTreeSpacing * xRatio;
 
-    int tr = 2;       // Лічильник для коливань
-    float trY = 20.0f; // Зсув по Y для ефекту хвилі
+    int tr = 2;
+    float trY = 20.0f;
 
     // Перший шар дерев
     for (int i = 0; i < treeCount - 18; ++i) {
@@ -227,41 +224,39 @@ void generateHomeScene(
 
     // Створюємо спрайт фону хати та масштабуємо його пропорційно розміру вікна
     sf::Sprite bg(background_home_texture);
-    float sx = windowWidth / texWidth;   // Масштаб по ширині
-    float sy = windowHeight / texHeight; // Масштаб по висоті
+    float sx = windowWidth / texWidth;
+    float sy = windowHeight / texHeight;
     bg.setScale(Vector2f(sx, sy));
-    bg.setPosition(Vector2f(0.f, 0.f));  // Встановлюємо позицію в лівому верхньому куті
+    bg.setPosition(Vector2f(0.f, 0.f));
     background_home.push_back(bg);
 
-    // Створюємо спрайт сокири
     sf::Sprite axeSprite(axe_texture);
 
-    // Базові розміри екрану (Full HD)
     const float baseW = 1920.f, baseH = 1080.f;
 
     // Вираховуємо коефіцієнти масштабування по осях
     float xRatio = windowWidth / baseW;
     float yRatio = windowHeight / baseH;
 
-    // Вибираємо менший коефіцієнт, щоб зберегти пропорції об'єкта
+    // Вибираємо менший коефіцієнт
     float uniform = min(xRatio, yRatio);
 
-    // Випадковий коефіцієнт масштабу від 0.8 до 1.2
+    // Випадковий коефіцієнт масштабу
     float rnd = 0.8f + (std::rand() % 41) / 100.f;
 
-    // Встановлюємо точку обертання спрайту по центру (щоб обертання відбувалося навколо центру)
+    //точка обертання спрайту по центру
     sf::Vector2u texSize = axe_texture.getSize();
     axeSprite.setOrigin(Vector2f(texSize.x / 2.f, texSize.y / 2.f));
 
-    // Застосовуємо масштабування з урахуванням рандома і коефіцієнта uniform
+    
     axeSprite.setScale(Vector2f(uniform * rnd, uniform * rnd));
 
     // Розміщуємо сокиру у відносних координатах відносно розміру вікна
     axeSprite.setPosition(Vector2f(
-        windowWidth * 0.4f,   // 40% від ширини вікна
-        windowHeight * 0.6f   // 60% від висоти вікна
+        windowWidth * 0.4f,   // 40% 
+        windowHeight * 0.6f   // 60% 
     ));
 
-    // Додаємо сокиру до відповідного вектора спрайтів
+   
     axe.push_back(axeSprite);
 }
