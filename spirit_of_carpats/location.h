@@ -4,6 +4,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <Windows.h>
+#include <SFML/Audio.hpp>
 #include <iomanip>
 #include <conio.h>
 #include <cmath>
@@ -37,6 +38,7 @@ void generateForestScene(
     std::vector<sf::Sprite>& trees,
     std::vector<sf::Sprite>& news,
     std::vector<sf::Sprite>& background,
+    sf::Music& Embient_Munsic,
     const sf::Texture& grassTexture,
     const sf::Texture& rockTexture,
     const sf::Texture& treeTexture,
@@ -48,6 +50,7 @@ void generateHomeScene(
     sf::RenderWindow& window,
     sf::Sprite& background,
     sf::Text& backButtonWithSetings,
+    
 
     Player& pl,
     sf::Font font,

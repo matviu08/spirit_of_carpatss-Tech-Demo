@@ -10,12 +10,24 @@ void generateForestScene(
     std::vector<sf::Sprite>& trees,
     std::vector<sf::Sprite>& news,
     std::vector<sf::Sprite>& background,
+    sf::Music& Embient_Munsic,
     const sf::Texture& grassTexture,
     const sf::Texture& rockTexture,
     const sf::Texture& treeTexture,
     const sf::Texture& backgroundTexture,
     const sf::Texture& newspaperTexture)
 {
+
+    if (!Embient_Munsic.openFromFile("assets/sound/forest_emb.ogg")) {
+        std::cout << "sound error" << std::endl;
+    }
+    else {
+        Embient_Munsic.setLooping(true);
+        Embient_Munsic.setVolume(30);
+        Embient_Munsic.play();
+    }
+
+
     // Очищуємо всі попередні спрайти, щоб створити сцену заново
     trees.clear();
     rock.clear();

@@ -155,6 +155,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     vector<sf::Sprite>bed;
     vector<sf::Sprite>bacground_home;
 
+    sf::Music embience;
 
     generateForestScene(
         window,
@@ -164,6 +165,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         trees,
         news,
         tiledBackgrounds,
+        embience,
         grassTexture,
         rockTexture,
         treeTexture,
