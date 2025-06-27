@@ -20,7 +20,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     sf::Vector2u windowSize = window.getSize();
 
     AnimationState currentAnimation = IDLE;
-
+    AnimationState lastAnimation;
 
     const float REFERENCE_WIDTH = 1920.0f;
     const float REFERENCE_HEIGHT = 1080.0f;
@@ -28,10 +28,9 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     float scaleFactorY = (float)windowSize.y / REFERENCE_HEIGHT;
     float uniformScale = min(scaleFactorX, scaleFactorY);
 
-    // Calculate screen-dependent positions
-    float screenGroundY = -((float)windowSize.y * 0.35f) / SCALE; // Ground relative to screen bottom
-    float screenCenterY = 0.0f; // Screen center in world coordinates
-    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; // Wall height based on screen height
+    float screenGroundY = -((float)windowSize.y * 0.35f) / SCALE;
+    float screenCenterY = 0.0f; 
+    float wallHalfHeight = ((float)windowSize.y * 0.5f) / SCALE; 
 
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = b2Vec2{ 0.0f, -10.0f };
@@ -173,8 +172,8 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     float accumulator = 0.0f;
 
     sf::IntRect currentFrame;
-    int frameWidth = 300;
-    int frameHeight = 300;
+    int frameWidth = 210;
+    int frameHeight = 450;
     int currentFrameIndex = 0;
     int totalFrames = 4;
     sf::Clock animationClock;
@@ -182,7 +181,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
 
 
-    currentFrame = IntRect(Vector2i(40, 80), Vector2i(static_cast<int>(frameWidth), static_cast<int>(frameHeight)));
+    currentFrame = IntRect(Vector2i(30, 0), Vector2i(static_cast<int>(frameWidth), static_cast<int>(frameHeight)));
 
     characterSprite.setTextureRect(currentFrame);
 
@@ -208,14 +207,14 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         sf::Keyboard::Key rightBind = menu.getRightKey();
 
         AnimationState newAnimation = IDLE;
-
+        lastAnimation = newAnimation;
         if (sf::Keyboard::isKeyPressed(leftBind)) {
             horizontalInput = -1.0f;
-            /*newAnimation = WALKING_LEFT;*/
+            newAnimation = WALKING_LEFT;
         }
         else if (sf::Keyboard::isKeyPressed(rightBind)) {
             horizontalInput = 1.0f;
-            /*newAnimation = WALKING_RIGHT;*/
+            newAnimation = WALKING_RIGHT;
         }
 
         float targetVelocityX = horizontalInput * MOVE_SPEED;
@@ -240,28 +239,22 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             animationClock.restart();
         }
 
-        /* if (animationClock.getElapsedTime().asSeconds() >= animationSpeed) {
+         if (animationClock.getElapsedTime().asSeconds() >= animationSpeed) {
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
 
 
             int row = 0;
             switch (currentAnimation) {
-            case IDLE:
-                row = 0;
-                break;
-            case WALKING_LEFT:
-                row = 1;
-                break;
-            case WALKING_RIGHT:
-                row = 2;
-                break;
+            case IDLE: break;
+            case WALKING_LEFT: break;
+            case WALKING_RIGHT: break;
             }
-            currentFrame.position.x = currentFrameIndex * frameWidth;
+            /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
             currentFrame.position.y = row * frameHeight;
             characterSprite.setTextureRect(currentFrame);
 
             animationClock.restart();
-        }*/
+        }
 
 
         b2Body_SetLinearVelocity(bodyId, velocity);
@@ -349,7 +342,21 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
         ));
-        characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+        if (currentAnimation == WALKING_LEFT) {
+            characterSprite.setScale(sf::Vector2f(-spriteScale, spriteScale));
+        }
+        else if (currentAnimation == WALKING_RIGHT) {
+            characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+        }
+        else if (currentAnimation == IDLE)
+        {
+            if (lastAnimation == WALKING_LEFT) {
+                characterSprite.setScale(sf::Vector2f(-spriteScale, spriteScale));
+            }
+            else if (lastAnimation == WALKING_RIGHT) {
+                characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+            }
+        }
 
         window.draw(characterSprite);
 
