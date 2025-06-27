@@ -22,7 +22,7 @@
 #include <box2d/box2d.h>
 #include "Ñhapter1General.h"
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu,float spriteScale);
+void createLevels1(RenderWindow& window, Sprite& background, Text& backButtonWithSetings, Player& pl, Font font, const optional<Event>& event, Menu& menu,float spriteScale);
 
 
 using namespace std;
