@@ -19,4 +19,4 @@
 #include <random>
 #include <vector>
 
-void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu);
+void scene_home(RenderWindow& window, Sprite& background, Text& backButtonWithSetings, Player& pl, Font font, const optional<Event>& event, Menu& menu);
