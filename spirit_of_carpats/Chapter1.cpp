@@ -12,7 +12,8 @@ extern bool levelStarted;
 enum AnimationState {
     IDLE,
     WALKING_LEFT,
-    WALKING_RIGHT
+    WALKING_RIGHT,
+    JUMPING
 };
 
 
@@ -246,6 +247,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(menu.getJumptKey());
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = JUMP_VELOCITY;
+            newAnimation = JUMPING;
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
 
@@ -259,14 +261,14 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
 
 
-            int row = 0;
             switch (currentAnimation) {
-            case IDLE:row = 0; characterSprite.setTexture(characterAxe);  break;
-            case WALKING_LEFT: row = 0;characterSprite.setTexture(characterWalk);break;
-            case WALKING_RIGHT: row = 0; characterSprite.setTexture(characterWalk);
+            case IDLE:characterSprite.setTexture(characterAxe);  break;
+            case WALKING_LEFT:characterSprite.setTexture(characterWalk);break;
+            case WALKING_RIGHT: characterSprite.setTexture(characterWalk); break;
+            case JUMPING:characterSprite.setTexture(characterJump);
             }
             /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
-            currentFrame.position.y = row * frameHeight;
+            currentFrame.position.y = 0 * frameHeight;
             characterSprite.setTextureRect(currentFrame);
             
             animationClock.restart();
