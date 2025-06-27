@@ -19,22 +19,23 @@
 #include "Chapter1.h"
 
 using namespace std;
+using namespace sf;
 
 int main() {
-    sf::VideoMode screenSize = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow window(screenSize, "Spirit of Carpatians", sf::State::Fullscreen);
+    VideoMode screenSize = VideoMode::getDesktopMode();
+    RenderWindow window(screenSize, "Spirit of Carpatians", State::Fullscreen);
 
-    sf::Texture backgroundTexture;
+    Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("assets/img/backgroundMenu_DecstopVersion.png")) {
         cout << "Помилка: неможливо завантажити backgroundMenu.png!" << std::endl;
     }
-    sf::Sprite backgroundSprite(backgroundTexture);
+    Sprite backgroundSprite(backgroundTexture);
     backgroundSprite.setScale({
         static_cast<float>(window.getSize().x) / backgroundTexture.getSize().x,
         static_cast<float>(window.getSize().y) / backgroundTexture.getSize().y
         });
 
-    sf::Font font;
+    Font font;
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
         cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
     }

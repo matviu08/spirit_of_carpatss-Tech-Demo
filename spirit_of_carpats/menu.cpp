@@ -3,82 +3,82 @@
 bool levelStarted = false;
 bool gamebuttonOn = false;
 bool tohnoEnglish = true;
-sf::Music menuMusic;
+Music menuMusic;
 
-void Menu::centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset) {
-    sf::Vector2u windowSize = window.getSize();
-    sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - button.getLocalBounds().size.x / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
+void Menu::centerButton(Text& button, RenderWindow& window, float yOffset) {
+    Vector2u windowSize = window.getSize();
+    Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - button.getLocalBounds().size.x / 2, static_cast<float>(windowSize.y) / 2 + yOffset);
     button.setPosition(pos_1);
 }
 
-Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButtonWithSetings(font), languageButton(font), musicButton(font), leftKeyButton(font), rightKeyButton(font), backButtonWithChapters(font), bindsButton(font), backButtonWithBinds(font), interactionKeyButton(font), jumpKeyButton(font) {
+Menu::Menu(Font& font, RenderWindow& window) : newGameButton(font), settingsButton(font), quitButton(font), chapterButton(font), backButtonWithSetings(font), languageButton(font), musicButton(font), leftKeyButton(font), rightKeyButton(font), backButtonWithChapters(font), bindsButton(font), backButtonWithBinds(font), interactionKeyButton(font), jumpKeyButton(font) {
     newGameButton.setString("New Game");
     newGameButton.setCharacterSize(50); 
-    newGameButton.setFillColor(sf::Color(252, 228, 204));
+    newGameButton.setFillColor(Color(252, 228, 204));
     centerButton(newGameButton, window, -100);
 
     settingsButton.setString("Settings");
     settingsButton.setCharacterSize(50);
-    settingsButton.setFillColor(sf::Color(252, 228, 204));
+    settingsButton.setFillColor(Color(252, 228, 204));
     centerButton(settingsButton, window, 0);
 
     quitButton.setString("Quit");
     quitButton.setCharacterSize(50);
-    quitButton.setFillColor(sf::Color(252, 228, 204));
+    quitButton.setFillColor(Color(252, 228, 204));
     centerButton(quitButton, window, 100);
 
     chapterButton.setString("chapter 1");
     chapterButton.setCharacterSize(50);
-    chapterButton.setFillColor(sf::Color(252, 228, 204));
+    chapterButton.setFillColor(Color(252, 228, 204));
     centerButton(chapterButton, window, -100);
 
     backButtonWithSetings.setString("Back");
     backButtonWithSetings.setCharacterSize(50);
-    backButtonWithSetings.setFillColor(sf::Color(252, 228, 204));
+    backButtonWithSetings.setFillColor(Color(252, 228, 204));
     centerButton(backButtonWithSetings, window, 200);
 
     backButtonWithChapters.setString("Back");
     backButtonWithChapters.setCharacterSize(50);
-    backButtonWithChapters.setFillColor(sf::Color(252, 228, 204));
+    backButtonWithChapters.setFillColor(Color(252, 228, 204));
     centerButton(backButtonWithChapters, window, 0);
   
     languageButton.setString("Language: English");
     languageButton.setCharacterSize(50);
-    languageButton.setFillColor(sf::Color(252, 228, 204));
+    languageButton.setFillColor(Color(252, 228, 204));
     centerButton(languageButton, window, -100);
 
     musicButton.setString("Music: ON");
     musicButton.setCharacterSize(50);
-    musicButton.setFillColor(sf::Color(252, 228, 204));
+    musicButton.setFillColor(Color(252, 228, 204));
     centerButton(musicButton, window, 0);
 
     leftKeyButton.setCharacterSize(50);
-    leftKeyButton.setFillColor(sf::Color(252, 228, 204));
+    leftKeyButton.setFillColor(Color(252, 228, 204));
     leftKeyButton.setString("Left: " + keyToString(leftKey));
     centerButton(leftKeyButton, window, -100);
 
     rightKeyButton.setCharacterSize(50);
-    rightKeyButton.setFillColor(sf::Color(252, 228, 204));
+    rightKeyButton.setFillColor(Color(252, 228, 204));
     rightKeyButton.setString("Right: " + keyToString(rightKey));
     centerButton(rightKeyButton, window, 0);
 
     bindsButton.setCharacterSize(50);
-    bindsButton.setFillColor(sf::Color(252, 228, 204));
+    bindsButton.setFillColor(Color(252, 228, 204));
     bindsButton.setString("Binds");
     centerButton(bindsButton, window, 100);
 
     backButtonWithBinds.setCharacterSize(50);
-    backButtonWithBinds.setFillColor(sf::Color(252, 228, 204));
+    backButtonWithBinds.setFillColor(Color(252, 228, 204));
     backButtonWithBinds.setString("Back");
     centerButton(backButtonWithBinds, window, 300);
 
     interactionKeyButton.setCharacterSize(50);
-    interactionKeyButton.setFillColor(sf::Color(252, 228, 204));
+    interactionKeyButton.setFillColor(Color(252, 228, 204));
     interactionKeyButton.setString("Interaction: " + keyToString(interactionKey));
     centerButton(interactionKeyButton, window, 100);
 
     jumpKeyButton.setCharacterSize(50);
-    jumpKeyButton.setFillColor(sf::Color(252, 228, 204));
+    jumpKeyButton.setFillColor(Color(252, 228, 204));
     jumpKeyButton.setString("Jump: " + keyToString(jumpKey));
     centerButton(jumpKeyButton, window, 200);
 
@@ -92,11 +92,11 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     }
 }
 
-void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& window, sf::Sprite& backgroundSprite, Menu& menu) {
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+void Menu::handleEvent(const optional<Event>& event, RenderWindow& window, Sprite& backgroundSprite, Menu& menu) {
+    Vector2i mousePos = Mouse::getPosition(window);
+    Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
-    if (event->is<sf::Event::MouseButtonPressed>()) {
+    if (event->is<Event::MouseButtonPressed>()) {
         if (!levelStarted && !settingsOpened) {
             if (newGameButton.getGlobalBounds().contains(mouseWorldPos)) {
                 levelStarted = true;
@@ -242,9 +242,9 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
             centerButton(jumpKeyButton, window, 200);
         }
     }
-    else if (event->is<sf::Event::KeyPressed>()) {
-        if (const auto* keyEvt = event->getIf<sf::Event::KeyPressed>()) {
-            sf::Keyboard::Key pressed = sf::Keyboard::localize(keyEvt->scancode);
+    else if (event->is<Event::KeyPressed>()) {
+        if (const auto* keyEvt = event->getIf<Event::KeyPressed>()) {
+            Keyboard::Key pressed =Keyboard::localize(keyEvt->scancode);
             if (waitingForLeftKey) {
                 leftKey = pressed;
                 if (isEnglish) {
@@ -295,7 +295,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
     }
 }
 
-void Menu::draw(sf::RenderWindow& window) {
+void Menu::draw(RenderWindow& window) {
     if (!levelStarted && !settingsOpened) {
         window.draw(newGameButton);
         window.draw(settingsButton);
@@ -323,8 +323,8 @@ void Menu::draw(sf::RenderWindow& window) {
 }
 
 
-std::string Menu::keyToString(sf::Keyboard::Key key) {
-    using K = sf::Keyboard::Key;
+string Menu::keyToString(Keyboard::Key key) {
+    using K = Keyboard::Key;
     switch (key) {
     case K::A: return "A";
     case K::B: return "B";
