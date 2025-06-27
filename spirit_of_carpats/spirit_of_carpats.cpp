@@ -27,7 +27,7 @@ int main() {
 
     Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("assets/img/backgroundMenu_DecstopVersion.png")) {
-        cout << "Помилка: неможливо завантажити backgroundMenu.png!" << std::endl;
+        cout << "Помилка: неможливо завантажити backgroundMenu.png!" << endl;
     }
     Sprite backgroundSprite(backgroundTexture);
     backgroundSprite.setScale({
@@ -37,7 +37,7 @@ int main() {
 
     Font font;
     if (!font.openFromFile("assets/fonts/alagard-12px-unicode.ttf")) {
-        cout << "Помилка: не вдалося завантажити шрифт!" << std::endl;
+        cout << "Помилка: не вдалося завантажити шрифт!" << endl;
     }
 
     Menu menu(font, window); 
@@ -47,7 +47,7 @@ int main() {
     while (window.isOpen()) {
         extern bool gamebuttonOn;
         while (const std::optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
+            if (event->is<Event::Closed>())
                 window.close();
 
             menu.handleEvent(event, window, backgroundSprite, menu);
