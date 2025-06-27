@@ -184,7 +184,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     sf::Clock animationClock;
     float animationSpeed = 0.000005f;
 
-
+    float spriteScale = uniformScale * screenMoveScale;
 
     currentFrame = IntRect(Vector2i(30, 40), Vector2i(static_cast<int>(frameWidth), static_cast<int>(frameHeight)));
 
@@ -246,7 +246,8 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
             if (abs(pos.x - doorX) <= tolerance) {
                 b2DestroyWorld(worldId);
-                createLevels1(window, background, backButtonWithSetings, pl, font, event, menu);
+                spriteScale /= 1.5f;
+                createLevels1(window, background, backButtonWithSetings, pl, font, event, menu, spriteScale);
                 return;
             }
 
@@ -364,7 +365,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             window.draw(spr);
 
 
-        float spriteScale = uniformScale * screenMoveScale * 1.0f;
+        
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE

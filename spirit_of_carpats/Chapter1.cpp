@@ -17,7 +17,7 @@ enum AnimationState {
 };
 
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu) {
+void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu, float spriteScale) {
     sf::Vector2u windowSize = window.getSize();
 
     AnimationState currentAnimation = IDLE;
@@ -304,7 +304,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         window.clear();
 
-        float spriteScale = uniformScale * screenMoveScale / 1.5f;
+        spriteScale = uniformScale * screenMoveScale/ 1.5f;
 
 
 
