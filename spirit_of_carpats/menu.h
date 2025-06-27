@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <fstream>
 #include "logick.h"
-#include "location.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -78,5 +77,7 @@ public:
     string getInteractionText() {
        return interactionText;
     }
-
+    bool getMusic() const {
+        return musicEnabled;
+    }
 };

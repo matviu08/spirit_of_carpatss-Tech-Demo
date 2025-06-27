@@ -43,7 +43,8 @@ void generateForestScene(
     const sf::Texture& rockTexture,
     const sf::Texture& treeTexture,
     const sf::Texture& backgroundTexture,
-    const sf::Texture& newspaperTexture);
+    const sf::Texture& newspaperTexture,
+    Menu& menu);
 
 
 void generateHomeScene(

@@ -15,16 +15,19 @@ void generateForestScene(
     const sf::Texture& rockTexture,
     const sf::Texture& treeTexture,
     const sf::Texture& backgroundTexture,
-    const sf::Texture& newspaperTexture)
+    const sf::Texture& newspaperTexture,
+    Menu& menu)
 {
 
     if (!Embient_Munsic.openFromFile("assets/sound/forest_emb.ogg")) {
         std::cout << "sound error" << std::endl;
     }
     else {
-        Embient_Munsic.setLooping(true);
-        Embient_Munsic.setVolume(30);
-        Embient_Munsic.play();
+        if (menu.getMusic()){
+            Embient_Munsic.setLooping(true);
+            Embient_Munsic.setVolume(30);
+            Embient_Munsic.play();
+        }
     }
 
 

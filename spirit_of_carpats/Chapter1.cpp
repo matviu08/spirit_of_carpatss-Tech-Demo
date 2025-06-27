@@ -170,7 +170,8 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         rockTexture,
         treeTexture,
         backgroundTexture,
-        newspaperTexture
+        newspaperTexture,
+        menu
     );
 
     const float FIXED_TIMESTEP = 1.0f / 60.0f;
