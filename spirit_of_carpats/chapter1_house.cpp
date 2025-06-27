@@ -113,24 +113,20 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
     sf::Sprite characterSprite(characterTexture);
 
-    //home_location
     sf::Texture background_home_texture;
     sf::Texture bed_texture;
     sf::Texture axe_texture;
 
 
-    //home_location
     background_home_texture.loadFromFile("assets/img/home_bg.png");
     axe_texture.loadFromFile("assets/img/axe_4.png");
 
-    //location_2_ountside
     vector<sf::Sprite> ground;
     vector<sf::Sprite> grass;
     vector<sf::Sprite> rock;
     vector<sf::Sprite> trees;
     vector<sf::Sprite> news;
 
-    //location_1_home
     vector<sf::Sprite> tiledBackgrounds;
     vector<sf::Sprite>bed;
     vector<sf::Sprite> axe;
@@ -173,14 +169,12 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     sf::Clock frameClock;
     float accumulator = 0.0f;
 
-    //
     bool theAxIsTaken = false;
     sf::Text promptText(font);
     promptText.setCharacterSize(60);
     promptText.setFillColor(sf::Color::White);
     sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - promptText.getLocalBounds().size.x / 2, 100);
     promptText.setPosition(pos_1);
-    //
 
     sf::IntRect currentFrame;
     int frameWidth = 260;
