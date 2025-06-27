@@ -311,10 +311,9 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             switch (currentAnimation) {
             case IDLE:if (theAxIsTaken) { characterSprite.setTexture(characterAxe); }
                      else { characterSprite.setTexture(characterTexture); } break;
-            case WALKING_LEFT:characterSprite.setTexture(characterWalk);break;
+            case WALKING_LEFT:
             case WALKING_RIGHT: characterSprite.setTexture(characterWalk);
             }
-             /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
              currentFrame.position.y = row * frameHeight;
              characterSprite.setTextureRect(currentFrame);
 

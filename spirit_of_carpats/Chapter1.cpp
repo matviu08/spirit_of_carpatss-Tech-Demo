@@ -256,15 +256,19 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             currentFrameIndex = 0;
             animationClock.restart();
         }
+        sf::Clock timer;
 
         if (animationClock.getElapsedTime().asSeconds() / 10 >= animationSpeed) {
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
 
 
             switch (currentAnimation) {
-            case IDLE:characterSprite.setTexture(characterAxe);  break;
-            case WALKING_LEFT:characterSprite.setTexture(characterWalk);break;
-            case WALKING_RIGHT: characterSprite.setTexture(characterWalk); break;
+            case IDLE:characterSprite.setTexture(characterAxe);  
+                
+                break;
+            case WALKING_RIGHT:
+            case WALKING_LEFT:characterSprite.setTexture(characterWalk);
+                break;
             case JUMPING:characterSprite.setTexture(characterJump);
             }
             /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
