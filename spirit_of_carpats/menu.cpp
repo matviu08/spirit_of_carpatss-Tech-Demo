@@ -21,18 +21,15 @@ Menu::Menu(sf::Font& font, sf::RenderWindow& window) : newGameButton(font), sett
     settingsButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(settingsButton, window, 0);
 
-
     quitButton.setString("Quit");
     quitButton.setCharacterSize(50);
     quitButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(quitButton, window, 100);
 
-
     chapterButton.setString("chapter 1");
     chapterButton.setCharacterSize(50);
     chapterButton.setFillColor(sf::Color(252, 228, 204));
     centerButton(chapterButton, window, -100);
-
 
     backButtonWithSetings.setString("Back");
     backButtonWithSetings.setCharacterSize(50);
@@ -123,31 +120,39 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
             if (bindsOpened) {
                 if (leftKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
                     waitingForLeftKey = true;
-                    if (isEnglish)
+                    if (isEnglish) {
                         leftKeyButton.setString("Left: ...");
-                    else
+                    }
+                    else {
                         leftKeyButton.setString(L"Вліво: ...");
+                    }
                 }
                 else if (rightKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
                     waitingForRightKey = true;
-                    if (isEnglish)
+                    if (isEnglish) {
                         rightKeyButton.setString("Right: ...");
-                    else
+                    }
+                    else {
                         rightKeyButton.setString(L"Вправо: ...");
+                    } 
                 }
                 else if (interactionKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
                     waitingForInteractionKey = true;
-                    if (isEnglish)
+                    if (isEnglish) {
                         interactionKeyButton.setString("Interaction: ...");
-                    else
+                    }
+                    else {
                         interactionKeyButton.setString(L"Взаємодія: ...");
+                    }
                 }
                 else if (jumpKeyButton.getGlobalBounds().contains(mouseWorldPos)) {
                     waitingForJumpKey = true;
-                    if (isEnglish)
+                    if (isEnglish) {
                         jumpKeyButton.setString("Jump: ...");
-                    else
+                    }
+                    else {
                         jumpKeyButton.setString(L"Стрибок: ...");
+                    }
                 }
                 else if (backButtonWithBinds.getGlobalBounds().contains(mouseWorldPos)) {
                     bindsOpened = false;
@@ -195,17 +200,21 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     musicEnabled = !musicEnabled;
                     if (musicEnabled) {
                         menuMusic.play();
-                        if (isEnglish)
+                        if (isEnglish) {
                             musicButton.setString("Music: ON");
-                        else
+                        }
+                        else {
                             musicButton.setString(L"Музика: Вкл");
+                        }
                     }
                     else {
                         menuMusic.pause();
-                        if (isEnglish)
+                        if (isEnglish) {
                             musicButton.setString("Music: OFF");
-                        else
+                        }
+                        else {
                             musicButton.setString(L"Музика: Викл");
+                        }
                     }
                 }
                 else if (bindsButton.getGlobalBounds().contains(mouseWorldPos)) {
@@ -237,39 +246,47 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
             sf::Keyboard::Key pressed = sf::Keyboard::localize(keyEvt->scancode);
             if (waitingForLeftKey) {
                 leftKey = pressed;
-                if (isEnglish)
+                if (isEnglish) {
                     leftKeyButton.setString("Left: " + keyToString(leftKey));
-                else
+                }
+                else {
                     leftKeyButton.setString(L"Вліво: " + keyToWideString(leftKey));
+                }
                 centerButton(leftKeyButton, window, -100);
                 waitingForLeftKey = false;
             }
             else if (waitingForRightKey) {
                 rightKey = pressed;
-                if (isEnglish)
+                if (isEnglish) {
                     rightKeyButton.setString("Right: " + keyToString(rightKey));
-                else
+                }
+                else {
                     rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
+                }
                 centerButton(rightKeyButton, window, 0);
                 waitingForRightKey = false;
             }
             else if (waitingForInteractionKey) {
                 interactionKey = pressed;
                 interactionText = " " + keyToWideString(interactionKey);
-                if (isEnglish) 
+                if (isEnglish) {
                     interactionKeyButton.setString("Interaction: " + keyToString(interactionKey));
-                else
+                }
+                else {
                     interactionKeyButton.setString(L"Взаємодія: " + keyToWideString(interactionKey));
+                }
                 centerButton(interactionKeyButton, window, 100);
                 waitingForInteractionKey = false;
                 
             }
             else if (waitingForJumpKey) {
                 jumpKey = pressed;
-                if (isEnglish)
+                if (isEnglish) {
                     jumpKeyButton.setString("Jump: " + keyToString(jumpKey));
-                else
+                }
+                else {
                     jumpKeyButton.setString(L"Стрибок: " + keyToWideString(jumpKey));
+                }
                 centerButton(jumpKeyButton, window, 200);
                 waitingForJumpKey = false;
             }
@@ -344,7 +361,7 @@ std::string Menu::keyToString(sf::Keyboard::Key key) {
     }
 }
 
-std::wstring Menu::keyToWideString(sf::Keyboard::Key key) {
-    std::string latin = keyToString(key);
-    return std::wstring(latin.begin(), latin.end());
+wstring Menu::keyToWideString(sf::Keyboard::Key key) {
+    string latin = keyToString(key);
+    return wstring(latin.begin(), latin.end());
 }
