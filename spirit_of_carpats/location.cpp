@@ -1,5 +1,5 @@
 ﻿#include "location.h"
-
+#include <ctime>
 void generateForestScene(
     sf::RenderWindow& window,
     std::vector<sf::Sprite>& ground,
@@ -84,10 +84,13 @@ void generateForestScene(
     float yRatio_tree = static_cast<float>(windowSize.y) / baseHeight;
 
     //adaprive generation of tree
-    const int treeCount = 12;
-    const float baseTreeX = 300.f;
-    const float baseTreeY = 425.f;
-    const float baseTreeSpacing = 550.f;
+    const int treeCount = 16;
+    const float baseTreeX = 290.f;
+
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+
+    float baseTreeY = 125.f;
+    const float baseTreeSpacing = 250.f;
 
     float treeX = baseTreeX * xRatio;
     float treeY = baseTreeY * yRatio;
@@ -95,8 +98,14 @@ void generateForestScene(
 
     for (int i = 0; i < treeCount; ++i) {
         sf::Sprite tree(treeTexture);
+
         float x = treeX + i * treeSpacing;
-        tree.setPosition(sf::Vector2f(x, treeY));
+
+        float wave = sin(i * 0.7f) * 40.f;
+        float noise = static_cast<float>(std::rand() % 31 - 15);
+        float y = (475.f + wave + noise) * yRatio;
+
+        tree.setPosition(sf::Vector2f(x, y));
         tree.setScale(sf::Vector2f(xRatio, yRatio)); 
         trees.push_back(tree);
     }
