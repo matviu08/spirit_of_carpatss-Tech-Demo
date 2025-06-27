@@ -55,14 +55,13 @@ private:
     sf::Text interactionKeyButton;
     sf::Text jumpKeyButton;
 
-    void centerButton(sf::Text& button, sf::RenderWindow& window, float yOffset);
-    std::string keyToString(sf::Keyboard::Key key);
-    std::wstring keyToWideString(sf::Keyboard::Key key);
+    void centerButton(sf::Text&, sf::RenderWindow&, float);
+    string keyToString(sf::Keyboard::Key key);
 
 public:
-    Menu(sf::Font& font, sf::RenderWindow& window);
-    void handleEvent(const std::optional<sf::Event>&, sf::RenderWindow&, sf::Sprite&, Menu& menu);
-    void draw(sf::RenderWindow& window);
+    Menu(sf::Font&, sf::RenderWindow&);
+    void handleEvent(const std::optional<sf::Event>&, sf::RenderWindow&, sf::Sprite&, Menu&);
+    void draw(sf::RenderWindow&);
 
     sf::Keyboard::Key getLeftKey() const { 
         return leftKey; 

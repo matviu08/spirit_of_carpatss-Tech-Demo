@@ -187,8 +187,8 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                         backButtonWithChapters.setString(L"Назад");
                         languageButton.setString(L"Мова: Українська");
                         musicButton.setString(musicEnabled ? L"Музика: Вкл" : L"Музика: Викл");
-                        leftKeyButton.setString(L"Вліво: " + keyToWideString(leftKey));
-                        rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
+                        leftKeyButton.setString(L"Вліво: " + keyToString(leftKey));
+                        rightKeyButton.setString(L"Вправо: " + keyToString(rightKey));
                         bindsButton.setString(L"Бінди");
                         backButtonWithBinds.setString(L"Назад");
                         interactionKeyButton.setString(L"Взаємодія: " + keyToString(interactionKey));
@@ -250,7 +250,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     leftKeyButton.setString("Left: " + keyToString(leftKey));
                 }
                 else {
-                    leftKeyButton.setString(L"Вліво: " + keyToWideString(leftKey));
+                    leftKeyButton.setString(L"Вліво: " + keyToString(leftKey));
                 }
                 centerButton(leftKeyButton, window, -100);
                 waitingForLeftKey = false;
@@ -261,19 +261,19 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     rightKeyButton.setString("Right: " + keyToString(rightKey));
                 }
                 else {
-                    rightKeyButton.setString(L"Вправо: " + keyToWideString(rightKey));
+                    rightKeyButton.setString(L"Вправо: " + keyToString(rightKey));
                 }
                 centerButton(rightKeyButton, window, 0);
                 waitingForRightKey = false;
             }
             else if (waitingForInteractionKey) {
                 interactionKey = pressed;
-                interactionText = " " + keyToWideString(interactionKey);
+                interactionText = " " + keyToString(interactionKey);
                 if (isEnglish) {
                     interactionKeyButton.setString("Interaction: " + keyToString(interactionKey));
                 }
                 else {
-                    interactionKeyButton.setString(L"Взаємодія: " + keyToWideString(interactionKey));
+                    interactionKeyButton.setString(L"Взаємодія: " + keyToString(interactionKey));
                 }
                 centerButton(interactionKeyButton, window, 100);
                 waitingForInteractionKey = false;
@@ -285,7 +285,7 @@ void Menu::handleEvent(const std::optional<sf::Event>& event, sf::RenderWindow& 
                     jumpKeyButton.setString("Jump: " + keyToString(jumpKey));
                 }
                 else {
-                    jumpKeyButton.setString(L"Стрибок: " + keyToWideString(jumpKey));
+                    jumpKeyButton.setString(L"Стрибок: " + keyToString(jumpKey));
                 }
                 centerButton(jumpKeyButton, window, 200);
                 waitingForJumpKey = false;
@@ -359,9 +359,4 @@ std::string Menu::keyToString(sf::Keyboard::Key key) {
     case K::LShift: return "Shift";
     default: return "Unknown";
     }
-}
-
-wstring Menu::keyToWideString(sf::Keyboard::Key key) {
-    string latin = keyToString(key);
-    return wstring(latin.begin(), latin.end());
 }
