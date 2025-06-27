@@ -52,3 +52,30 @@ int Player::characterMaxHp() const
 {
     return maxHp;
 }
+
+//void Player::walking(sf::Sprite& sprite, sf::Texture walk, sf::Texture stay)
+//{
+//    bool isFrozen = false;
+//    sf::Clock freezeClock;
+//    float freezeDuration = 0.0005f; 
+//
+//    if (someCondition && !isFrozen) {
+//        isFrozen = true;
+//        freezeClock.restart();
+//    }
+//
+//    if (isFrozen) {
+//        if (freezeClock.getElapsedTime().asSeconds() >= freezeDuration) {
+//            isFrozen = false;
+//        }
+//    }
+//
+//    if (!isFrozen) {
+//        
+//    }
+//    sprite.setTexture(walk);
+//    sf::sleep(sf::milliseconds(0.005f));
+//    sprite.setTexture(stay);
+//    sf::sleep(sf::milliseconds(0.005f));
+//    sprite.setTexture(walk);
+//}
