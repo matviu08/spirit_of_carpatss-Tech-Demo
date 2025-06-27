@@ -32,13 +32,13 @@ class news_peper {};
 
 void generateForestScene(
     sf::RenderWindow& window,
-    std::vector<sf::Sprite>& ground,
-    std::vector<sf::Sprite>& grass,
-    std::vector<sf::Sprite>& rock,
-    std::vector<sf::Sprite>& trees,
-    std::vector<sf::Sprite>& news,
-    std::vector<sf::Sprite>& background,
-    sf::Music& Embient_Munsic,
+    vector<sf::Sprite>& ground,
+    vector<sf::Sprite>& grass,
+    vector<sf::Sprite>& rock,
+    vector<sf::Sprite>& trees,
+    vector<sf::Sprite>& news,
+    vector<sf::Sprite>& background,
+    Music& Embient_Munsic,
     const sf::Texture& grassTexture,
     const sf::Texture& rockTexture,
     const sf::Texture& treeTexture,
@@ -56,8 +56,8 @@ void generateHomeScene(
     sf::Font font,
     
     const std::optional<sf::Event>& event,
-    std::vector<sf::Sprite>& bed,
-    std::vector<sf::Sprite>& axe,
+    vector<sf::Sprite>& bed,
+    vector<sf::Sprite>& axe,
     
     std::vector<sf::Sprite>& background_home,
     const sf::Texture& axe_texture,
