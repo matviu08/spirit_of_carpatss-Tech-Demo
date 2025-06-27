@@ -26,7 +26,7 @@ class object {};
 class bg {};
 class for_bg {};
 class ground {};
-class weather {};  
+class weather {};
 class news_peper {};
 
 void generateForestScene(
@@ -48,8 +48,10 @@ void generateHomeScene(
     sf::RenderWindow& window,
     sf::Sprite& background,
     sf::Text& backButtonWithSetings,
+
     Player& pl,
     sf::Font font,
+    
     const std::optional<sf::Event>& event,
     std::vector<sf::Sprite>& bed,
     std::vector<sf::Sprite>& axe,
