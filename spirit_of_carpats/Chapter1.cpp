@@ -12,7 +12,8 @@ extern bool levelStarted;
 enum AnimationState {
     IDLE,
     WALKING_LEFT,
-    WALKING_RIGHT
+    WALKING_RIGHT,
+    JUMPING
 };
 
 
@@ -95,10 +96,10 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
     characterShape.setFillColor(sf::Color::Transparent);
 
-    std::vector<sf::Texture>idleFrame;
-    const int counter = 4;
+    /*std::vector<sf::Texture>idleFrame;
+    const int counter = 4;*/
 
-    for (int i = 1; i <= counter; ++i) {
+    /*for (int i = 1; i <= counter; ++i) {
         sf::Texture texture;
         std::string filname = "assets/img/Right_state_" + to_string(i) + ".png";
         if (!texture.loadFromFile(filname)) {
@@ -106,13 +107,26 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         }
         idleFrame.push_back(texture);
+    }*/
+    sf::Texture characterAxe;
+    if (!characterAxe.loadFromFile("assets/img/pleyer_stay_with_wepon.png")) {
+        cout << "Failed to load character axe!" << std::endl;
     }
+
+    sf::Texture characterWalk;
+    if (!characterWalk.loadFromFile("assets/img/pleyer_4_cadr.png")) {
+        cout << "Failed to load character walk!" << std::endl;
+    }
+
+    sf::Texture characterJump;
+    if (!characterJump.loadFromFile("assets/img/pleyer_cadr_2.png")) {
+        cout << "Failed to load character jumpo!" << std::endl;
+    }
+
     sf::Texture characterTexture;
     if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
         cout << "Failed to load character texture!" << std::endl;
     }
-
-
     
 
     sf::Sprite characterSprite(characterTexture);
@@ -172,12 +186,12 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     float accumulator = 0.0f;
 
     sf::IntRect currentFrame;
-    int frameWidth = 210;
+    int frameWidth = 260;
     int frameHeight = 450;
     int currentFrameIndex = 0;
     int totalFrames = 4;
     sf::Clock animationClock;
-    float animationSpeed = 0.2f;
+    float animationSpeed = 0.00005f;
 
 
 
@@ -216,6 +230,9 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             horizontalInput = 1.0f;
             newAnimation = WALKING_RIGHT;
         }
+        if (!sf::Keyboard::isKeyPressed(rightBind) && !sf::Keyboard::isKeyPressed(leftBind)) {
+            newAnimation = IDLE;
+        }
 
         float targetVelocityX = horizontalInput * MOVE_SPEED;
         float velocityChangeX = targetVelocityX - velocity.x;
@@ -230,6 +247,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(menu.getJumptKey());
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = JUMP_VELOCITY;
+            newAnimation = JUMPING;
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
 
@@ -239,23 +257,23 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             animationClock.restart();
         }
 
-         if (animationClock.getElapsedTime().asSeconds() >= animationSpeed) {
+        if (animationClock.getElapsedTime().asSeconds() / 10 >= animationSpeed) {
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
 
 
-            int row = 0;
             switch (currentAnimation) {
-            case IDLE: break;
-            case WALKING_LEFT: break;
-            case WALKING_RIGHT: break;
+            case IDLE:characterSprite.setTexture(characterAxe);  break;
+            case WALKING_LEFT:characterSprite.setTexture(characterWalk);break;
+            case WALKING_RIGHT: characterSprite.setTexture(characterWalk); break;
+            case JUMPING:characterSprite.setTexture(characterJump);
             }
             /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
-            currentFrame.position.y = row * frameHeight;
+            currentFrame.position.y = 0 * frameHeight;
             characterSprite.setTextureRect(currentFrame);
-
+            
             animationClock.restart();
         }
-
+        
 
         b2Body_SetLinearVelocity(bodyId, velocity);
 
@@ -299,14 +317,14 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         window.clear();
 
-        for (auto& homeBg : bacground_home)
+        /*for (auto& homeBg : bacground_home)
             window.draw(homeBg);
 
         for (auto& tile : tiledBackgrounds)
             window.draw(tile);
 
         for (auto& bedSprite : bed)
-            window.draw(bedSprite);
+            window.draw(bedSprite);*/
 
         // Scale sprites based on screen size
         float spriteScale = uniformScale * screenMoveScale / 1.5f;

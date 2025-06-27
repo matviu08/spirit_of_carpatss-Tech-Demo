@@ -90,11 +90,25 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     characterShape.setSize({ CHARACTER_HALF_WIDTH * 6 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 6 * SCALE * charVisualScale });
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
     characterShape.setFillColor(sf::Color::Transparent);
+
+    sf::Texture characterAxe;
+    if (!characterAxe.loadFromFile("assets/img/pleyer_stay_with_wepon.png")) {
+        cout << "Failed to load character axe!" << std::endl;
+    }
+
+    sf::Texture characterWalk;
+    if (!characterWalk.loadFromFile("assets/img/pleyer_4_cadr.png")) {
+        cout << "Failed to load character walk!" << std::endl;
+    }
+
+    sf::Texture characterJump;
+    if (!characterJump.loadFromFile("assets/img/pleyer_cadr_2.png")) {
+        cout << "Failed to load character jumpo!" << std::endl;
+    }
+
     sf::Texture characterTexture;
-
-
     if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
-        cout << "Failed to load character texture!" << endl;
+        cout << "Failed to load character texture!" << std::endl;
     }
 
     sf::Sprite characterSprite(characterTexture);
@@ -169,12 +183,12 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
     //
 
     sf::IntRect currentFrame;
-    int frameWidth = 210;
+    int frameWidth = 260;
     int frameHeight = 450;
     int currentFrameIndex = 0;
     int totalFrames = 4;
     sf::Clock animationClock;
-    float animationSpeed = 0.2f;
+    float animationSpeed = 0.000005f;
 
 
 
@@ -269,6 +283,9 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             horizontalInput = 1.0f;
             newAnimation = WALKING_RIGHT;
         }
+        if (!sf::Keyboard::isKeyPressed(rightBind) && !sf::Keyboard::isKeyPressed(leftBind)) {
+            newAnimation = IDLE;
+        }
 
         float targetVelocityX = horizontalInput * MOVE_SPEED;
         float velocityChangeX = targetVelocityX - velocity.x;
@@ -286,22 +303,17 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             animationClock.restart();
         }
 
-        if (currentAnimation != IDLE && animationClock.getElapsedTime().asSeconds() >= animationSpeed) {
+        if (animationClock.getElapsedTime().asSeconds()/10 >= animationSpeed) {
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
 
 
-             int row = 0;
-             /*switch (currentAnimation) {
-             case IDLE:
-                 row = 0;
-                 break;
-             case WALKING_LEFT:
-                 row = 1;
-                 break;
-             case WALKING_RIGHT:
-                 row = 2;
-                 break;
-             }*/
+            int row = 0;
+            switch (currentAnimation) {
+            case IDLE:if (theAxIsTaken) { characterSprite.setTexture(characterAxe); }
+                     else { characterSprite.setTexture(characterTexture); } break;
+            case WALKING_LEFT:characterSprite.setTexture(characterWalk);break;
+            case WALKING_RIGHT: characterSprite.setTexture(characterWalk);
+            }
              /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
              currentFrame.position.y = row * frameHeight;
              characterSprite.setTextureRect(currentFrame);
