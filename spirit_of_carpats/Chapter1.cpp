@@ -249,7 +249,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(menu.getJumptKey());
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = JUMP_VELOCITY;
-            newAnimation = JUMPING;
         }
         jumpHeldLastFrame = jumpHeldThisFrame;
 
@@ -264,14 +263,18 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
 
 
-            switch (currentAnimation) {
-            case IDLE:characterSprite.setTexture(characterAxe);  
-                
-                break;
-            case WALKING_RIGHT:
-            case WALKING_LEFT:characterSprite.setTexture(characterWalk);
-                break;
-            case JUMPING:characterSprite.setTexture(characterJump);
+            if(onGround){
+                switch (currentAnimation) {
+                case IDLE:characterSprite.setTexture(characterAxe);
+
+                    break;
+                case WALKING_RIGHT:
+                case WALKING_LEFT:characterSprite.setTexture(characterWalk);
+                    break;
+                }
+            }
+            else {
+                characterSprite.setTexture(characterJump);
             }
             /*currentFrame.position.x = currentFrameIndex * frameWidth;*/
             currentFrame.position.y = 0 * frameHeight;
