@@ -17,8 +17,8 @@ enum AnimationState {
 };
 
 
-void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& backButtonWithSetings, Player& pl, sf::Font font, const std::optional<sf::Event>& event, Menu& menu, float spriteScale) {
-    sf::Vector2u windowSize = window.getSize();
+void createLevels1(RenderWindow& window, Sprite& background, Text& backButtonWithSetings, Player& pl, Font font, const std::optional<Event>& event, Menu& menu, float spriteScale) {
+    Vector2u windowSize = window.getSize();
 
     AnimationState currentAnimation = IDLE;
     AnimationState lastAnimation;
@@ -85,40 +85,40 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     b2Body_SetAwake(bodyId, true);
     b2Body_SetFixedRotation(bodyId, true);
 
-    sf::RectangleShape characterShape;
+    RectangleShape characterShape;
     float charVisualScale = uniformScale * ((float)windowSize.y / REFERENCE_HEIGHT);
     characterShape.setSize({ CHARACTER_HALF_WIDTH * 6 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 6 * SCALE * charVisualScale });
     characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
-    characterShape.setFillColor(sf::Color::Transparent);
+    characterShape.setFillColor(Color::Transparent);
 
-    sf::Texture characterAxe;
+    Texture characterAxe;
     if (!characterAxe.loadFromFile("assets/img/pleyer_stay_with_wepon.png")) {
-        cout << "Failed to load character axe!" << std::endl;
+        cout << "Failed to load character axe!" << endl;
     }
 
-    sf::Texture characterWalk;
+    Texture characterWalk;
     if (!characterWalk.loadFromFile("assets/img/pleyer_4_cadr.png")) {
-        cout << "Failed to load character walk!" << std::endl;
+        cout << "Failed to load character walk!" << endl;
     }
 
-    sf::Texture characterJump;
+    Texture characterJump;
     if (!characterJump.loadFromFile("assets/img/pleyer_cadr_2.png")) {
-        cout << "Failed to load character jumpo!" << std::endl;
+        cout << "Failed to load character jumpo!" << endl;
     }
 
-    sf::Texture characterTexture;
+    Texture characterTexture;
     if (!characterTexture.loadFromFile("assets/img/pleyer_1cadr.png")) {
-        cout << "Failed to load character texture!" << std::endl;
+        cout << "Failed to load character texture!" << endl;
     }
     
 
-    sf::Sprite characterSprite(characterTexture);
+    Sprite characterSprite(characterTexture);
 
-    sf::Texture grassTexture;
-    sf::Texture rockTexture;
-    sf::Texture treeTexture;
-    sf::Texture newspaperTexture;
-    sf::Texture backgroundTexture;
+    Texture grassTexture;
+    Texture rockTexture;
+    Texture treeTexture;
+    Texture newspaperTexture;
+    Texture backgroundTexture;
 
 
 
@@ -128,17 +128,17 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     backgroundTexture.loadFromFile("assets/img/levl1_bg.png");
 
 
-    vector<sf::Sprite> ground;
-    vector<sf::Sprite> grass;
-    vector<sf::Sprite> rock;
-    vector<sf::Sprite> trees;
-    vector<sf::Sprite> news;
+    vector<Sprite> ground;
+    vector<Sprite> grass;
+    vector<Sprite> rock;
+    vector<Sprite> trees;
+    vector<Sprite> news;
 
-    vector<sf::Sprite> tiledBackgrounds;
-    vector<sf::Sprite>bed;
-    vector<sf::Sprite>bacground_home;
+    vector<Sprite> tiledBackgrounds;
+    vector<Sprite>bed;
+    vector<Sprite>bacground_home;
 
-    sf::Music embience;
+    Music embience;
 
     generateForestScene(
         window,
@@ -166,15 +166,15 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
     bool jumpHeldLastFrame = false;
     bool mouseWasPressed = false;
-    sf::Clock frameClock;
+    Clock frameClock;
     float accumulator = 0.0f;
 
-    sf::IntRect currentFrame;
+    IntRect currentFrame;
     int frameWidth = 260;
     int frameHeight = 450;
     int currentFrameIndex = 0;
     int totalFrames = 4;
-    sf::Clock animationClock;
+    Clock animationClock;
     float animationSpeed = 0.00005f;
 
 
@@ -184,7 +184,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
     characterSprite.setTextureRect(currentFrame);
 
 
-    characterSprite.setOrigin(sf::Vector2f(frameWidth / 2.0f, frameHeight / 2.0f));
+    characterSprite.setOrigin(Vector2f(frameWidth / 2.0f, frameHeight / 2.0f));
 
     while (window.isOpen()) {
 
@@ -200,20 +200,20 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         bool onGround = (pos.y <= groundCheckY + 0.1f) && (velocity.y <= 0.1f);
 
         float horizontalInput = 0.0f;
-        sf::Keyboard::Key leftBind = menu.getLeftKey();
-        sf::Keyboard::Key rightBind = menu.getRightKey();
+        Keyboard::Key leftBind = menu.getLeftKey();
+        Keyboard::Key rightBind = menu.getRightKey();
 
         AnimationState newAnimation = IDLE;
         lastAnimation = newAnimation;
-        if (sf::Keyboard::isKeyPressed(leftBind)) {
+        if (Keyboard::isKeyPressed(leftBind)) {
             horizontalInput = -1.0f;
             newAnimation = WALKING_LEFT;
         }
-        else if (sf::Keyboard::isKeyPressed(rightBind)) {
+        else if (Keyboard::isKeyPressed(rightBind)) {
             horizontalInput = 1.0f;
             newAnimation = WALKING_RIGHT;
         }
-        if (!sf::Keyboard::isKeyPressed(rightBind) && !sf::Keyboard::isKeyPressed(leftBind)) {
+        if (!Keyboard::isKeyPressed(rightBind) && !Keyboard::isKeyPressed(leftBind)) {
             newAnimation = IDLE;
         }
 
@@ -227,7 +227,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             velocity.x += velocityChangeX * AIR_CONTROL_FACTOR;
         }
 
-        bool jumpHeldThisFrame = sf::Keyboard::isKeyPressed(menu.getJumptKey());
+        bool jumpHeldThisFrame = Keyboard::isKeyPressed(menu.getJumptKey());
         if (jumpHeldThisFrame && !jumpHeldLastFrame && onGround) {
             velocity.y = JUMP_VELOCITY;
         }
@@ -238,7 +238,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             currentFrameIndex = 0;
             animationClock.restart();
         }
-        sf::Clock timer;
+        Clock timer;
 
         if (animationClock.getElapsedTime().asSeconds() / 10 >= animationSpeed) {
             currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
@@ -268,11 +268,10 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
         if (!mousePressed && mouseWasPressed) {
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            sf::Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+            Vector2i mousePos = sf::Mouse::getPosition(window);
+            Vector2f mouseWorldPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 
             if (backButtonWithSetings.getGlobalBounds().contains(mouseWorldPos)) {
-                std::cout << "backButton to menu!" << std::endl;
                 b2DestroyWorld(worldId);
                 window.close();
                 return;
@@ -299,7 +298,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
         cameraX = max(worldStartX, min(cameraX, worldEndX));
 
-        sf::View gameView(sf::Vector2f(cameraX, cameraY), sf::Vector2f(viewWidth, viewHeight));
+        View gameView(Vector2f(cameraX, cameraY), Vector2f(viewWidth, viewHeight));
         window.setView(gameView);
 
         window.clear();
@@ -310,7 +309,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
 
         for (auto& rockSprite : rock) {
-            rockSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+            rockSprite.setScale(Vector2f(spriteScale, spriteScale));
             window.draw(rockSprite);
         }
 
@@ -319,44 +318,44 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
         }
 
         for (auto& treeSprite : trees) {
-            treeSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+            treeSprite.setScale(Vector2f(spriteScale, spriteScale));
             window.draw(treeSprite);
         }
 
         for (auto& newsSprite : news) {
-            newsSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+            newsSprite.setScale(Vector2f(spriteScale, spriteScale));
             window.draw(newsSprite);
         }
         spriteScale /= 1.5f;
 
-        characterShape.setPosition(sf::Vector2f(
+        characterShape.setPosition(Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
         ));
         window.draw(characterShape);
-        characterSprite.setPosition(sf::Vector2f(
+        characterSprite.setPosition(Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
         ));
         if (currentAnimation == WALKING_LEFT) {
-            characterSprite.setScale(sf::Vector2f(-spriteScale, spriteScale));
+            characterSprite.setScale(Vector2f(-spriteScale, spriteScale));
         }
         else if (currentAnimation == WALKING_RIGHT) {
-            characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+            characterSprite.setScale(Vector2f(spriteScale, spriteScale));
         }
         else if (currentAnimation == IDLE)
         {
             if (lastAnimation == WALKING_LEFT) {
-                characterSprite.setScale(sf::Vector2f(-spriteScale, spriteScale));
+                characterSprite.setScale(Vector2f(-spriteScale, spriteScale));
             }
             else if (lastAnimation == WALKING_RIGHT) {
-                characterSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+                characterSprite.setScale(Vector2f(spriteScale, spriteScale));
             }
         }
 
         window.draw(characterSprite);
 
-        sf::View defaultView = window.getDefaultView();
+        View defaultView = window.getDefaultView();
         window.setView(defaultView);
         window.draw(backButtonWithSetings);
         window.setView(gameView);
