@@ -359,6 +359,7 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
             newsSprite.setScale(sf::Vector2f(spriteScale, spriteScale));
             window.draw(newsSprite);
         }
+        spriteScale /= 1.5f;
 
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,

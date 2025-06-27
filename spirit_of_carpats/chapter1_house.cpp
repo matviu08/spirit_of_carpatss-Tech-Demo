@@ -87,8 +87,8 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
 
     sf::RectangleShape characterShape;
     float charVisualScale = uniformScale * ((float)windowSize.y / REFERENCE_HEIGHT);
-    characterShape.setSize({ CHARACTER_HALF_WIDTH * 6 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 6 * SCALE * charVisualScale });
-    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 3, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 3 });
+    characterShape.setSize({ CHARACTER_HALF_WIDTH * 5 * SCALE * charVisualScale, CHARACTER_HALF_HEIGHT * 5 * SCALE * charVisualScale });
+    characterShape.setOrigin({ CHARACTER_HALF_WIDTH * SCALE * charVisualScale * 2.5f, CHARACTER_HALF_HEIGHT * SCALE * charVisualScale * 2.5f });
     characterShape.setFillColor(sf::Color::Transparent);
 
     sf::Texture characterAxe;
@@ -370,7 +370,7 @@ void scene_home(sf::RenderWindow& window, sf::Sprite& background, sf::Text& back
             window.draw(spr);
 
 
-        float spriteScale = uniformScale * screenMoveScale * 1.5f;
+        float spriteScale = uniformScale * screenMoveScale * 1.0f;
         characterShape.setPosition(sf::Vector2f(
             pos.x * SCALE,
             (float)windowSize.y * 0.5f / uniformScale - pos.y * SCALE
