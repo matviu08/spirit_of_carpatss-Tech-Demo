@@ -32,7 +32,6 @@ public:
 	int characterDamage()const;
 	int characterMaxHp()const;
 
-	void walking(sf::Sprite&, sf::Texture, sf::Texture);
 };
 
 

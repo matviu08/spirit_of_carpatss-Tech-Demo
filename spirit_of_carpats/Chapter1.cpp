@@ -17,7 +17,7 @@ enum AnimationState {
 };
 
 
-void createLevels1(RenderWindow& window, Sprite& background, Text& backButtonWithSetings, Player& pl, Font font, const std::optional<Event>& event, Menu& menu, float spriteScale) {
+void createLevels1(RenderWindow& window, Sprite& background, Text& backButtonWithSetings, Player& pl, Font font, const optional<Event>& event, Menu& menu, float spriteScale) {
     Vector2u windowSize = window.getSize();
 
     AnimationState currentAnimation = IDLE;
