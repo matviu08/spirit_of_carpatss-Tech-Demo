@@ -84,7 +84,7 @@ void generateForestScene(
     float yRatio_tree = static_cast<float>(windowSize.y) / baseHeight;
 
     //adaprive generation of tree
-    const int treeCount = 16;
+    const int treeCount = 32;
     const float baseTreeX = 290.f;
 
     std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -92,23 +92,59 @@ void generateForestScene(
     float baseTreeY = 125.f;
     const float baseTreeSpacing = 250.f;
 
-    float treeX = baseTreeX * xRatio;
+    float treeX = baseTreeX * xRatio / 4;
     float treeY = baseTreeY * yRatio;
     float treeSpacing = baseTreeSpacing * xRatio;
-
-    for (int i = 0; i < treeCount; ++i) {
+    int tr = 2;
+    float trY = 20.0f;
+    for (int i = 0; i < treeCount - 18; ++i) {
         sf::Sprite tree(treeTexture);
+
+        tr < 4 ? tr += 2 : tr--;
 
         float x = treeX + i * treeSpacing;
 
-        float wave = sin(i * 0.7f) * 40.f;
-        float noise = static_cast<float>(std::rand() % 31 - 15);
-        float y = (475.f + wave + noise) * yRatio;
+        trY < 50.0f ? trY += 12.0f : trY -= 10.0f;
+        float y = (335.f + trY) * yRatio;
+
+        tree.setPosition(sf::Vector2f(x, y));
+        tree.setScale(sf::Vector2f(xRatio, yRatio));
+        trees.push_back(tree);
+    }
+    treeSpacing /= 2;
+    for (int i = 0; i < treeCount; ++i) {
+        sf::Sprite tree(treeTexture);
+        
+        tr < 4 ? tr += 2 : tr--;
+
+        float x = treeX + i * treeSpacing - treeCount * tr;
+
+        trY < 50.0f ? trY += 12.0f : trY-=10.0f;
+        float y = (435.f + trY) * yRatio;
 
         tree.setPosition(sf::Vector2f(x, y));
         tree.setScale(sf::Vector2f(xRatio, yRatio)); 
         trees.push_back(tree);
+
     }
+    treeSpacing *= 8;
+    for (int i = 0; i < treeCount - 30; ++i) {
+        sf::Sprite tree(treeTexture);
+
+        tr < 4 ? tr += 2 : tr--;
+
+        float x = treeX + i * treeSpacing;
+
+        trY < 50.0f ? trY += 12.0f : trY -= 10.0f;
+        float y = (465.f + trY) * yRatio;
+
+        tree.setPosition(sf::Vector2f(x, y));
+        tree.setScale(sf::Vector2f(xRatio, yRatio));
+        trees.push_back(tree);
+
+    }
+    
+    
 
     // adaprive generation of rock
     const int rockCount = 1;
