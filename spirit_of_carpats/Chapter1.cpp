@@ -293,7 +293,6 @@ void createLevels1(sf::RenderWindow& window, sf::Sprite& background, sf::Text& b
 
             if (backButtonWithSetings.getGlobalBounds().contains(mouseWorldPos)) {
                 std::cout << "backButton to menu!" << std::endl;
-                levelStarted = false;
                 b2DestroyWorld(worldId);
                 window.close();
                 return;

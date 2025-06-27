@@ -49,7 +49,7 @@ void createLevel1(sf::RenderWindow& window, sf::Sprite& backgroundSprite, const 
     }
     chapterText.setCharacterSize(80);
     chapterText.setFillColor(sf::Color::White);
-    sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - chapterText.getLocalBounds().size.x / 2, static_cast<float>(windowSize.y) / 2);
+    sf::Vector2f pos_1(static_cast<float>(windowSize.x) / 2 - chapterText.getLocalBounds().size.x / 2, static_cast<float>(windowSize.y) / 2 - chapterText.getLocalBounds().size.y / 2);
     chapterText.setPosition(pos_1);
 
     sf::Vector2f textureSizeF = static_cast<sf::Vector2f>(sf::Vector2u(newBackgroundTexture.getSize()));
