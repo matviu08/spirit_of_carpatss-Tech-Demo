@@ -19,6 +19,7 @@
 #include <optional>
 
 using namespace std;
+using namespace sf;
 
 class Menu {
 private:
@@ -32,46 +33,46 @@ private:
     bool waitingForJumpKey = false;
     string interactionText = "E";
 
-    sf::Keyboard::Key leftKey = sf::Keyboard::Key::A;
-    sf::Keyboard::Key rightKey = sf::Keyboard::Key::D;
-    sf::Keyboard::Key interactionKey = sf::Keyboard::Key::E;
-    sf::Keyboard::Key jumpKey = sf::Keyboard::Key::Space;
+    Keyboard::Key leftKey = Keyboard::Key::A;
+    Keyboard::Key rightKey = Keyboard::Key::D;
+    Keyboard::Key interactionKey = Keyboard::Key::E;
+    Keyboard::Key jumpKey = Keyboard::Key::Space;
 
-    sf::Text newGameButton;
-    sf::Text settingsButton;
-    sf::Text quitButton;
-    sf::Text chapterButton;
-    sf::Text backButtonWithSetings;
-    sf::Text backButtonWithChapters;
-    sf::Text languageButton;
-    sf::Text bindsButton;
-    sf::Text backButtonWithBinds;
+    Text newGameButton;
+    Text settingsButton;
+    Text quitButton;
+    Text chapterButton;
+    Text backButtonWithSetings;
+    Text backButtonWithChapters;
+    Text languageButton;
+    Text bindsButton;
+    Text backButtonWithBinds;
 
-    sf::Text musicButton;
+    Text musicButton;
 
-    sf::Text leftKeyButton;
-    sf::Text rightKeyButton;
-    sf::Text interactionKeyButton;
-    sf::Text jumpKeyButton;
+    Text leftKeyButton;
+    Text rightKeyButton;
+    Text interactionKeyButton;
+    Text jumpKeyButton;
 
-    void centerButton(sf::Text&, sf::RenderWindow&, float);
-    string keyToString(sf::Keyboard::Key key);
+    void centerButton(Text&, RenderWindow&, float);
+    string keyToString(Keyboard::Key key);
 
 public:
-    Menu(sf::Font&, sf::RenderWindow&);
-    void handleEvent(const std::optional<sf::Event>&, sf::RenderWindow&, sf::Sprite&, Menu&);
-    void draw(sf::RenderWindow&);
+    Menu(Font&, RenderWindow&);
+    void handleEvent(const optional<Event>&, RenderWindow&, Sprite&, Menu&);
+    void draw(RenderWindow&);
 
-    sf::Keyboard::Key getLeftKey() const { 
+    Keyboard::Key getLeftKey() const { 
         return leftKey; 
     }
-    sf::Keyboard::Key getRightKey() const {
+    Keyboard::Key getRightKey() const {
         return rightKey;
     }
-    sf::Keyboard::Key getInteractiontKey() const {
+    Keyboard::Key getInteractiontKey() const {
         return interactionKey;
     }
-    sf::Keyboard::Key getJumptKey() const {
+    Keyboard::Key getJumptKey() const {
         return jumpKey;
     }
     string getInteractionText() {
