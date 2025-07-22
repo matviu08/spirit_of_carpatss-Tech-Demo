@@ -1,6 +1,8 @@
 ﻿#include "location.h"
-#include <ctime>
+
 extern sf::Music menuMusic;
+
+
 
 // Функція генерації сцени лісу
 void generateForestScene(
@@ -59,7 +61,6 @@ void generateForestScene(
         background.push_back(backgroundSprite);
     }
 
-    
     // Генерація газет (news) — адаптивне позиціювання
     const float baseWidth = 1920.f;
     const float baseHeight = 1080.f;
@@ -79,9 +80,9 @@ void generateForestScene(
     float y = baseY * yRatio;             // Фіксована позиція по Y
     float spacing = baseSpacing * xRatio; // Відстань між газетами
 
-    int newsCount = 3; // Кількість газет
+    int newsCount = 3; 
 
-    srand(time(NULL)); // Ініціалізація генератора випадкових чисел
+    srand(time(NULL));
 
     for (int i = 0; i < newsCount; ++i) {
         sf::Sprite newspaper(newspaperTexture);
@@ -130,7 +131,7 @@ void generateForestScene(
         // Позиція по X із врахуванням індексу
         float x = treeX + i * treeSpacing;
 
-        // Коливання по Y (створення хвилястого ефекту)
+        // Коливання по Y
         trY < 50.0f ? trY += 12.0f : trY -= 10.0f;
 
         // Остаточна позиція по Y з масштабуванням
@@ -141,7 +142,7 @@ void generateForestScene(
         trees.push_back(tree);
     }
 
-    // Другий шар дерев із зменшеним spacing для більшої густоти
+    // Другий шар дерев
     treeSpacing /= 2;
     for (int i = 0; i < treeCount; ++i) {
         sf::Sprite tree(treeTexture);
@@ -159,7 +160,7 @@ void generateForestScene(
         trees.push_back(tree);
     }
 
-    // Третій шар дерев із збільшеним spacing для рідкіснішого розташування
+    // Третій шар дерев
     treeSpacing *= 8;
     for (int i = 0; i < treeCount - 30; ++i) {
         sf::Sprite tree(treeTexture);
@@ -177,7 +178,7 @@ void generateForestScene(
     }
 
     // ----------------------------------------------------
-    // Генерація каменю — позиція і масштабування
+    // Генерація каменю
 
     const int rockCount = 1;            // Кількість каменів
     const float baseRockX = -75.f;      // Базова позиція по X
@@ -259,4 +260,19 @@ void generateHomeScene(
 
    
     axe.push_back(axeSprite);
+}
+
+
+void generate_Cave_map(
+    sf::RenderWindow& window,
+    const sf::Texture& Chest,
+    const sf::Texture& spirit,
+    const sf::Texture& Rock,
+    const sf::Texture& background_caves,
+    sf::Sprite& backgoudCaves,
+    vector<sf::Sprite>& spirit_enemy,
+    vector<sf::Sprite>& chest,
+    vector<sf::Sprite>& rock
+) {
+    
 }

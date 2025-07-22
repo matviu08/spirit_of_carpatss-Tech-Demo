@@ -17,18 +17,14 @@
 #include <SFML/System.hpp>
 #include <box2d/box2d.h>
 #include <random>
+#include <ctime>
 #include <vector>
 
 using namespace sf;
 using namespace std;
 
-class loot_box {};
-class object {};
-class bg {};
-class for_bg {};
-class ground {};
-class weather {};
-class news_peper {};
+
+
 
 void generateForestScene(
     sf::RenderWindow& window,
@@ -51,7 +47,6 @@ void generateHomeScene(
     sf::Sprite& background,
     sf::Text& backButtonWithSetings,
     
-
     Player& pl,
     sf::Font font,
     
@@ -64,4 +59,17 @@ void generateHomeScene(
     const sf::Texture& background_home_texture,
     const sf::Texture& bed_texture
     
+);
+
+
+void generate_Cave_map(
+    sf::RenderWindow& window,
+    const sf::Texture& Chest,
+    const sf::Texture& spirit,
+    const sf::Texture& Rock,
+    const sf::Texture& background_caves,
+    sf::Sprite& backgoudCaves,
+    vector<sf::Sprite>& spirit_enemy,
+    vector<sf::Sprite>& chest,
+    vector<sf::Sprite>& rock
 );
