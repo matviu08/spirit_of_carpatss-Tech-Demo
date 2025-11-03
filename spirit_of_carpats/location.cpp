@@ -274,5 +274,36 @@ void generate_Cave_map(
     vector<sf::Sprite>& chest,
     vector<sf::Sprite>& rock
 ) {
+    float windowWidth = float(window.getSize().x);
+	float windowHeight = float(window.getSize().y);
+    float textWith = float(window.getSize().x);
+	float textHeight = float(window.getSize().y); 
+
+
+    backgoudCaves.setTexture(background_caves);
+    float sx = windowWidth / textWith;
+    float sy = windowHeight / textHeight;
+
+    backgoudCaves.setScale(Vector2f(sx, sy));
+    backgoudCaves.setPosition(Vector2f(0.f, 0.f));
     
+    spirit_enemy.clear();
+    chest.clear();
+    rock.clear();
+    
+    sf::Sprite spirit_sprite(spirit);
+    spirit_sprite.setPosition(sf::Vector2f(windowWidth * 0.7f, windowHeight * 0.5f));
+    spirit_sprite.setScale(sf::Vector2f(sx, sy));
+    
+    spirit_enemy.push_back(spirit_sprite);
+    sf::Sprite chest_sprite(Chest);
+    chest_sprite.setPosition(sf::Vector2f(windowWidth * 0.3f, windowHeight * 0.7f));
+    chest_sprite.setScale(sf::Vector2f(sx, sy));
+    
+    chest.push_back(chest_sprite);
+    
+    sf::Sprite rock_sprite(Rock);
+    rock_sprite.setPosition(sf::Vector2f(windowWidth * 0.5f, windowHeight * 0.8f));
+    rock_sprite.setScale(sf::Vector2f(sx, sy));
+	rock.push_back(rock_sprite);
 }
