@@ -63,4 +63,108 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="librarise\SFML-3.0.0\lib\FLAC.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\FLACd.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\freetype.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\freetyped.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\ogg.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\oggd.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-audio.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-audio-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-audio-s.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-audio-s-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-graphics.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-graphics-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-graphics-s.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-graphics-s-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-main-s.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-main-s-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-network.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-network-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-network-s.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-network-s-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-system.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-system-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-system-s.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-system-s-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-window.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-window-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-window-s.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\sfml-window-s-d.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\vorbis.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\vorbisd.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\vorbisenc.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\vorbisencd.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\vorbisfile.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="librarise\SFML-3.0.0\lib\vorbisfiled.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+  </ItemGroup>
 </Project>
